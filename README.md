@@ -2,8 +2,7 @@
 
 **Real-time dashboards for job market intelligence and economic growth monitoring in Montgomery, AL.**
 
-Built for the [World Wide Vibes Hackathon 2026](https://genai.works) — Track: **Workforce, Business & Economic Growth**
-Team: **wwv.commit.ai**
+Built for the [World Wide Vibes Hackathon 2026](https://genai.works) | Track: **Workforce, Business & Economic Growth** | Team: **wwv.commit.ai**
 
 ---
 
