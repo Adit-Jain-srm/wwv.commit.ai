@@ -56,12 +56,3 @@ All sessions will be recorded and shared.
 | Bright Data Docs | [Getting Started](https://docs.brightdata.com/) |
 | Google Stitch (design) | [withgoogle.com/stitch](https://stitchdesign.google/) |
 | Google Antigravity (codelab) | [Antigravity Codelab](https://codelabs.developers.google.com/) |
-
-## Team Contacts
-
-| Name | Email | GitHub | LinkedIn |
-|---|---|---|---|
-| Adit Jain | aditjain2005@gmail.com | [@Adit-Jain-srm](https://github.com/Adit-Jain-srm) | [Profile](https://www.linkedin.com/in/-adit-jain) |
-| Amina Yekhlef | ayekhlef1@gmail.com | — | [Profile](http://www.linkedin.com/in/ayekhlef) |
-| Daria Dackiewicz | dackiewiczd@outlook.com | [@daria-dot](https://github.com/daria-dot) | [Profile](https://linkedin.com/in/daria-dackiewicz-85616a2a2) |
-| Ridhima Kathait | ridhima.kathait@gmail.com | [@Ridhimakathait](https://github.com/Ridhimakathait) | [Profile](https://www.linkedin.com/in/ridhima-kathait-3229561a0/) |

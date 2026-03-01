@@ -34,10 +34,10 @@ Local governments and workforce agencies lack a unified, real-time view of hirin
 
 ## Team
 
-| Name | GitHub | LinkedIn |
-|---|---|---|
-| Adit Jain | [@Adit-Jain-srm](https://github.com/Adit-Jain-srm) | [linkedin.com/in/-adit-jain](https://www.linkedin.com/in/-adit-jain) |
-| Amina Yekhlef | — | [linkedin.com/in/ayekhlef](http://www.linkedin.com/in/ayekhlef) |
-| Daria Dackiewicz | [@daria-dot](https://github.com/daria-dot) | [linkedin.com/in/daria-dackiewicz](https://linkedin.com/in/daria-dackiewicz-85616a2a2) |
-| Ridhima Kathait | [@Ridhimakathait](https://github.com/Ridhimakathait) | [linkedin.com/in/ridhima-kathait](https://www.linkedin.com/in/ridhima-kathait-3229561a0/) |
+| Name | Email | GitHub | LinkedIn |
+|---|---|---|---|
+| Adit Jain | aditjain2005@gmail.com | [@Adit-Jain-srm](https://github.com/Adit-Jain-srm) | [LinkedIn](https://www.linkedin.com/in/-adit-jain) |
+| Amina Yekhlef | ayekhlef1@gmail.com | — | [LinkedIn](http://www.linkedin.com/in/ayekhlef) |
+| Daria Dackiewicz | dackiewiczd@outlook.com | [@daria-dot](https://github.com/daria-dot) | [LinkedIn](https://linkedin.com/in/daria-dackiewicz-85616a2a2) |
+| Ridhima Kathait | ridhima.kathait@gmail.com | [@Ridhimakathait](https://github.com/Ridhimakathait) | [LinkedIn](https://www.linkedin.com/in/ridhima-kathait-3229561a0/) |
 
