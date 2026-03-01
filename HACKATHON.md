@@ -45,6 +45,8 @@ https://forms.gle/hN7YPNEbQv9HtQ8z5
 
 All sessions will be recorded and shared.
 
+> **Sponsor bonus:** Integrating [Bright Data](https://docs.brightdata.com/) earns bonus points in judging. Optional but recommended.
+
 ## Data & Resources
 
 | Resource | Link |
