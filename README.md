@@ -18,6 +18,7 @@ Local governments and workforce agencies lack a unified, real-time view of hirin
 - **Identifies hiring trends** — growing industries, emerging roles, and shifting skill requirements
 - **Monitors business growth signals** — new business filings, expansion indicators, and economic momentum
 - **Maps training needs** — highlights gaps between workforce skills and employer demand to inform education and upskilling programs
+- _Additional features to be defined during the build phase_
 
 ## Tech Stack
 
@@ -40,6 +41,3 @@ Local governments and workforce agencies lack a unified, real-time view of hirin
 | Daria Dackiewicz | [@daria-dot](https://github.com/daria-dot) | [linkedin.com/in/daria-dackiewicz](https://linkedin.com/in/daria-dackiewicz-85616a2a2) |
 | Ridhima Kathait | [@Ridhimakathait](https://github.com/Ridhimakathait) | [linkedin.com/in/ridhima-kathait](https://www.linkedin.com/in/ridhima-kathait-3229561a0/) |
 
-## License
-
-_TBD_
