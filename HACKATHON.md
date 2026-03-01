@@ -1,17 +1,19 @@
 # Hackathon Reference — World Wide Vibes 2026
 
-Single-source reference for the team. All times are **Central Time (CT)**.
+Single-source reference for the team. Primary times in **Central Time (CT)** with conversions for all members.
+
+> US DST starts Sun, Mar 8 — times on Mar 9+ shift by 1 hour compared to earlier dates.
 
 ---
 
 ## Key Deadlines
 
-| Deadline | Date & Time |
-|---|---|
-| **Team Registration** | Sat, Mar 7 — 9:00 AM CT |
-| **Build Phase Opens** | Thu, Mar 5 — 9:00 AM CT |
-| **Project Submission** | Mon, Mar 9 — 9:00 AM CT |
-| **Winners Announced** | Fri, Mar 21 |
+| Deadline | CT | GMT (UK) | CET (France) | IST (India) |
+|---|---|---|---|---|
+| **Build Phase Opens** | Thu, Mar 5 — 9:00 AM | 3:00 PM | 4:00 PM | 8:30 PM |
+| **Team Registration** | Sat, Mar 7 — 9:00 AM | 3:00 PM | 4:00 PM | 8:30 PM |
+| **Project Submission** | Mon, Mar 9 — 9:00 AM | 2:00 PM | 3:00 PM | 7:30 PM |
+| **Winners Announced** | Fri, Mar 21 | — | — | — |
 
 Late submission penalty: **−1 point per 2-hour window** past the deadline (max −5 points).
 
@@ -33,13 +35,13 @@ https://forms.gle/hN7YPNEbQv9HtQ8z5
 
 ## Workshop Schedule (Week of Mar 2)
 
-| Date | Time (CT) | Session | Host |
-|---|---|---|---|
-| Mon, Mar 2 | 11:00 AM | Unlock the Web for Your Agents | Bright Data |
-| Mon, Mar 2 | 12:00 PM | Challenge Statements Overview | University of Alabama |
-| Mon, Mar 2 | 1:00 PM | Introduction to Vibe Coding | GenAI Works |
-| Tue, Mar 3 | 4:00 PM | Participant Induction | GenAI Works |
-| Wed, Mar 4 | 4:00 PM | Mentor Induction | GenAI Works |
+| Date | CT | GMT (UK) | CET (France) | IST (India) | Session | Host |
+|---|---|---|---|---|---|---|
+| Mon, Mar 2 | 11:00 AM | 5:00 PM | 6:00 PM | 10:30 PM | Unlock the Web for Your Agents | Bright Data |
+| Mon, Mar 2 | 12:00 PM | 6:00 PM | 7:00 PM | 11:30 PM | Challenge Statements Overview | U of Alabama |
+| Mon, Mar 2 | 1:00 PM | 7:00 PM | 8:00 PM | 12:30 AM+1 | Introduction to Vibe Coding | GenAI Works |
+| Tue, Mar 3 | 4:00 PM | 10:00 PM | 11:00 PM | 3:30 AM+1 | Participant Induction | GenAI Works |
+| Wed, Mar 4 | 4:00 PM | 10:00 PM | 11:00 PM | 3:30 AM+1 | Mentor Induction | GenAI Works |
 
 All sessions will be recorded and shared.
 
