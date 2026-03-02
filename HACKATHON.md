@@ -46,6 +46,8 @@ https://forms.gle/hN7YPNEbQv9HtQ8z5
 All sessions will be recorded and shared.
 
 > **Sponsor bonus:** Integrating [Bright Data](https://docs.brightdata.com/) earns bonus points in judging. Optional but recommended.
+>
+> **$100 free credits:** Apply promo code `worldwidevibes` at [brightdata.com/cp/billing](https://brightdata.com/cp/billing/overview).
 
 ## Data & Resources
 
@@ -54,5 +56,7 @@ All sessions will be recorded and shared.
 | Montgomery Open Data Portal | https://opendata.montgomeryal.gov/ |
 | Challenge Statements & Rules | [GenAI.Works Academy](https://genai.works) |
 | Bright Data Docs | [Getting Started](https://docs.brightdata.com/) |
+| Bright Data for AI | [brightdata.com/ai](https://brightdata.com/ai?utm_source=brand&utm_campaign=brnd-mkt_hackathon_worldwidevibes) |
+| Bright Data Hack Pack | [GitHub Repo](https://github.com/ScrapeAlchemist/brightdata-hack-pack) — code examples, MCP agents, starter template |
 | Google Stitch (design) | [withgoogle.com/stitch](https://stitchdesign.google/) |
 | Google Antigravity (codelab) | [Antigravity Codelab](https://codelabs.developers.google.com/) |
