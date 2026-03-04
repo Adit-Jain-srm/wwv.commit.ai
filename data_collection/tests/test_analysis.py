@@ -65,6 +65,16 @@ class TestClassifySector:
         assert classify_sector("IT Specialist", "Maxwell Air Force Base") == "federal"
         assert classify_sector("Engineer", source="usajobs") == "federal"
 
+    def test_federal_beats_public(self):
+        """Federal jobs mentioning 'public' should be federal, not public."""
+        assert classify_sector("Public Affairs Officer", "Maxwell Air Force Base") == "federal"
+
+    def test_private_with_public_in_description(self):
+        """Private jobs mentioning 'public' in common phrases stay private."""
+        assert classify_sector("Sales Rep", "Acme Corp", "public speaking skills required") == "private"
+        assert classify_sector("PR Manager", "Tech Inc", "public relations experience") == "private"
+        assert classify_sector("Receptionist", "Hotel", "public-facing role") == "private"
+
     def test_private_sector(self):
         assert classify_sector("Cashier", "Walmart") == "private"
 

@@ -65,20 +65,24 @@ INDUSTRY_KEYWORDS: dict[str, list[str]] = {
 
 # ── Sector classification (public vs private vs federal) ─────────
 
-SECTOR_RULES: dict[str, list[str]] = {
-    "public": [
-        "city of montgomery", "state of alabama", "county", "municipal",
-        "government", "public", "personnel board", "planning department",
-        "housing authority", "public works", "school district",
-        "alabama state university", "auburn university at montgomery",
-    ],
-    "federal": [
+# Federal checked first (more specific) to prevent federal jobs
+# mentioning "public" from being misclassified as public sector.
+# Bare "public" removed — too broad (matches "public speaking" etc.)
+SECTOR_RULES = [
+    ("federal", [
         "federal", "usajobs", "air force", "maxwell", "gunter",
         "department of defense", "dod", "va ", "veterans affairs",
         "fbi", "irs", "usps", "postal", "social security",
-    ],
-    "private": [],  # default fallback
-}
+    ]),
+    ("public", [
+        "city of montgomery", "state of alabama", "county government",
+        "municipal", "public sector", "public administration",
+        "personnel board", "planning department", "public works",
+        "housing authority", "school district", "public safety",
+        "alabama state university", "auburn university at montgomery",
+        "government jobs", "civil service",
+    ]),
+]
 
 # ── Skill extraction ─────────────────────────────────────────────
 
@@ -125,11 +129,9 @@ def _normalize_job(job: dict) -> dict:
 
 
 def classify_sector(title: str, company: str = "", description: str = "", source: str = "") -> str:
-    """Classify job as public / federal / private sector."""
+    """Classify job as federal / public / private sector."""
     text = f"{title} {company} {description} {source}".lower()
-    for sector, keywords in SECTOR_RULES.items():
-        if sector == "private":
-            continue
+    for sector, keywords in SECTOR_RULES:
         if any(kw in text for kw in keywords):
             return sector
     return "private"
