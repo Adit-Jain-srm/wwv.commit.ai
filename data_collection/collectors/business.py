@@ -258,13 +258,18 @@ def _parse_extracted_datasets(data, source_url: str) -> list[dict]:
 
 
 def _classify_signal(text: str) -> str:
+    """Classify business signal aligned with Montgomery's economic structure."""
     text_lower = text.lower()
     categories = {
+        "data_center": ["data center", "aws", "google", "meta", "cloud facility", "hyperscale", "server farm"],
+        "defense_contract": ["defense contract", "air force", "maxwell", "gunter", "military", "dod", "federal contract"],
         "new_business": ["new business", "filing", "registered", "incorporation", "startup", "launched"],
-        "expansion": ["expansion", "expanding", "new location", "growth", "relocat"],
-        "economic_development": ["economic development", "incentive", "grant", "investment", "workforce"],
-        "real_estate": ["commercial real estate", "office space", "construction", "development"],
-        "hiring_surge": ["hiring", "jobs added", "employment growth", "workforce expansion"],
+        "expansion": ["expansion", "expanding", "new location", "growth", "relocat", "headquarter"],
+        "infrastructure": ["infrastructure", "utility", "water", "electricity", "broadband", "construction"],
+        "economic_development": ["economic development", "incentive", "grant", "investment", "workforce", "revitalization"],
+        "real_estate": ["commercial real estate", "office space", "construction", "development", "zoning"],
+        "hiring_surge": ["hiring", "jobs added", "employment growth", "workforce expansion", "staffing"],
+        "public_safety": ["police", "staffing shortage", "recruitment", "officer", "public safety"],
     }
     for category, keywords in categories.items():
         if any(kw in text_lower for kw in keywords):
