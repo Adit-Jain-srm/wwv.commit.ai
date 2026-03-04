@@ -27,11 +27,15 @@ https://forms.gle/hN7YPNEbQv9HtQ8z5
 - Final submission must include the **app + presentation** (see form description for full requirements).
 - Review the **[Judging Criteria Guide](https://genai.works)** before submitting.
 
-## Our Track
+### Submission checklist
 
-**Workforce, Business & Economic Growth**
-
-> Create dashboards that collect job postings, identify hiring trends, and monitor business growth signals — like "Workforce Pulse" showing local industry demand and training needs.
+- **Mentors (optional)**: list any mentors to nominate in `HACKATHON.md`.
+- **Describe solution**: 1–2 sentence summary (what it is, for whom, and why).
+- **Prototype URL**: live app, demo environment, or notebook.
+- **Pitch video URL**: ≤5 minutes, public access.
+- **Slides (optional)**: link to slide deck (public).
+- **Code repo (optional)**: GitHub/other repo link.
+- **Supplementary doc (optional)**: up to ~8 pages (e.g. technical or product brief).
 
 ## Workshop Schedule (Week of Mar 2)
 
