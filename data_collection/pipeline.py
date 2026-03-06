@@ -20,6 +20,24 @@ from .collectors.business import collect_business_signals
 from .collectors.jobs import collect_jobs
 from .config import DATA_DIR
 
+PROGRESS_FILE = DATA_DIR / "pipeline_progress.json"
+
+
+def _write_progress(progress: int, current_step: str, steps_done: list[str] | None = None) -> None:
+    """Write progress to a JSON file for frontend polling."""
+    try:
+        data = {
+            "running": progress < 100,
+            "progress": progress,
+            "current_step": current_step,
+            "steps_done": steps_done or [],
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        }
+        PROGRESS_FILE.write_text(json.dumps(data), encoding="utf-8")
+    except Exception as e:
+        logger.warning("Could not write progress file: %s", e)
+
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s  %(levelname)-8s  %(name)s  %(message)s",
@@ -40,8 +58,21 @@ async def run_pipeline(run_jobs: bool = True, run_business: bool = True):
         "results": {},
     }
 
+    steps_done: list[str] = []
+    total_steps = (2 if run_jobs else 0) + (2 if run_business else 0)
+    if total_steps == 0:
+        total_steps = 1
+    step = 0
+
+    _write_progress(0, "Initializing Bright Data…", steps_done)
+
     async with BrightDataClient() as client:
         if run_jobs:
+            _write_progress(
+                int(100 * step / total_steps),
+                "LinkedIn job listings + SERP + AI extract (Indeed, USAJobs, JobAps)",
+                steps_done,
+            )
             logger.info("\n▸ Collecting job postings...")
             jobs = await collect_jobs(client)
 
@@ -62,8 +93,15 @@ async def run_pipeline(run_jobs: bool = True, run_business: bool = True):
                 "sample": jobs[:3] if jobs else [],
             }
             logger.info("▸ Jobs: %d entries | Sector: %s", len(jobs), summary["results"]["jobs"]["by_sector"])
+            step += 1
+            steps_done.append("Job collection (LinkedIn, SERP, AI extract)")
 
         if run_business:
+            _write_progress(
+                int(100 * step / total_steps),
+                "LinkedIn companies + SERP + AI extract (open data)",
+                steps_done,
+            )
             logger.info("\n▸ Collecting business growth signals...")
             signals = await collect_business_signals(client)
 
@@ -78,7 +116,9 @@ async def run_pipeline(run_jobs: bool = True, run_business: bool = True):
                 "sample": signals[:3] if signals else [],
             }
             logger.info("▸ Business signals: %d entries | Types: %s", len(signals), signal_types)
+            steps_done.append("Business signals (LinkedIn, SERP, AI extract)")
 
+    _write_progress(100, "Complete", steps_done)
     summary_path = DATA_DIR / "pipeline_summary.json"
     summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
 

@@ -4,6 +4,28 @@ Single-source reference for the team. Primary times in **Central Time (CT)** wit
 
 > US DST starts Sun, Mar 8 — times on Mar 9+ shift by 1 hour compared to earlier dates.
 
+**Official Challenge Statement (WWV 2026)**
+
+> Build a vibe-coded solution that addresses one of the key challenge areas below using data from the City of Montgomery Data Portal and publicly available web data powered by Bright Data. Participants are encouraged to rapidly prototype creative applications using AI, automation, or intelligent agents that turn real-world data into useful tools, insights, or services.
+
+Tracks:
+- (1) Civic Access & Community Communication  
+- (2) **Workforce, Business & Economic Growth**  ← **our track**  
+- (3) Smart Cities, Infrastructure & Public Spaces  
+- (4) Public Safety, Emergency Response & City Analytics
+
+Example problem angles (not exhaustive):
+- Improve city communication and public access
+- Train and reskill the workforce
+- Innovate classroom learning and student support
+- Analyze patterns in public transportation usage
+- Compare crime statistics with public perception and messaging
+- Analyze and improve insights from 911 data
+- Compare business licenses with foot traffic trends
+- Identify and address vacant properties
+- Track and optimize city construction projects and costs
+- Analyze and improve usage of city-owned properties
+
 ---
 
 ## Key Deadlines
@@ -29,6 +51,8 @@ https://forms.gle/hN7YPNEbQv9HtQ8z5
 
 ### Submission checklist
 
+- **Slack**: every team member must be in the hackathon Slack.
+- **Access**: all shared links (prototype, video, slides, docs, repo) must have public or judge-accessible permissions.
 - **Mentors (optional)**: list any mentors to nominate in `HACKATHON.md`.
 - **Describe solution**: 1–2 sentence summary (what it is, for whom, and why).
 - **Prototype URL**: live app, demo environment, or notebook.
@@ -36,6 +60,21 @@ https://forms.gle/hN7YPNEbQv9HtQ8z5
 - **Slides (optional)**: link to slide deck (public).
 - **Code repo (optional)**: GitHub/other repo link.
 - **Supplementary doc (optional)**: up to ~8 pages (e.g. technical or product brief).
+
+### Judging criteria (30 pts + 3 Bright Data bonus)
+
+- **Consistency with the challenge statements (10 pts)**  
+  How relevant is the solution to the problem statement? (**Most important**.)
+- **Quality and Design (10 pts)**  
+  Quality of the algorithm, code, UX, and overall design.
+- **Originality (5 pts)**  
+  How different is this solution from others in the market?
+- **Social value / impact (5 pts)**  
+  How valuable is this solution to society at large (especially Montgomery)?
+- **Commercialisation (5 pts)**  
+  Realistic commercial opportunity / path to adoption.
+
+**Bright Data bonus:** Any solution that uses the Bright Data product automatically gains **+3 bonus points**.
 
 ## Workshop Schedule (Week of Mar 2)
 
@@ -64,3 +103,20 @@ All sessions will be recorded and shared.
 | Bright Data Hack Pack | [GitHub Repo](https://github.com/ScrapeAlchemist/brightdata-hack-pack) — code examples, MCP agents, starter template |
 | Google Stitch (design) | [withgoogle.com/stitch](https://stitchdesign.google/) |
 | Google Antigravity (codelab) | [Antigravity Codelab](https://codelabs.developers.google.com/) |
+
+---
+
+## Workforce Pulse — Submission Links
+
+> Fill in these before submitting on Mon, Mar 9. Ensure all links are public or judge-accessible.
+
+| Item | Link / Placeholder |
+|------|--------------------|
+| **Prototype URL** | *(e.g. Vercel app URL)* |
+| **Pitch video** (≤5 min) | *(e.g. YouTube/Loom link)* |
+| **Slides** (optional) | *(e.g. Google Slides link)* |
+| **Code repo** | *(e.g. GitHub URL)* |
+| **Supplementary doc** (optional) | *(e.g. PDF brief)* |
+
+**Solution summary (1–2 sentences):**  
+Workforce Pulse is Montgomery’s AI-powered workforce & economic intelligence dashboard for city planners and workforce agencies. It aggregates Bright Data + Montgomery Open Data to surface hiring trends, skills gaps, and policy-ready insights.

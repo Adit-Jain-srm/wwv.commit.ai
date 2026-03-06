@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-950 text-slate-50 antialiased;
+  font-size: 15.5px;
+}
+
+/* Sidebar nav items — 15px */
+.sidebar-item {
+  font-size: 15px;
+}
+
+* {
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1f2937;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+@media print {
+  html,
+  body {
+    height: auto;
+    background: #ffffff !important;
+  }
+
+  body {
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:bg-white {
+    background: #ffffff !important;
+  }
+
+  .print\:text-slate-900 {
+    color: #0f172a !important;
+  }
+
+  .leaflet-container {
+    filter: grayscale(0.15) contrast(1.05);
+  }
+}
+
+.leaflet-tooltip {
+  background: #0f172a !important;
+  border: 1px solid #475569 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Collection loader — orbital cycle */
+@keyframes loader-orbital {
+  0%, 100% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes loader-dot-chase {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.loader-orbital {
+  animation: loader-orbital 1.2s ease-in-out infinite;
+}
+
+.loader-dot {
+  animation: loader-dot-chase 1.4s ease-in-out infinite both;
+}
+
+.loader-dot:nth-child(1) { animation-delay: -0.32s; }
+.loader-dot:nth-child(2) { animation-delay: -0.16s; }
+
+
