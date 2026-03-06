@@ -4,4 +4,4 @@ __pycache__/
 data_collection/data/
 .cursor/
 .pytest_cache/
-frontend/.next/
+frontend/node_modules/
