@@ -1,8 +1,30 @@
+# Secrets
 .env
+.env.*
+!.env.example
+*.key
+*.pem
+credentials*
+
+# Python
 __pycache__/
 *.pyc
-data_collection/data/
-.cursor/
+*.pyo
+*.egg-info/
+dist/
+build/
 .pytest_cache/
+
+# Data
+data_collection/data/
+
+# Frontend
 frontend/.next/
 frontend/node_modules/
+
+# Editors / IDEs
+.cursor/
+.vscode/
+.idea/
+*.swp
+*.swo

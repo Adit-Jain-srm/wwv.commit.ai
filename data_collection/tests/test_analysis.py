@@ -8,8 +8,11 @@ from data_collection.analysis import (
     detect_skills_gap,
     extract_industry,
     extract_skills,
+    extract_experience_level,
+    extract_work_arrangement,
     analyze_jobs,
     _normalize_job,
+    _is_valid_job_title,
 )
 
 
@@ -163,9 +166,18 @@ class TestExtractSkills:
         skills = extract_skills("Analyst", "security clearance required")
         assert any("clearance" in s for s in skills)
 
-    def test_job_type(self):
-        skills = extract_skills("Worker", "full-time position")
-        assert any("full" in s for s in skills)
+    def test_excludes_job_modalities(self):
+        skills = extract_skills("Worker", "full-time remote position")
+        skill_lower = [s.lower() for s in skills]
+        assert "full-time" not in skill_lower
+        assert "remote" not in skill_lower
+
+    def test_excludes_seniority_levels(self):
+        skills = extract_skills("Senior Manager", "supervisor role")
+        skill_lower = [s.lower() for s in skills]
+        assert "senior" not in skill_lower
+        assert "manager" not in skill_lower
+        assert "supervisor" not in skill_lower
 
     def test_empty_input_returns_empty_list(self):
         assert extract_skills("") == []
@@ -176,9 +188,10 @@ class TestExtractSkills:
         tech = [s for s in skills if s in ("python", "java", "sql")]
         assert len(tech) >= 1
 
-    def test_experience_years_pattern(self):
-        skills = extract_skills("Manager", "5 years experience required")
-        assert len(skills) >= 1
+    def test_keeps_real_skills(self):
+        skills = extract_skills("Dev", "python aws sql hvac required")
+        skill_lower = [s.lower() for s in skills]
+        assert "python" in skill_lower or "aws" in skill_lower
 
     def test_caps_skills_deduplicated(self):
         skills = extract_skills("Dev", "Python python PYTHON")
@@ -186,7 +199,7 @@ class TestExtractSkills:
         assert python_count <= 1
 
     def test_max_twelve_skills_returned(self):
-        long_desc = "python java sql excel word outlook certification bachelor degree full-time remote hybrid"
+        long_desc = "python java sql excel word outlook certification bachelor degree customer service data entry"
         skills = extract_skills("Dev", long_desc)
         assert len(skills) <= 12
 
@@ -295,6 +308,8 @@ class TestAnalyzeJobs:
         assert "sector" in j
         assert "industry" in j
         assert "skills" in j
+        assert "experience_level" in j
+        assert "work_arrangement" in j
         assert isinstance(j["skills"], list)
 
     def test_jobs_without_title_filtered(self):
@@ -305,3 +320,93 @@ class TestAnalyzeJobs:
         enriched, trends = analyze_jobs(jobs)
         assert len(enriched) == 1
         assert trends["total_jobs"] == 1
+
+    def test_junk_titles_filtered(self):
+        jobs = [
+            {"title": "Software Engineer", "company": "Tech Corp"},
+            {"title": "Skip to main content", "company": ""},
+            {"title": "Sign in", "company": ""},
+            {"title": "Employers / Post Job", "company": ""},
+        ]
+        enriched, trends = analyze_jobs(jobs)
+        assert len(enriched) == 1
+        assert enriched[0]["title"] == "Software Engineer"
+
+
+class TestTitleValidation:
+    def test_rejects_skip_to_main_content(self):
+        assert not _is_valid_job_title("Skip to main content")
+
+    def test_rejects_sign_in(self):
+        assert not _is_valid_job_title("Sign in")
+
+    def test_rejects_employers_post_job(self):
+        assert not _is_valid_job_title("Employers / Post Job")
+
+    def test_rejects_section_headers(self):
+        assert not _is_valid_job_title("Skills")
+        assert not _is_valid_job_title("Education")
+        assert not _is_valid_job_title("Benefits")
+
+    def test_rejects_short_titles(self):
+        assert not _is_valid_job_title("abc")
+        assert not _is_valid_job_title("")
+        assert not _is_valid_job_title(None)
+
+    def test_accepts_real_job_titles(self):
+        assert _is_valid_job_title("Police Officer")
+        assert _is_valid_job_title("Software Engineer")
+        assert _is_valid_job_title("Registered Nurse")
+        assert _is_valid_job_title("Assembly Worker - Hyundai")
+        assert _is_valid_job_title("City of Montgomery Budget Analyst")
+
+
+class TestExperienceLevel:
+    def test_entry_level(self):
+        assert extract_experience_level("Junior Developer", "entry-level position") == "entry"
+        assert extract_experience_level("Intern", "internship program") == "entry"
+
+    def test_senior_level(self):
+        assert extract_experience_level("Senior Engineer", "") == "senior"
+        assert extract_experience_level("Lead Analyst", "") == "senior"
+
+    def test_management_level(self):
+        assert extract_experience_level("Project Manager", "") == "management"
+        assert extract_experience_level("Director of IT", "") == "management"
+
+    def test_mid_level_default(self):
+        assert extract_experience_level("Nurse", "") == "mid"
+        assert extract_experience_level("Analyst", "requires 3 years") == "mid"
+
+
+class TestWorkArrangement:
+    def test_remote(self):
+        assert extract_work_arrangement("Developer", "remote position") == "remote"
+        assert extract_work_arrangement("Analyst", "telework eligible") == "remote"
+
+    def test_hybrid(self):
+        assert extract_work_arrangement("Manager", "hybrid schedule") == "hybrid"
+
+    def test_onsite_default(self):
+        assert extract_work_arrangement("Nurse", "hospital setting") == "onsite"
+
+
+class TestNewTrendDimensions:
+    def test_trends_include_experience_levels(self):
+        jobs = [
+            {"title": "Senior Engineer", "company": "A"},
+            {"title": "Junior Developer", "company": "B"},
+            {"title": "Manager", "company": "C"},
+        ]
+        trends = compute_hiring_trends(jobs)
+        assert "by_experience_level" in trends
+        assert isinstance(trends["by_experience_level"], dict)
+
+    def test_trends_include_work_arrangements(self):
+        jobs = [
+            {"title": "Remote Developer", "description": "remote position"},
+            {"title": "Onsite Nurse", "company": "Hospital"},
+        ]
+        trends = compute_hiring_trends(jobs)
+        assert "by_work_arrangement" in trends
+        assert isinstance(trends["by_work_arrangement"], dict)

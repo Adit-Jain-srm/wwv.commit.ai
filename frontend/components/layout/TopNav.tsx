@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Badge } from "../ui/badge";
@@ -19,6 +19,7 @@ export function TopNav({
 }: TopNavProps) {
   const { query, setQuery, setActiveSuggestion, setFilters } = useSearch();
   const [focused, setFocused] = useState(false);
+  const [highlightIdx, setHighlightIdx] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const matches = query.trim().length > 0
@@ -38,8 +39,32 @@ export function TopNav({
       neighborhood: matches.find((m) => m.name === name && m.type === "neighborhood")?.name ?? null,
     });
     setFocused(false);
+    setHighlightIdx(-1);
     inputRef.current?.blur();
   };
+
+  const visibleMatches = matches.slice(0, 8);
+
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!focused || visibleMatches.length === 0) return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setHighlightIdx((prev) => (prev < visibleMatches.length - 1 ? prev + 1 : 0));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setHighlightIdx((prev) => (prev > 0 ? prev - 1 : visibleMatches.length - 1));
+      } else if (e.key === "Enter" && highlightIdx >= 0) {
+        e.preventDefault();
+        handleSelect(visibleMatches[highlightIdx].name);
+      } else if (e.key === "Escape") {
+        setFocused(false);
+        setHighlightIdx(-1);
+        inputRef.current?.blur();
+      }
+    },
+    [focused, visibleMatches, highlightIdx]
+  );
 
   return (
     <header className="print:hidden border-b border-slate-900/80 bg-slate-950/80 backdrop-blur">
@@ -74,6 +99,7 @@ export function TopNav({
                   const v = e.target.value;
                   setQuery(v);
                   setActiveSuggestion(null);
+                  setHighlightIdx(-1);
                   const q = v.trim().toLowerCase();
                   const industryLabels = ["Government", "Defense", "Healthcare", "Manufacturing", "Technology", "Education", "Public Safety"];
                   const industry = industryLabels.find((x) => x.toLowerCase().includes(q) || q.includes(x.toLowerCase())) ?? null;
@@ -84,24 +110,35 @@ export function TopNav({
                   });
                 }}
                 onFocus={() => setFocused(true)}
-                onBlur={() => setTimeout(() => setFocused(false), 180)}
+                onBlur={() => setTimeout(() => { setFocused(false); setHighlightIdx(-1); }, 180)}
+                onKeyDown={handleKeyDown}
                 placeholder="Intelligence search — industries, skills, neighborhoods"
+                aria-label="Search industries, skills, and neighborhoods"
+                role="combobox"
+                aria-expanded={focused && visibleMatches.length > 0}
+                aria-autocomplete="list"
                 className={cn(
                   "h-9 w-80 min-w-[18rem] xl:w-96 xl:min-w-[22rem] rounded-md border border-slate-800/80 bg-slate-900/70 pl-8 pr-2 text-[15px]",
                   "placeholder:text-slate-500 focus:border-sky-500/70 focus:outline-none focus:ring-1 focus:ring-sky-500/70"
                 )}
               />
-              {focused && matches.length > 0 && (
+              {focused && visibleMatches.length > 0 && (
                 <div
                   className="absolute left-0 right-0 top-full z-50 mt-1 max-h-56 overflow-auto rounded-md border border-slate-700 bg-slate-900 py-1 shadow-xl"
+                  role="listbox"
                   onMouseDown={(e) => e.preventDefault()}
                 >
-                  {matches.slice(0, 8).map((s, i) => (
+                  {visibleMatches.map((s, i) => (
                     <button
                       key={`${s.type}-${s.name}-${i}`}
                       type="button"
+                      role="option"
+                      aria-selected={i === highlightIdx}
                       onClick={() => handleSelect(s.name)}
-                      className="flex w-full items-center gap-2 px-3 py-2 text-left text-[14px] text-slate-200 hover:bg-slate-800"
+                      className={cn(
+                        "flex w-full items-center gap-2 px-3 py-2 text-left text-[14px] text-slate-200 hover:bg-slate-800",
+                        i === highlightIdx && "bg-slate-800"
+                      )}
                     >
                       <span className="rounded bg-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-400">
                         {s.type}

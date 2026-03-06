@@ -1,12 +1,21 @@
 from __future__ import annotations
 
+import logging
+import re
+import time
 from pathlib import Path
 from typing import Any, Tuple
 from datetime import datetime, timedelta, timezone, date
 import json
 
+logger = logging.getLogger(__name__)
+
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = BASE_DIR / "data_collection" / "data"
+
+# Simple in-memory cache: {filename: (timestamp, data)}
+_cache: dict[str, tuple[float, Any]] = {}
+_CACHE_TTL = 30  # seconds
 
 
 def _load_json(filename: str, default: Any) -> Any:
@@ -15,28 +24,53 @@ def _load_json(filename: str, default: Any) -> Any:
         return default
     try:
         return json.loads(path.read_text(encoding="utf-8"))
-    except Exception:
+    except Exception as e:
+        logger.warning("Failed to load %s: %s", filename, e)
         return default
 
 
+def _cached_load(filename: str, default: Any) -> Any:
+    """Load JSON with in-memory caching (30s TTL)."""
+    cache_key = str(DATA_DIR / filename)
+    now = time.monotonic()
+    cached = _cache.get(cache_key)
+    if cached is not None:
+        ts, data = cached
+        if now - ts < _CACHE_TTL:
+            return data
+    data = _load_json(filename, default)
+    _cache[cache_key] = (now, data)
+    return data
+
+
 def get_jobs() -> list[dict]:
-    data = _load_json("jobs_latest.json", default=[])
+    data = _cached_load("jobs_latest.json", default=[])
     return data if isinstance(data, list) else []
 
 
 def get_trends() -> dict:
-    data = _load_json("trends_latest.json", default={})
+    data = _cached_load("trends_latest.json", default={})
     return data if isinstance(data, dict) else {}
 
 
 def get_business_signals() -> list[dict]:
-    data = _load_json("business_latest.json", default=[])
+    data = _cached_load("business_latest.json", default=[])
+    return data if isinstance(data, list) else []
+
+
+def get_glassdoor_data() -> list[dict]:
+    data = _cached_load("glassdoor_latest.json", default=[])
+    return data if isinstance(data, list) else []
+
+
+def get_google_maps_data() -> list[dict]:
+    data = _cached_load("google_maps_latest.json", default=[])
     return data if isinstance(data, list) else []
 
 
 def get_neighborhoods() -> list[dict]:
     """
-    Mock neighborhood-level aggregation.
+    Neighborhood-level aggregation derived from sector counts.
 
     In a real deployment, this would join jobs/business data with GIS
     neighborhoods from the Montgomery Open Data Portal. For hackathon scope,
@@ -76,7 +110,7 @@ def get_pipeline_summary() -> dict:
     Schema is defined in data_collection.pipeline; we only
     surface a small, read-only subset to the frontend.
     """
-    data = _load_json("pipeline_summary.json", default={})
+    data = _cached_load("pipeline_summary.json", default={})
     return data if isinstance(data, dict) else {}
 
 
@@ -84,6 +118,7 @@ def get_pipeline_progress() -> dict:
     """
     Return live pipeline progress when a run is in flight.
     Written by data_collection.pipeline and by run-pipeline on start.
+    Uses _load_json directly (no cache) for real-time progress.
     """
     data = _load_json("pipeline_progress.json", default={})
     return data if isinstance(data, dict) else {}
@@ -97,14 +132,22 @@ def write_pipeline_progress_start() -> None:
             json.dumps({
                 "running": True,
                 "progress": 0,
-                "current_step": "Starting Bright Data pipeline…",
+                "current_step": "Starting Bright Data pipeline\u2026",
                 "steps_done": [],
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }),
             encoding="utf-8",
         )
-    except Exception:
-        pass
+        # Invalidate cache so next read picks up new state
+        _cache.pop(str(DATA_DIR / "pipeline_progress.json"), None)
+    except Exception as e:
+        logger.warning("Failed to write pipeline progress start: %s", e)
+
+
+# Compiled regex patterns for date parsing
+_RE_DAYS_AGO = re.compile(r"(\d+)\s+(day|days)\s+ago")
+_RE_WEEKS_AGO = re.compile(r"(\d+)\s+(week|weeks)\s+ago")
+_RE_MONTHS_AGO = re.compile(r"(\d+)\s+(month|months)\s+ago")
 
 
 def _parse_posted_date(text: str) -> date | None:
@@ -124,22 +167,21 @@ def _parse_posted_date(text: str) -> date | None:
         pass
 
     lower = text.lower()
-    import re
 
-    m = re.search(r"(\d+)\s+(day|days)\s+ago", lower)
+    m = _RE_DAYS_AGO.search(lower)
     if m:
         days = int(m.group(1))
         return (datetime.now(timezone.utc) - timedelta(days=days)).date()
 
-    m = re.search(r"(\d+)\s+(week|weeks)\s+ago", lower)
+    m = _RE_WEEKS_AGO.search(lower)
     if m:
         weeks = int(m.group(1))
         return (datetime.now(timezone.utc) - timedelta(weeks=weeks)).date()
 
-    m = re.search(r"(\d+)\s+(month|months)\s+ago", lower)
+    m = _RE_MONTHS_AGO.search(lower)
     if m:
         months = int(m.group(1))
-        return (datetime.now(timezone.utc) - timedelta(days=30 * int(m.group(1)))).date()
+        return (datetime.now(timezone.utc) - timedelta(days=30 * months)).date()
 
     return None
 
@@ -261,4 +303,3 @@ def get_jobs_with_summary() -> Tuple[list[dict], dict, list[dict]]:
     summary["job_growth_pct_30d"] = job_growth_pct
 
     return jobs, summary, timeseries
-

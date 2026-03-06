@@ -1,3 +1,8 @@
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Leaflet + React-Leaflet do not play nicely with
@@ -6,6 +11,9 @@ const nextConfig = {
   // Disable StrictMode for this hackathon dashboard
   // so the map only initializes once in dev.
   reactStrictMode: false,
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 export default nextConfig;

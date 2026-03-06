@@ -85,18 +85,41 @@ LINKEDIN_JOB_URLS = [
     "https://www.linkedin.com/jobs/search/?keywords=technology+data+center&location=Montgomery%2C%20Alabama",
 ]
 
+# Keywords for LinkedIn SDK job search (used by linkedin_search_jobs method)
+LINKEDIN_SEARCH_KEYWORDS = [
+    "",  # general — all Montgomery jobs
+    "government",
+    "defense",
+    "healthcare",
+    "manufacturing",
+    "technology",
+    "data center",
+    "police",
+    "education",
+]
+
 EXTRACT_JOB_URLS = [
     (
         "https://www.indeed.com/jobs?q=&l=Montgomery%2C+AL&sort=date",
-        "Extract all job listings: title, company, location, salary, job type, posted date, URL. For each job also note if it is government/public sector, federal/military, healthcare, manufacturing, or private sector.",
+        "Return a JSON array of job listings. For each job include: "
+        "title (string), company (string), location (string), salary (string or null), "
+        "job_type (string: full-time/part-time/contract), posted_date (string), "
+        "url (string). ONLY include actual job postings, not navigation links, "
+        "headers, or UI elements. Return ONLY the JSON array, no other text.",
     ),
     (
         "https://jobapscloud.com/MGM/",
-        "Extract all current government job openings: title, department, salary range, closing date, link. These are City of Montgomery and Montgomery County government positions.",
+        "Return a JSON array of government job openings. For each include: "
+        "title (string), department (string), salary_range (string), "
+        "closing_date (string), url (string). These are City of Montgomery "
+        "government positions. Return ONLY the JSON array.",
     ),
     (
         "https://www.usajobs.gov/Search/Results?l=Montgomery%2C%20Alabama",
-        "Extract all federal job listings: title, agency, department, grade, salary range, location, closing date, URL.",
+        "Return a JSON array of federal job listings. For each include: "
+        "title (string), agency (string), grade (string), salary_range (string), "
+        "location (string), closing_date (string), url (string). "
+        "Return ONLY the JSON array.",
     ),
 ]
 
@@ -153,6 +176,9 @@ ZILLOW_COMMERCIAL_URLS = [
 
 OPEN_DATA_URLS = [
     "https://opendata.montgomeryal.gov/",
+    "https://opendata.montgomeryal.gov/datasets/business-licenses",
+    "https://opendata.montgomeryal.gov/datasets/building-permits",
+    "https://opendata.montgomeryal.gov/datasets/code-enforcement",
 ]
 
 EXTRACT_BUSINESS_URLS = [
@@ -160,6 +186,54 @@ EXTRACT_BUSINESS_URLS = [
         "https://opendata.montgomeryal.gov/",
         "Extract all available datasets: name, category, description, last updated date, number of records. Focus on business licenses, permits, economic indicators, employer data, workforce, zoning, land use, public safety, and infrastructure datasets.",
     ),
+    (
+        "https://opendata.montgomeryal.gov/datasets/business-licenses",
+        "Return a JSON array of recent business license records. For each include: "
+        "business_name, license_type, address, issue_date, status. "
+        "Return ONLY the JSON array.",
+    ),
+    (
+        "https://opendata.montgomeryal.gov/datasets/building-permits",
+        "Return a JSON array of recent building permit records. For each include: "
+        "permit_number, project_description, address, permit_type, issue_date, "
+        "estimated_cost. Return ONLY the JSON array.",
+    ),
+]
+
+# ── Glassdoor employer quality ───────────────────────────────────
+
+GLASSDOOR_EMPLOYER_URLS = [
+    "https://www.glassdoor.com/Overview/Working-at-City-of-Montgomery-Alabama-EI_IE236885.htm",
+    "https://www.glassdoor.com/Overview/Working-at-Hyundai-Motor-Manufacturing-Alabama-EI_IE256738.htm",
+    "https://www.glassdoor.com/Overview/Working-at-Baptist-Health-EI_IE17399.htm",
+    "https://www.glassdoor.com/Overview/Working-at-Alabama-State-University-EI_IE130624.htm",
+    "https://www.glassdoor.com/Overview/Working-at-Maxwell-Air-Force-Base-EI_IE40073.htm",
+    "https://www.glassdoor.com/Overview/Working-at-Jackson-Hospital-Montgomery-EI_IE466837.htm",
+]
+
+GLASSDOOR_SEARCH_QUERIES = [
+    "Glassdoor reviews City of Montgomery Alabama employer",
+    "Glassdoor reviews Hyundai Montgomery Alabama",
+    "Glassdoor reviews Maxwell Air Force Base Montgomery",
+    "best employers Montgomery Alabama Glassdoor ratings",
+    "Montgomery AL employer reviews salary compensation",
+]
+
+# ── Google Maps local business ───────────────────────────────────
+
+GOOGLE_MAPS_URLS = [
+    "https://www.google.com/maps/place/Hyundai+Motor+Manufacturing+Alabama/@32.346,-86.296,17z",
+    "https://www.google.com/maps/place/Baptist+Health+Montgomery/@32.380,-86.298,17z",
+    "https://www.google.com/maps/place/Maxwell+Air+Force+Base/@32.383,-86.366,15z",
+    "https://www.google.com/maps/place/Jackson+Hospital+%26+Clinic/@32.374,-86.303,17z",
+    "https://www.google.com/maps/place/Alabama+State+University/@32.364,-86.296,16z",
+]
+
+GOOGLE_MAPS_SEARCH_QUERIES = [
+    "top employers Montgomery Alabama",
+    "new businesses Montgomery AL 2026",
+    "Montgomery AL commercial district businesses",
+    "Montgomery Alabama major employers reviews",
 ]
 
 # ── Montgomery local education programs (for skills gap analysis) ─

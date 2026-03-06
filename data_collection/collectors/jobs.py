@@ -22,6 +22,7 @@ from ..config import (
     JOB_BOARDS,
     JOB_SEARCH_QUERIES,
     LINKEDIN_JOB_URLS,
+    LINKEDIN_SEARCH_KEYWORDS,
 )
 
 logger = logging.getLogger(__name__)
@@ -40,15 +41,15 @@ async def collect_jobs(client: BrightDataClient) -> list[dict]:
     timestamp = datetime.now(timezone.utc).isoformat()
 
     # ── Phase 1: LinkedIn structured data ────────────────────────
-    logger.info("Phase 1: LinkedIn structured job listings...")
-    for url in LINKEDIN_JOB_URLS:
+    logger.info("Phase 1: LinkedIn structured job search...")
+    for keyword in LINKEDIN_SEARCH_KEYWORDS:
         try:
-            data = await client.linkedin_job_listing(url)
-            parsed = _parse_linkedin_jobs(data, url, timestamp)
-            logger.info("  %s → %d jobs", _short_url(url), len(parsed))
+            data = await client.linkedin_search_jobs(keyword, location="Montgomery, Alabama")
+            parsed = _parse_linkedin_jobs(data, f"linkedin-search:{keyword or 'general'}", timestamp)
+            logger.info("  LinkedIn search '%s' → %d jobs", keyword or "(general)", len(parsed))
             all_jobs.extend(parsed)
         except Exception as e:
-            logger.warning("  LinkedIn structured failed for %s: %s", _short_url(url), e)
+            logger.warning("  LinkedIn search failed for '%s': %s", keyword or "(general)", e)
 
     # ── Phase 2: AI extract from job boards ──────────────────────
     logger.info("Phase 2: AI-powered extraction from job boards...")
@@ -68,12 +69,26 @@ async def collect_jobs(client: BrightDataClient) -> list[dict]:
             logger.warning("  AI extract failed for %s: %s", _short_url(url), e)
 
     # ── Phase 3: SERP search ─────────────────────────────────────
-    logger.info("Phase 3: SERP search across %d queries...", len(JOB_SEARCH_QUERIES))
-    search_results = await client.search_all(JOB_SEARCH_QUERIES, country=GEO_LOCATION)
+    logger.info("Phase 3: SERP search across %d queries (parallel)...", len(JOB_SEARCH_QUERIES))
+    search_results = await client.search_batch(JOB_SEARCH_QUERIES, country=GEO_LOCATION)
     for query, results in search_results.items():
         for r in results:
+            title_text = r.get("title", "")
+            company = ""
+            # SERP titles often use "Job Title - Company - Location" format
+            dash_parts = [p.strip() for p in title_text.split(" - ") if p.strip()]
+            if len(dash_parts) >= 2:
+                title_text = dash_parts[0]
+                company = dash_parts[1]
+            # Also try " | " separator
+            elif " | " in title_text:
+                pipe_parts = [p.strip() for p in title_text.split(" | ") if p.strip()]
+                if len(pipe_parts) >= 2:
+                    title_text = pipe_parts[0]
+                    company = pipe_parts[1]
             all_jobs.append({
-                "title": r.get("title", ""),
+                "title": title_text,
+                "company": company,
                 "url": r.get("url") or r.get("link", ""),
                 "description": r.get("description", ""),
                 "source": "serp",
@@ -83,10 +98,13 @@ async def collect_jobs(client: BrightDataClient) -> list[dict]:
     logger.info("  SERP yielded %d raw entries", sum(len(v) for v in search_results.values()))
 
     # ── Phase 4: Markdown scrape fallback ────────────────────────
-    logger.info("Phase 4: Scraping %d job boards...", len(JOB_BOARDS))
-    for board_url in JOB_BOARDS:
+    logger.info("Phase 4: Scraping %d job boards (parallel)...", len(JOB_BOARDS))
+    batch_markdowns = await client.scrape_batch(JOB_BOARDS)
+    for board_url, markdown in batch_markdowns.items():
+        if not markdown:
+            logger.error("  FAILED to scrape %s: empty response", _short_url(board_url))
+            continue
         try:
-            markdown = await client.scrape_page(board_url)
             parsed = _extract_jobs_from_markdown(markdown, board_url)
             for j in parsed:
                 j["source"] = "job_board"
@@ -95,7 +113,7 @@ async def collect_jobs(client: BrightDataClient) -> list[dict]:
             logger.info("  %s → %d jobs", _short_url(board_url), len(parsed))
             all_jobs.extend(parsed)
         except Exception as e:
-            logger.error("  FAILED to scrape %s: %s", _short_url(board_url), e)
+            logger.error("  FAILED to parse %s: %s", _short_url(board_url), e)
 
     # ── Phase 5: Deduplicate, analyze, save ──────────────────────
     all_jobs = _deduplicate(all_jobs)
@@ -203,6 +221,19 @@ def _extract_jobs_from_markdown(markdown: str, source_url: str) -> list[dict]:
             current["url"] = link_match.group(2).strip()
             current["source_url"] = source_url
             continue
+
+        # Company heuristic: short line right after title, not a location/date/header
+        if current.get("title") and not current.get("company"):
+            if (
+                len(stripped) < 80
+                and not stripped.startswith(("#", "*", "[", "|", "---", "http"))
+                and not re.match(r"^\d", stripped)
+                and not re.search(r"\d+\s+(days?|hours?|weeks?)\s+ago", stripped, re.IGNORECASE)
+                and not re.match(r"^(Montgomery|Alabama|AL\b|Remote|Full-time|Part-time)", stripped, re.IGNORECASE)
+                and not re.search(r"\$\d", stripped)
+            ):
+                current["company"] = stripped
+                continue
 
         if current.get("title") and not current.get("location"):
             for pat in [r"(Montgomery|Alabama|AL|Remote)", r"(\d+\s+(?:days?|hours?)\s+ago)"]:

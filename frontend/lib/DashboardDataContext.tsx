@@ -31,8 +31,23 @@ export type HiringTimeseriesPoint = {
   public_safety: number;
 };
 
+export type Job = {
+  title: string;
+  company: string;
+  location: string;
+  industry?: string;
+  sector?: string;
+  skills?: string[];
+  pay?: string;
+  posted?: string;
+  source?: string;
+  url?: string;
+  experience_level?: string;
+  work_arrangement?: string;
+};
+
 export type JobsApiResponse = {
-  jobs: any[];
+  jobs: Job[];
   summary: JobsSummary;
   timeseries: HiringTimeseriesPoint[];
 };

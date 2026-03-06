@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
+import logging
 from pathlib import Path
 import subprocess
+from datetime import datetime, timezone
 from typing import Any, Dict, List
 
 from dotenv import load_dotenv
@@ -10,9 +13,12 @@ load_dotenv()
 
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
 
 from . import data_access
 from .azure_ai import generate_insights, generate_policy_brief, ask_workforce_pulse, run_scenario
+
+logger = logging.getLogger(__name__)
 
 
 app = FastAPI(
@@ -97,6 +103,33 @@ async def economic_signals() -> Dict[str, List[Dict[str, Any]]]:
     return {"signals": signals}
 
 
+@app.get("/api/employer-quality")
+async def employer_quality() -> Dict[str, Any]:
+    """
+    Return Glassdoor employer quality + Google Maps local business signals.
+    Provides employer ratings, reviews, and local business discovery data.
+    """
+    glassdoor = data_access.get_glassdoor_data()
+    google_maps = data_access.get_google_maps_data()
+
+    # Compute summary stats
+    gd_with_rating = [g for g in glassdoor if g.get("overall_rating")]
+    avg_rating = (
+        round(sum(g["overall_rating"] for g in gd_with_rating) / len(gd_with_rating), 2)
+        if gd_with_rating else None
+    )
+
+    return {
+        "glassdoor": glassdoor,
+        "google_maps": google_maps,
+        "summary": {
+            "glassdoor_count": len(glassdoor),
+            "google_maps_count": len(google_maps),
+            "avg_employer_rating": avg_rating,
+        },
+    }
+
+
 @app.get("/api/neighborhoods")
 async def neighborhoods() -> Dict[str, List[Dict[str, Any]]]:
     items = data_access.get_neighborhoods()
@@ -152,47 +185,51 @@ async def pipeline_status() -> Dict[str, Any]:
     results = summary.get("results", {})
     jobs_info = results.get("jobs", {})
     business_info = results.get("business_signals", {})
+    glassdoor_info = results.get("glassdoor", {})
+    google_maps_info = results.get("google_maps", {})
     return {
         "last_run": summary.get("timestamp"),
         "region": summary.get("region"),
         "jobs_count": jobs_info.get("count", 0),
         "business_signals_count": business_info.get("count", 0),
+        "glassdoor_count": glassdoor_info.get("count", 0),
+        "google_maps_count": google_maps_info.get("count", 0),
     }
 
 
+class AskRequest(BaseModel):
+    question: str = Field(..., min_length=1, max_length=5000)
+
+
+class ScenarioRequest(BaseModel):
+    scenario: str = Field(default="a new data center opens in Montgomery", max_length=2000)
+
+
 @app.post("/api/ask")
-async def ask(body: Dict[str, Any]) -> Dict[str, Any]:
+async def ask(body: AskRequest) -> Dict[str, Any]:
     """
     Ask Workforce Pulse a natural-language question about Montgomery workforce and economic data.
     Request body: { "question": "What industries are growing fastest?" }
     """
-    question = (body or {}).get("question", "").strip()
-    if not question:
-        raise HTTPException(status_code=400, detail="question is required")
-
     jobs = data_access.get_jobs()
     trends = data_access.get_trends()
     signals = data_access.get_business_signals()
 
-    result = await ask_workforce_pulse(question, jobs, trends, signals)
+    result = await ask_workforce_pulse(body.question.strip(), jobs, trends, signals)
     return result
 
 
 @app.post("/api/scenario")
-async def scenario(body: Dict[str, Any]) -> Dict[str, Any]:
+async def scenario(body: ScenarioRequest) -> Dict[str, Any]:
     """
     Run a scenario simulation (e.g. new data center) and get projected impact.
     Request body: { "scenario": "What happens if a new data center opens?" }
     """
-    scenario_text = (body or {}).get("scenario", "").strip()
-    if not scenario_text:
-        scenario_text = "a new data center opens in Montgomery"
-
     jobs = data_access.get_jobs()
     trends = data_access.get_trends()
     signals = data_access.get_business_signals()
 
-    result = await run_scenario(scenario_text, jobs, trends, signals)
+    result = await run_scenario(body.scenario.strip(), jobs, trends, signals)
     return result
 
 
@@ -208,6 +245,7 @@ async def pipeline_progress() -> Dict[str, Any]:
         "progress": p.get("progress", 0),
         "current_step": p.get("current_step", ""),
         "steps_done": p.get("steps_done", []),
+        "stages": p.get("stages", []),
         "updated_at": p.get("updated_at"),
     }
 
@@ -224,10 +262,31 @@ async def run_pipeline(background_tasks: BackgroundTasks) -> Dict[str, Any]:
     def _launch() -> None:
         data_access.write_pipeline_progress_start()
         root = Path(__file__).resolve().parents[1]
-        subprocess.Popen(
-            ["python", "-m", "data_collection.pipeline", "--jobs", "--business"],
-            cwd=str(root),
-        )
+        try:
+            subprocess.Popen(
+                ["python", "-m", "data_collection.pipeline", "--jobs", "--business", "--glassdoor", "--google-maps"],
+                cwd=str(root),
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        except Exception as e:
+            logger.error("Failed to launch pipeline subprocess: %s", e)
+            # Write failure state so frontend can detect it
+            try:
+                progress_path = root / "data_collection" / "data" / "pipeline_progress.json"
+                progress_path.write_text(
+                    json.dumps({
+                        "running": False,
+                        "progress": 0,
+                        "current_step": f"Failed to start: {e}",
+                        "steps_done": [],
+                        "updated_at": datetime.now(timezone.utc).isoformat(),
+                    }),
+                    encoding="utf-8",
+                )
+            except Exception:
+                pass
 
     background_tasks.add_task(_launch)
     return {"status": "started"}

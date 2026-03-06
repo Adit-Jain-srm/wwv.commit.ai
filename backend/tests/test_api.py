@@ -207,7 +207,7 @@ async def test_pipeline_status_endpoint() -> None:
 async def test_ask_requires_question() -> None:
     async with _client() as client:
         resp = await client.post("/api/ask", json={})
-    assert resp.status_code == 400
+    assert resp.status_code == 422
 
 
 @pytest.mark.asyncio

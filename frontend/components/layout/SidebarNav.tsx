@@ -7,6 +7,7 @@ import {
   Radar,
   ShieldHalf,
   Sparkles,
+  Star,
   Zap
 } from "lucide-react";
 import { cn } from "../../lib/utils";
@@ -17,6 +18,7 @@ const items: { key: string; label: string; href: string; icon: React.ElementType
   { key: "hiring", label: "Hiring Trends", href: "/hiring", icon: BarChart3 },
   { key: "skills", label: "Skills Gap", href: "/skills", icon: Radar },
   { key: "signals", label: "Economic Signals", href: "/signals", icon: Building2 },
+  { key: "employer-quality", label: "Employer Quality", href: "/employer-quality", icon: Star },
   { key: "training", label: "Training Alignment", href: "/training", icon: ShieldHalf },
   { key: "insights", label: "AI Insights", href: "/insights", icon: Sparkles },
   { key: "scenarios", label: "Scenario Simulator", href: "/scenarios", icon: Zap }
@@ -41,6 +43,7 @@ export function SidebarNav({ active }: SidebarNavProps) {
               <Link
                 key={item.key}
                 href={item.href}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
                   "sidebar-item group flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 transition-colors",
                   "text-slate-400 hover:bg-slate-900/80 hover:text-slate-100",
@@ -48,7 +51,7 @@ export function SidebarNav({ active }: SidebarNavProps) {
                     "bg-slate-900/90 text-slate-100 shadow-[0_0_0_1px_rgba(56,189,248,0.3)]"
                 )}
               >
-                <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-900/80 text-slate-400 group-hover:text-sky-300">
+                <span className="flex h-6 w-6 items-center justify-center rounded-md bg-slate-900/80 text-slate-400 group-hover:text-sky-300" aria-hidden="true">
                   <Icon className="h-3.5 w-3.5" />
                 </span>
                 <span className="truncate">{item.label}</span>

@@ -57,11 +57,23 @@ SAMPLE_ZILLOW = {
 @pytest.fixture
 def mock_client():
     client = MagicMock(spec=BrightDataClient)
+    # Batch methods (used by collectors)
+    client.search_batch = AsyncMock(return_value={
+        "state government jobs Montgomery Alabama": SAMPLE_SEARCH_RESULTS,
+    })
+    client.scrape_batch = AsyncMock(return_value={
+        "https://www.indeed.com/jobs?q=&l=Montgomery%2C+AL&sort=date": SAMPLE_MARKDOWN,
+    })
+    # Legacy sequential methods (kept for compatibility)
     client.search_all = AsyncMock(return_value={
         "state government jobs Montgomery Alabama": SAMPLE_SEARCH_RESULTS,
     })
     client.scrape_page = AsyncMock(return_value=SAMPLE_MARKDOWN)
     client.extract = AsyncMock(return_value=SAMPLE_MARKDOWN)
+    # LinkedIn SDK search (Phase 1 now uses keyword search, not URL listing)
+    client.linkedin_search_jobs = AsyncMock(return_value=[
+        {"title": "Budget Analyst", "company": "City of Montgomery", "location": "Montgomery, AL"},
+    ])
     client.linkedin_job_listing = AsyncMock(return_value=[
         {"title": "Budget Analyst", "company": "City of Montgomery", "location": "Montgomery, AL"},
     ])
@@ -111,7 +123,7 @@ async def test_collect_jobs_enrichment(mock_client, temp_data_dir):
 @pytest.mark.asyncio
 async def test_collect_business_signal_types(mock_client, temp_data_dir):
     """Business collector classifies Montgomery-specific signal types."""
-    mock_client.search_all = AsyncMock(return_value={
+    mock_client.search_batch = AsyncMock(return_value={
         "data center construction Montgomery Alabama": [
             {"title": "AWS Data Center Montgomery", "link": "https://example.com", "description": "data center construction"},
         ],
@@ -128,7 +140,7 @@ async def test_collect_business_signal_types(mock_client, temp_data_dir):
 
 @pytest.mark.asyncio
 async def test_business_linkedin_company(mock_client, temp_data_dir):
-    mock_client.search_all = AsyncMock(return_value={})
+    mock_client.search_batch = AsyncMock(return_value={})
     signals = await collect_business_signals(mock_client)
     linkedin = [s for s in signals if s.get("source") == "linkedin_company"]
     assert len(linkedin) >= 1
@@ -137,7 +149,7 @@ async def test_business_linkedin_company(mock_client, temp_data_dir):
 
 @pytest.mark.asyncio
 async def test_business_crunchbase(mock_client, temp_data_dir):
-    mock_client.search_all = AsyncMock(return_value={})
+    mock_client.search_batch = AsyncMock(return_value={})
     signals = await collect_business_signals(mock_client)
     cb = [s for s in signals if s.get("source") == "crunchbase"]
     assert len(cb) >= 1
@@ -146,7 +158,7 @@ async def test_business_crunchbase(mock_client, temp_data_dir):
 
 @pytest.mark.asyncio
 async def test_business_zillow(mock_client, temp_data_dir):
-    mock_client.search_all = AsyncMock(return_value={})
+    mock_client.search_batch = AsyncMock(return_value={})
     signals = await collect_business_signals(mock_client)
     zillow = [s for s in signals if s.get("source") == "zillow"]
     assert len(zillow) >= 1
@@ -158,7 +170,7 @@ async def test_business_zillow(mock_client, temp_data_dir):
 @pytest.mark.asyncio
 async def test_collect_jobs_handles_empty_search(mock_client, temp_data_dir):
     """When SERP returns no results, jobs list can be empty or from other sources."""
-    mock_client.search_all = AsyncMock(return_value={})
+    mock_client.search_batch = AsyncMock(return_value={})
     jobs = await collect_jobs(mock_client)
     # LinkedIn or other phases may still yield jobs
     assert isinstance(jobs, list)
@@ -168,7 +180,7 @@ async def test_collect_jobs_handles_empty_search(mock_client, temp_data_dir):
 @pytest.mark.asyncio
 async def test_collect_jobs_handles_linkedin_failure(mock_client, temp_data_dir):
     """LinkedIn failure should not crash the pipeline."""
-    mock_client.linkedin_job_listing = AsyncMock(side_effect=Exception("API error"))
+    mock_client.linkedin_search_jobs = AsyncMock(side_effect=Exception("API error"))
     jobs = await collect_jobs(mock_client)
     assert isinstance(jobs, list)
     assert (temp_data_dir / "jobs_latest.json").exists()
@@ -178,7 +190,7 @@ async def test_collect_jobs_handles_linkedin_failure(mock_client, temp_data_dir)
 async def test_collect_jobs_deduplication(mock_client, temp_data_dir):
     """Duplicate jobs from multiple sources are deduplicated."""
     dup = {"title": "Same Job", "link": "https://example.com/same", "description": "dup"}
-    mock_client.search_all = AsyncMock(return_value={"q1": [dup], "q2": [dup]})
+    mock_client.search_batch = AsyncMock(return_value={"q1": [dup], "q2": [dup]})
     jobs = await collect_jobs(mock_client)
     titles = [j.get("title", "") for j in jobs]
     assert titles.count("Same Job") <= 1 or len(jobs) >= 1
@@ -188,7 +200,7 @@ async def test_collect_jobs_deduplication(mock_client, temp_data_dir):
 async def test_collect_business_handles_empty_linkedin(mock_client, temp_data_dir):
     """Empty LinkedIn company response should not crash."""
     mock_client.linkedin_company_profile = AsyncMock(return_value={})
-    mock_client.search_all = AsyncMock(return_value={})
+    mock_client.search_batch = AsyncMock(return_value={})
     signals = await collect_business_signals(mock_client)
     assert isinstance(signals, list)
 
@@ -197,7 +209,7 @@ async def test_collect_business_handles_empty_linkedin(mock_client, temp_data_di
 async def test_collect_business_handles_none_crunchbase(mock_client, temp_data_dir):
     """None/invalid Crunchbase response should be skipped."""
     mock_client.crunchbase_company = AsyncMock(return_value=None)
-    mock_client.search_all = AsyncMock(return_value={})
+    mock_client.search_batch = AsyncMock(return_value={})
     signals = await collect_business_signals(mock_client)
     assert isinstance(signals, list)
 

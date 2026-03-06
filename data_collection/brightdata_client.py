@@ -117,6 +117,60 @@ class BrightDataClient:
             await asyncio.sleep(delay)
         return results
 
+    # ── Batch operations (parallel with concurrency control) ──────
+
+    async def search_batch(self, queries: list[str], country: str = "us", max_concurrent: int = 3) -> dict[str, list[dict]]:
+        """Run multiple SERP searches concurrently (faster than search_all)."""
+        semaphore = asyncio.Semaphore(max_concurrent)
+
+        async def _search_one(q: str) -> tuple[str, list[dict]]:
+            async with semaphore:
+                try:
+                    hits = await self.search(q, country)
+                    logger.info("  %s → %d results", q, len(hits))
+                    return q, hits
+                except Exception as e:
+                    logger.error("  %s → FAILED: %s", q, e)
+                    return q, []
+
+        tasks = [_search_one(q) for q in queries]
+        results = await asyncio.gather(*tasks)
+        return dict(results)
+
+    async def scrape_batch(self, urls: list[str], max_concurrent: int = 5) -> dict[str, str]:
+        """Scrape multiple URLs concurrently via asyncio.gather."""
+        semaphore = asyncio.Semaphore(max_concurrent)
+
+        async def _scrape_one(url: str) -> tuple[str, str]:
+            async with semaphore:
+                try:
+                    md = await self.scrape_page(url)
+                    return url, md
+                except Exception as e:
+                    logger.warning("Batch scrape failed for %s: %s", url[:50], e)
+                    return url, ""
+
+        tasks = [_scrape_one(u) for u in urls]
+        results = await asyncio.gather(*tasks)
+        return dict(results)
+
+    async def extract_batch(self, url_prompts: list[tuple[str, str]], max_concurrent: int = 3) -> dict[str, Any]:
+        """Extract structured data from multiple URLs concurrently."""
+        semaphore = asyncio.Semaphore(max_concurrent)
+
+        async def _extract_one(url: str, prompt: str) -> tuple[str, Any]:
+            async with semaphore:
+                try:
+                    data = await self.extract(url, prompt)
+                    return url, data
+                except Exception as e:
+                    logger.warning("Batch extract failed for %s: %s", url[:50], e)
+                    return url, None
+
+        tasks = [_extract_one(u, p) for u, p in url_prompts]
+        results = await asyncio.gather(*tasks)
+        return dict(results)
+
     # ── Scraping (httpx — SDK doesn't have async markdown scrape) ─
 
     async def scrape_page(self, url: str) -> str:

@@ -1,16 +1,67 @@
 from __future__ import annotations
 
+import asyncio
 import json
+import logging
 import os
+import re
 from typing import Any
 
 import httpx
 
+logger = logging.getLogger(__name__)
 
 AZURE_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT", "").rstrip("/")
 AZURE_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "")
 AZURE_DEPLOYMENT = os.getenv("AZURE_OPENAI_DEPLOYMENT", "gpt-4o")
 AZURE_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION", "2025-01-01-preview")
+
+# Montgomery-specific context injected into all AI prompts
+_MONTGOMERY_CONTEXT = (
+    "Key Montgomery employers: Hyundai Motor Manufacturing Alabama (HMMA), "
+    "Maxwell-Gunter Air Force Base, Baptist Health, City of Montgomery, State of Alabama, "
+    "Alabama State University, Trenholm State Community College, Auburn University at Montgomery. "
+    "Montgomery metro population ~380K. Key growth areas: defense tech, healthcare, manufacturing. "
+    "Workforce challenges: skills gap in cybersecurity and cloud, competition with Birmingham/Atlanta."
+)
+
+_MAX_RETRIES = 2
+_RETRY_DELAY = 1.5  # seconds
+
+
+async def _call_azure(payload: dict, timeout: int = 30) -> str | None:
+    """
+    Call Azure OpenAI with retry logic.
+
+    Returns the content string on success, or None on failure.
+    Retries once on transient errors (timeouts, 429, 5xx).
+    """
+    url = f"{AZURE_ENDPOINT}/openai/deployments/{AZURE_DEPLOYMENT}/chat/completions?api-version={AZURE_API_VERSION}"
+    headers = {"api-key": AZURE_API_KEY, "Content-Type": "application/json"}
+
+    for attempt in range(_MAX_RETRIES):
+        try:
+            async with httpx.AsyncClient(timeout=timeout) as client:
+                resp = await client.post(url, headers=headers, json=payload)
+                resp.raise_for_status()
+                data = resp.json()
+            content = _extract_content(data)
+            if content:
+                return content
+            logger.warning("Azure OpenAI returned empty/malformed response (attempt %d)", attempt + 1)
+        except httpx.HTTPStatusError as e:
+            status = e.response.status_code
+            logger.warning("Azure OpenAI HTTP %d (attempt %d): %s", status, attempt + 1, e)
+            # Only retry on rate-limit or server errors
+            if status not in (429, 500, 502, 503, 504):
+                return None
+        except Exception as e:
+            logger.warning("Azure OpenAI request failed (attempt %d): %s", attempt + 1, e)
+
+        if attempt < _MAX_RETRIES - 1:
+            await asyncio.sleep(_RETRY_DELAY)
+
+    return None
 
 
 def _build_data_facts(jobs: list[dict], trends: dict, signals: list[dict]) -> str:
@@ -32,8 +83,9 @@ def _build_data_facts(jobs: list[dict], trends: dict, signals: list[dict]) -> st
     # Sector breakdown
     sector_pct = {}
     if by_sector and total_jobs > 0:
+        sector_total = sum(by_sector.values()) or 1
         for k, v in by_sector.items():
-            sector_pct[k] = round(100 * v / sum(by_sector.values()), 1)
+            sector_pct[k] = round(100 * v / sector_total, 1)
     sector_str = ", ".join(f"{k}: {v}%" for k, v in sector_pct.items()) or "N/A"
 
     # Skill gaps: skills without local training
@@ -44,7 +96,7 @@ def _build_data_facts(jobs: list[dict], trends: dict, signals: list[dict]) -> st
     trained_str = ", ".join(trained_skills[:5]) if trained_skills else "none"
 
     # Signal counts by type
-    by_signal = {}
+    by_signal: dict[str, int] = {}
     for s in signals:
         st = s.get("signal_type", "other")
         by_signal[st] = by_signal.get(st, 0) + 1
@@ -63,6 +115,34 @@ def _build_data_facts(jobs: list[dict], trends: dict, signals: list[dict]) -> st
     return "\n".join(lines)
 
 
+def _extract_content(data: dict) -> str | None:
+    """Safely extract content from Azure OpenAI response."""
+    try:
+        choices = data.get("choices")
+        if not choices or not isinstance(choices, list):
+            return None
+        return choices[0]["message"]["content"]
+    except (KeyError, IndexError, TypeError):
+        return None
+
+
+def _safe_parse_json(content: str) -> dict | None:
+    """Parse JSON from AI response, stripping markdown code blocks if present."""
+    text = content.strip()
+    # Strip markdown code block wrappers (```json, ```JSON, ``` json, etc.)
+    if text.startswith("```"):
+        # Remove opening fence
+        text = re.sub(r"^```\s*(?:json)?\s*\n?", "", text, flags=re.IGNORECASE)
+        # Remove closing fence
+        text = re.sub(r"\n?```\s*$", "", text)
+        text = text.strip()
+    try:
+        return json.loads(text)
+    except (json.JSONDecodeError, ValueError) as e:
+        logger.warning("Failed to parse AI JSON response: %s", e)
+        return None
+
+
 async def generate_insights(jobs: list[dict], trends: dict, signals: list[dict]) -> dict[str, Any]:
     """
     Use Azure OpenAI to summarize key insights for the AI panel.
@@ -76,6 +156,7 @@ async def generate_insights(jobs: list[dict], trends: dict, signals: list[dict])
     facts = _build_data_facts(jobs, trends, signals)
     system_prompt = (
         "You are an economic intelligence analyst for the City of Montgomery, Alabama. "
+        f"{_MONTGOMERY_CONTEXT} "
         "You receive pre-computed DATA FACTS. Base every insight on these exact numbers. "
         "Do not invent statistics. Write 3–6 concise bullet insights for a mayoral dashboard.\n"
         "Focus on: top industries (with counts), sector ratios, skill gaps vs local training, "
@@ -97,26 +178,11 @@ async def generate_insights(jobs: list[dict], trends: dict, signals: list[dict])
             },
         ],
         "temperature": 0.2,
-        "max_tokens": 400,
+        "max_tokens": 600,
     }
 
-    url = f"{AZURE_ENDPOINT}/openai/deployments/{AZURE_DEPLOYMENT}/chat/completions?api-version={AZURE_API_VERSION}"
-
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            resp = await client.post(
-                url,
-                headers={"api-key": AZURE_API_KEY, "Content-Type": "application/json"},
-                json=payload,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-    except Exception:
-        return _fallback_insights(jobs, trends, signals)
-
-    try:
-        content = data["choices"][0]["message"]["content"]
-    except Exception:
+    content = await _call_azure(payload, timeout=30)
+    if not content:
         return _fallback_insights(jobs, trends, signals)
 
     # Split bullets by newline and strip markers
@@ -168,8 +234,10 @@ async def generate_policy_brief(
     if not (AZURE_ENDPOINT and AZURE_API_KEY):
         return _fallback_policy_brief(raw_insights, trends)
 
+    facts = _build_data_facts(jobs, trends, signals)
     system_prompt = (
         "You are a workforce strategy advisor for the City of Montgomery, Alabama. "
+        f"{_MONTGOMERY_CONTEXT} "
         "Create a STRUCTURED executive policy brief for city planners. Do NOT simply repeat the given insights. "
         "Return valid JSON with exactly these keys:\n"
         '- "executive_summary": 2–3 sentences synthesizing the situation and priority areas.\n'
@@ -187,6 +255,7 @@ async def generate_policy_brief(
             {
                 "role": "user",
                 "content": (
+                    f"{facts}\n\n"
                     "Raw AI insights (do not copy verbatim; synthesize):\n"
                     f"{insights_block}\n\n"
                     f"Trends: {trends}\n\n"
@@ -199,33 +268,20 @@ async def generate_policy_brief(
         "max_tokens": 700,
     }
 
-    url = f"{AZURE_ENDPOINT}/openai/deployments/{AZURE_DEPLOYMENT}/chat/completions?api-version={AZURE_API_VERSION}"
-
-    try:
-        async with httpx.AsyncClient(timeout=40) as client:
-            resp = await client.post(
-                url,
-                headers={"api-key": AZURE_API_KEY, "Content-Type": "application/json"},
-                json=payload,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-    except Exception:
+    content = await _call_azure(payload, timeout=40)
+    if not content:
         return _fallback_policy_brief(raw_insights, trends)
 
-    try:
-        content = data["choices"][0]["message"]["content"].strip()
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1] if "\n" in content else content
-            content = content.replace("```json", "").replace("```", "").strip()
-        brief = json.loads(content)
-        return {
-            "executive_summary": brief.get("executive_summary", ""),
-            "key_findings": brief.get("key_findings", [])[:5],
-            "recommended_actions": brief.get("recommended_actions", [])[:5],
-        }
-    except Exception:
+    brief = _safe_parse_json(content)
+    if brief is None:
+        logger.warning("Could not parse policy brief JSON from AI response")
         return _fallback_policy_brief(raw_insights, trends)
+
+    return {
+        "executive_summary": brief.get("executive_summary", ""),
+        "key_findings": brief.get("key_findings", [])[:5],
+        "recommended_actions": brief.get("recommended_actions", [])[:5],
+    }
 
 
 def _fallback_policy_brief(insights: list[str], trends: dict) -> dict[str, Any]:
@@ -264,6 +320,7 @@ async def ask_workforce_pulse(
     facts = _build_data_facts(jobs, trends, signals)
     system_prompt = (
         "You are Workforce Pulse, an AI assistant for the City of Montgomery, Alabama's workforce and economic planning. "
+        f"{_MONTGOMERY_CONTEXT} "
         "You receive pre-computed DATA FACTS. Ground every answer in these exact values. "
         "Cite numbers (e.g. '41 public_safety postings', '17.1% public sector'). "
         "If the data lacks the answer, say so. Do not invent statistics. "
@@ -287,24 +344,9 @@ async def ask_workforce_pulse(
         "max_tokens": 600,
     }
 
-    url = f"{AZURE_ENDPOINT}/openai/deployments/{AZURE_DEPLOYMENT}/chat/completions?api-version={AZURE_API_VERSION}"
-
-    try:
-        async with httpx.AsyncClient(timeout=45) as client:
-            resp = await client.post(
-                url,
-                headers={"api-key": AZURE_API_KEY, "Content-Type": "application/json"},
-                json=payload,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-    except Exception as e:
-        return {"answer": f"Sorry, the AI service is temporarily unavailable: {e!s}"}
-
-    try:
-        content = data["choices"][0]["message"]["content"]
-    except Exception:
-        return {"answer": "Could not parse the AI response."}
+    content = await _call_azure(payload, timeout=45)
+    if not content:
+        return {"answer": "Sorry, the AI service is temporarily unavailable. Please try again."}
 
     return {"answer": content.strip()}
 
@@ -333,9 +375,14 @@ async def run_scenario(
     facts = _build_data_facts(jobs, trends, signals)
     system_prompt = (
         "You are an economic impact analyst for Montgomery, Alabama. "
+        f"{_MONTGOMERY_CONTEXT} "
+        "The local economy has ~180K jobs, $42K median household income, 15% poverty rate. "
+        "Key sectors: government (25%), manufacturing (12%), healthcare (15%), defense (10%). "
         "Use the provided DATA FACTS as baseline. Given a scenario, produce a SHORT JSON object with projected impacts. "
         "Use keys: jobs_change (string, e.g. '+1200 jobs'), tech_demand_change (e.g. '+18%'), "
-        "electricity_usage_change (e.g. '+35%'), and optionally 1–2 more short impact lines. "
+        "electricity_usage_change (e.g. '+35%'), housing_impact (e.g. '+5% demand'), "
+        "training_needs (e.g. '200 cloud computing certifications needed'), "
+        "and optionally 1–2 more short impact lines. "
         "Base estimates on typical industry multipliers; keep numbers plausible. Return ONLY valid JSON, no markdown."
     )
 
@@ -347,44 +394,20 @@ async def run_scenario(
                 "content": (
                     f"{facts}\n\n"
                     f"Scenario: {scenario}. "
-                    "Return JSON with jobs_change, tech_demand_change, electricity_usage_change."
+                    "Return JSON with jobs_change, tech_demand_change, electricity_usage_change, housing_impact, training_needs."
                 ),
             },
         ],
         "temperature": 0.4,
-        "max_tokens": 300,
+        "max_tokens": 400,
     }
 
-    url = f"{AZURE_ENDPOINT}/openai/deployments/{AZURE_DEPLOYMENT}/chat/completions?api-version={AZURE_API_VERSION}"
+    content = await _call_azure(payload, timeout=30)
 
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            resp = await client.post(
-                url,
-                headers={"api-key": AZURE_API_KEY, "Content-Type": "application/json"},
-                json=payload,
-            )
-            resp.raise_for_status()
-            data = resp.json()
-    except Exception:
-        return {
-            "scenario": scenario,
-            "projected": {
-                "jobs_change": "+1200 jobs",
-                "tech_demand_change": "+18%",
-                "electricity_usage_change": "+35%",
-            },
-            "footnote": "Service temporarily unavailable; showing example projections.",
-        }
-
-    try:
-        content = data["choices"][0]["message"]["content"].strip()
-        # Strip markdown code block if present
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1] if "\n" in content else content
-            content = content.replace("```json", "").replace("```", "").strip()
-        projected = json.loads(content)
-    except Exception:
+    projected = None
+    if content:
+        projected = _safe_parse_json(content)
+    if projected is None:
         projected = {
             "jobs_change": "+1200 jobs",
             "tech_demand_change": "+18%",
@@ -396,4 +419,3 @@ async def run_scenario(
         "projected": projected,
         "footnote": "Powered by Workforce Pulse.",
     }
-

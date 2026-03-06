@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import {
   Activity,
@@ -28,6 +28,15 @@ import { useDemoMode } from "../../lib/DemoModeContext";
 import { DashboardFilters } from "./DashboardFilters";
 import { AskWorkforcePulse } from "./AskWorkforcePulse";
 import { ScenarioSimulator } from "./ScenarioSimulator";
+import {
+  type Job,
+  type JobsSummary,
+  type JobsApiResponse,
+  type IndustriesApiResponse,
+  type SkillsApiResponse,
+  type EconomicSignalsApiResponse,
+  type NeighborhoodApiResponse,
+} from "../../lib/DashboardDataContext";
 import {
   HiringTrendsChart,
   type HiringTimeseriesPoint
@@ -68,51 +77,8 @@ type InsightResponse = {
   insights: string[];
 };
 
-type JobsSummary = {
-  total_active_postings: number;
-  public_ratio: number;
-  private_ratio: number;
-  top_growing_industry: string;
-  new_businesses_this_month: number;
-  last_updated: string;
+type DashboardJobsSummary = JobsSummary & {
   job_growth_pct_30d?: number | null;
-};
-
-type JobsApiResponse = {
-  jobs: any[];
-  summary: JobsSummary;
-  timeseries: HiringTimeseriesPoint[];
-};
-
-type IndustriesApiResponse = {
-  by_industry: Record<string, number>;
-  top_industries: string[];
-};
-
-type SkillsApiResponse = {
-  in_demand_skills_list: string[];
-  skills_gap_list: {
-    skill: string;
-    local_training_available: boolean;
-    gap: boolean;
-  }[];
-};
-
-type EconomicSignal = {
-  id: string;
-  label: string;
-  value: number;
-  unit: string;
-  delta_30d: number;
-  trend: "up" | "down" | "flat";
-};
-
-type EconomicSignalsApiResponse = {
-  signals: EconomicSignal[];
-};
-
-type NeighborhoodApiResponse = {
-  neighborhoods: { name: string; job_density_score: number; top_sector: string }[];
 };
 
 const API_BASE =
@@ -133,9 +99,15 @@ export function DashboardShell() {
     region: string | null;
     jobs_count: number;
     business_signals_count: number;
+    glassdoor_count: number;
+    google_maps_count: number;
   } | null>(null);
   const [pipelineRunning, setPipelineRunning] = useState(false);
   const [pipelineCurrentStep, setPipelineCurrentStep] = useState("");
+  const [pipelineProgress, setPipelineProgress] = useState(0);
+  const [pipelineStages, setPipelineStages] = useState<
+    { name: string; status: string; items: number }[]
+  >([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -244,8 +216,11 @@ export function DashboardShell() {
           progress: number;
           current_step: string;
           steps_done: string[];
+          stages: { name: string; status: string; items: number }[];
         };
         setPipelineCurrentStep(data.current_step ?? "");
+        setPipelineProgress(data.progress ?? 0);
+        setPipelineStages(data.stages ?? []);
         if (!data.running || data.progress >= 100) {
           setPipelineRunning(false);
           // Refresh dashboard data
@@ -274,6 +249,8 @@ export function DashboardShell() {
               region: string | null;
               jobs_count: number;
               business_signals_count: number;
+              glassdoor_count: number;
+              google_maps_count: number;
             };
             setPipelineStatus(d);
           }
@@ -291,26 +268,30 @@ export function DashboardShell() {
   const allTimeseries: HiringTimeseriesPoint[] = jobs?.timeseries ?? [];
 
   const rangeDays = dateRange === "30d" ? 30 : dateRange === "90d" ? 90 : 365;
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - rangeDays);
-  const filteredTimeseries = allTimeseries.filter(
-    (p) => new Date(p.date) >= cutoff
-  );
 
-  const totalSeries =
-    filteredTimeseries.map((p) => {
-      const pt = p as Record<string, number>;
-      return (
-        (pt.government ?? 0) +
-        (pt.defense ?? 0) +
-        (pt.healthcare ?? 0) +
-        (pt.manufacturing ?? 0) +
-        (pt.technology ?? 0) +
-        (pt.education ?? 0) +
-        (pt.public_safety ?? 0) +
-        (pt.other ?? 0)
-      );
-    }) ?? [];
+  const filteredTimeseries = useMemo(() => {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - rangeDays);
+    return allTimeseries.filter((p) => new Date(p.date) >= cutoff);
+  }, [allTimeseries, rangeDays]);
+
+  const totalSeries = useMemo(
+    () =>
+      filteredTimeseries.map((p) => {
+        const pt = p as Record<string, number>;
+        return (
+          (pt.government ?? 0) +
+          (pt.defense ?? 0) +
+          (pt.healthcare ?? 0) +
+          (pt.manufacturing ?? 0) +
+          (pt.technology ?? 0) +
+          (pt.education ?? 0) +
+          (pt.public_safety ?? 0) +
+          (pt.other ?? 0)
+        );
+      }),
+    [filteredTimeseries]
+  );
 
   const jobGrowthFromSeries =
     totalSeries.length >= 2 && totalSeries[0] > 0
@@ -380,7 +361,7 @@ export function DashboardShell() {
           .sort((a, b) => b.postings - a.postings)
       : [];
 
-  const neighborhoodPoints =
+  const neighborhoodPoints = useMemo(() =>
     neighborhoods?.neighborhoods.map((n, idx) => {
       const mapping: Record<
         string,
@@ -407,9 +388,9 @@ export function DashboardShell() {
               ? ("mixed" as const)
               : ("new_business" as const)
       };
-    }) ?? [];
+    }) ?? [], [neighborhoods]);
 
-  const skillsChartData: SkillDemandDatum[] = (() => {
+  const skillsChartData: SkillDemandDatum[] = useMemo(() => {
     if (!skills || !jobs) return [];
     const counts: Record<string, number> = {};
     for (const job of jobs.jobs ?? []) {
@@ -426,9 +407,9 @@ export function DashboardShell() {
         postings: counts[skill] ?? 0
       }));
     return top;
-  })();
+  }, [skills, jobs]);
 
-  const trainingAlignmentData: TrainingAlignmentDatum[] = (() => {
+  const trainingAlignmentData: TrainingAlignmentDatum[] = useMemo(() => {
     if (!skills || !jobs) return [];
     const counts: Record<string, number> = {};
     for (const job of jobs.jobs ?? []) {
@@ -446,7 +427,7 @@ export function DashboardShell() {
         training_supply
       };
     });
-  })();
+  }, [skills, jobs]);
 
   const mainContent = (
     <div
@@ -478,7 +459,9 @@ export function DashboardShell() {
                           {" · "}
                           <span>
                             {pipelineStatus.jobs_count} jobs,{" "}
-                            {pipelineStatus.business_signals_count} signals
+                            {pipelineStatus.business_signals_count} signals,{" "}
+                            {pipelineStatus.glassdoor_count} employers,{" "}
+                            {pipelineStatus.google_maps_count} local biz
                           </span>
                         </>
                       ) : (
@@ -517,30 +500,55 @@ export function DashboardShell() {
                   </button>
                 </div>
                 {pipelineRunning && (
-                  <div className="mt-2 flex items-center gap-3 rounded-md border border-slate-800/80 bg-slate-950/80 px-3 py-2.5 text-[11px]">
-                    <div className="relative flex h-5 w-5 shrink-0 items-center justify-center">
+                  <div className="mt-2 space-y-2 rounded-md border border-slate-800/80 bg-slate-950/80 px-3 py-2.5 text-[11px]">
+                    <div className="flex items-center gap-3">
+                      <div className="relative flex h-5 w-5 shrink-0 items-center justify-center">
+                        <div
+                          className="absolute h-5 w-5 rounded-full border-2 border-orange-500/30 border-t-orange-400"
+                          style={{ animation: "loader-orbital 1.2s linear infinite" }}
+                        />
+                        <img
+                          src="https://www.brightdata.com/favicon.ico"
+                          alt=""
+                          className="relative h-2.5 w-2.5"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        {pipelineCurrentStep ? (
+                          <span className="text-slate-200">{pipelineCurrentStep}</span>
+                        ) : (
+                          <span className="text-slate-400">Collection in progress…</span>
+                        )}
+                      </div>
+                      <span className="shrink-0 font-mono text-slate-400">
+                        {pipelineProgress}%
+                      </span>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
                       <div
-                        className="absolute h-5 w-5 rounded-full border-2 border-orange-500/30 border-t-orange-400"
-                        style={{ animation: "loader-orbital 1.2s linear infinite" }}
-                      />
-                      <img
-                        src="https://www.brightdata.com/favicon.ico"
-                        alt=""
-                        className="relative h-2.5 w-2.5"
+                        className="h-full rounded-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-500"
+                        style={{ width: `${Math.min(pipelineProgress, 100)}%` }}
                       />
                     </div>
-                    <div className="min-w-0 flex-1">
-                      {pipelineCurrentStep ? (
-                        <span className="text-slate-200">{pipelineCurrentStep}</span>
-                      ) : (
-                        <span className="text-slate-400">Collection in progress…</span>
-                      )}
-                    </div>
-                    <div className="flex gap-1">
-                      <span className="loader-dot h-1.5 w-1.5 rounded-full bg-orange-400" />
-                      <span className="loader-dot h-1.5 w-1.5 rounded-full bg-amber-400" />
-                      <span className="loader-dot h-1.5 w-1.5 rounded-full bg-orange-500" />
-                    </div>
+                    {/* Per-stage breakdown */}
+                    {pipelineStages.length > 0 && (
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-slate-500">
+                        {pipelineStages.map((s) => (
+                          <span key={s.name}>
+                            {s.status === "done" ? "✓" : s.status === "skipped" ? "–" : "…"}{" "}
+                            <span className={s.status === "done" ? "text-slate-300" : ""}>
+                              {s.name.replace(/_/g, " ")}
+                            </span>
+                            {s.status === "done" && (
+                              <span className="ml-0.5 font-mono text-emerald-400/70">
+                                ({s.items})
+                              </span>
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -643,7 +651,7 @@ export function DashboardShell() {
                   tone="positive"
                   sparkline={
                     filteredTimeseries.map((p) =>
-                      industryKey ? (p as any)[industryKey] : p.healthcare
+                      industryKey ? (p as Record<string, number>)[industryKey] ?? 0 : p.healthcare
                     ) ?? []
                   }
                 />
@@ -666,6 +674,14 @@ export function DashboardShell() {
               <section id="section-hiring-trends" className="space-y-3">
                 {loading ? (
                   <Skeleton className="h-[360px] w-full rounded-xl bg-slate-900/80" />
+                ) : filteredTimeseries.length === 0 ? (
+                  <Card className="border-slate-800/80 bg-slate-950/80">
+                    <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+                      <TrendingUp className="mb-3 h-8 w-8 text-slate-600" />
+                      <p className="text-sm font-medium text-slate-400">No hiring trend data yet</p>
+                      <p className="mt-1 text-xs text-slate-600">Run the data pipeline to populate hiring trends.</p>
+                    </CardContent>
+                  </Card>
                 ) : (
                   <HiringTrendsChart
                     data={filteredTimeseries}
@@ -728,7 +744,7 @@ export function DashboardShell() {
                           <Skeleton className="h-3 w-3/6" />
                         </div>
                       )}
-                      {!loading && insights && (
+                      {!loading && insights && insights.length > 0 && (
                         <ul className="space-y-2">
                           {insights.map((item, idx) => (
                             <li
@@ -740,6 +756,11 @@ export function DashboardShell() {
                             </li>
                           ))}
                         </ul>
+                      )}
+                      {!loading && (!insights || insights.length === 0) && (
+                        <p className="py-4 text-center text-xs text-slate-500">
+                          No AI insights available. Run the data pipeline to generate insights.
+                        </p>
                       )}
                     </CardContent>
                   </Card>
@@ -1185,71 +1206,6 @@ function EconomicSignalRow({
         </span>
       )}
     </div>
-  );
-}
-
-function EconomicSignalCard({
-  signal
-}: {
-  signal: EconomicSignal | Record<string, unknown>;
-}) {
-  // Backend returns raw business signals (title, url, source, signal_type, employee_count, etc.)
-  const label =
-    (signal as EconomicSignal).label ??
-    (signal as Record<string, unknown>).title ??
-    "—";
-  const unit =
-    (signal as EconomicSignal).unit ??
-    (signal as Record<string, unknown>).signal_type ??
-    (signal as Record<string, unknown>).source ??
-    "";
-  const value =
-    (signal as EconomicSignal).value ??
-    (signal as Record<string, unknown>).employee_count ??
-    (signal as Record<string, unknown>).total_funding ??
-    null;
-  const delta =
-    (signal as EconomicSignal).delta_30d ?? null;
-
-  const tone =
-    (signal as EconomicSignal).trend === "up"
-      ? (delta ?? 0) >= 0
-        ? "positive"
-        : "negative"
-      : "neutral";
-  const toneClass =
-    tone === "positive"
-      ? "text-emerald-400"
-      : tone === "negative"
-        ? "text-red-400"
-        : "text-slate-400";
-
-  return (
-    <Card className="bg-slate-950/80">
-      <CardContent className="flex items-center justify-between gap-2 py-2.5">
-        <div>
-          <p className="text-[11px] font-medium text-slate-300">{label}</p>
-          <p className="mt-0.5 text-[11px] text-slate-500">
-            {unit || (value != null ? "" : "Business signal")}
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-sm font-semibold text-slate-50">
-            {value != null
-              ? typeof value === "number"
-                ? value.toLocaleString()
-                : String(value)
-              : "—"}
-          </p>
-          {delta != null && (
-            <p className={`text-[11px] ${toneClass}`}>
-              {delta >= 0 ? "+" : ""}
-              {delta.toFixed(1)}% last 30d
-            </p>
-          )}
-        </div>
-      </CardContent>
-    </Card>
   );
 }
 

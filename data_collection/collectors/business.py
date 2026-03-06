@@ -92,8 +92,8 @@ async def collect_business_signals(client: BrightDataClient) -> list[dict]:
             logger.warning("  Zillow failed for %s: %s", _short_url(url), e)
 
     # ── Phase 5: SERP search ─────────────────────────────────────
-    logger.info("Phase 5: SERP search for business signals...")
-    search_results = await client.search_all(BUSINESS_SEARCH_QUERIES, country=GEO_LOCATION)
+    logger.info("Phase 5: SERP search for business signals (parallel)...")
+    search_results = await client.search_batch(BUSINESS_SEARCH_QUERIES, country=GEO_LOCATION)
     for query, results in search_results.items():
         for r in results:
             all_signals.append({

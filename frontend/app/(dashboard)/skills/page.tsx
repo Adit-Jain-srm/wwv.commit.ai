@@ -26,8 +26,22 @@ export default function SkillsPage() {
       .map((skill) => ({ skill, postings: counts[skill] ?? 0 }));
   }, [skills, jobs]);
 
-  const topShortages = ["Cybersecurity", "AI/ML", "Healthcare workers"];
-  const gapScore = 62;
+  const gaps = useMemo(() => {
+    return skills?.skills_gap_list ?? [];
+  }, [skills]);
+
+  const gapScore = useMemo(() => {
+    if (!gaps.length) return 0;
+    const gapCount = gaps.filter((g) => g.gap).length;
+    return Math.round((gapCount / gaps.length) * 100);
+  }, [gaps]);
+
+  const topShortages = useMemo(() => {
+    return gaps
+      .filter((g) => g.gap)
+      .map((g) => g.skill)
+      .slice(0, 5);
+  }, [gaps]);
 
   return (
     <div className="mx-auto w-full max-w-[1600px] gap-3 px-3 py-4 laptop:px-4 desktop:px-6">
