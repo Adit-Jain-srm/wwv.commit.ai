@@ -17,7 +17,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <TopNavWithData />
       <div className="flex flex-1 overflow-hidden">
         <SidebarNav active={activeNav} />
-        <main className="flex-1 overflow-y-auto bg-gradient-to-b from-slate-950 via-slate-950 to-slate-950">
+        <main className="flex-1 overflow-y-auto bg-slate-950">
           {children}
         </main>
       </div>

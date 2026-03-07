@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { MONTGOMERY_CENTER as MC, DEFAULT_ZOOM } from "../../lib/montgomery-geo";
 
 export type MapNeighborhoodDatum = {
   id: string;
@@ -20,23 +20,14 @@ interface WorkforceIntelligenceMapProps {
   data: MapNeighborhoodDatum[];
 }
 
-const MONTGOMERY_CENTER: LatLngExpression = [32.3668, -86.3006];
+const MONTGOMERY_CENTER: LatLngExpression = [MC.lat, MC.lng];
+
+const AVAILABLE_LAYERS = new Set(["jobs"]);
 
 const DARK_TILE =
   "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
 
 export function WorkforceIntelligenceMap({ data }: WorkforceIntelligenceMapProps) {
-  const [layers, setLayers] = useState({
-    jobs: true,
-    businesses: true,
-    skills: true,
-    education: true,
-  });
-
-  const toggle = (key: keyof typeof layers) => {
-    setLayers((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
   return (
     <Card className="min-h-[550px] overflow-hidden border-slate-800/80 shadow-xl shadow-slate-900/30 transition-all duration-300 hover:shadow-2xl">
       <CardHeader className="flex flex-row items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
@@ -44,26 +35,28 @@ export function WorkforceIntelligenceMap({ data }: WorkforceIntelligenceMapProps
           Workforce Intelligence Map — Montgomery Command Center
         </CardTitle>
         <div className="flex flex-wrap gap-2">
-          {(["jobs", "businesses", "skills", "education"] as const).map((key) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => toggle(key)}
-              className={`rounded-md px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider transition-colors ${
-                layers[key]
-                  ? "bg-sky-600/90 text-slate-50"
-                  : "bg-slate-800/80 text-slate-500 hover:text-slate-300"
-              }`}
-            >
-              {key}
-            </button>
-          ))}
+          {(["jobs", "businesses", "skills", "education"] as const).map((key) => {
+            const available = AVAILABLE_LAYERS.has(key);
+            return (
+              <span
+                key={key}
+                title={available ? `${key} layer active` : "Coming soon"}
+                className={`rounded-md px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider ${
+                  available
+                    ? "bg-sky-600/90 text-slate-50"
+                    : "bg-slate-800/80 text-slate-600 cursor-not-allowed"
+                }`}
+              >
+                {key}
+              </span>
+            );
+          })}
         </div>
       </CardHeader>
       <CardContent className="h-[520px] p-0">
         <MapContainer
           center={MONTGOMERY_CENTER}
-          zoom={11}
+          zoom={DEFAULT_ZOOM}
           scrollWheelZoom
           className="h-full w-full rounded-b-xl"
         >
@@ -71,8 +64,7 @@ export function WorkforceIntelligenceMap({ data }: WorkforceIntelligenceMapProps
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
             url={DARK_TILE}
           />
-          {layers.jobs &&
-            data.map((n) => {
+          {data.map((n) => {
               const intensity = Math.min(Math.max(n.job_density_score / 100, 0.2), 1);
               const radius = 10 + (n.job_density_score / 100) * 20;
               const baseColor =

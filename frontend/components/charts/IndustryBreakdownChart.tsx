@@ -10,6 +10,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { INDUSTRY_COLORS, INDUSTRY_LABELS, CHART_TOOLTIP_STYLE, PROJECTION_FACTOR as PROJ_FACTOR } from "../../lib/chart-constants";
 
 export type IndustryBarDatum = {
   industry: string;
@@ -21,7 +22,14 @@ interface IndustryBreakdownChartProps {
   demoMode?: boolean;
 }
 
-const PROJECTION_FACTOR = 1.14;
+const IndustryBarShape = (props: any) => {
+  const { x, y, width, height, payload } = props;
+  const key = Object.entries(INDUSTRY_LABELS).find(
+    ([, label]) => label === payload?.industry
+  )?.[0];
+  const color = key ? (INDUSTRY_COLORS[key] ?? "#22c55e") : "#22c55e";
+  return <rect x={x} y={y} width={width} height={height} rx={4} fill={color} fillOpacity={0.8} />;
+};
 
 export function IndustryBreakdownChart({
   data,
@@ -29,22 +37,22 @@ export function IndustryBreakdownChart({
 }: IndustryBreakdownChartProps) {
   const chartData = demoMode
     ? data.map((d) => {
-        const proj = Math.round(d.postings * PROJECTION_FACTOR);
+        const proj = Math.round(d.postings * PROJ_FACTOR);
         return { ...d, postings_proj: proj, postings_delta: Math.max(0, proj - d.postings) };
       })
     : data;
 
   return (
-    <Card className="h-[300px] shadow-lg shadow-slate-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
+    <Card className="h-[340px] shadow-lg shadow-slate-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Top hiring sectors — volume</CardTitle>
+        <CardTitle>Sector Employment Share — Resource Allocation Guide</CardTitle>
         {demoMode && (
           <span className="text-[10px] uppercase tracking-[0.16em] text-emerald-400/90">
             6mo projection
           </span>
         )}
       </CardHeader>
-      <CardContent className="h-[230px]">
+      <CardContent className="h-[260px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
@@ -73,18 +81,12 @@ export function IndustryBreakdownChart({
               width={120}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: "#020617",
-                border: "1px solid #1f2937",
-                borderRadius: 8,
-                fontSize: 11
-              }}
+              contentStyle={CHART_TOOLTIP_STYLE}
             />
             <Bar
               dataKey="postings"
               stackId="industry"
-              radius={[4, demoMode ? 0 : 4, demoMode ? 0 : 4, 4]}
-              fill="url(#industryVolumeGradient)"
+              shape={<IndustryBarShape />}
               isAnimationActive
               animationDuration={400}
             />
@@ -103,19 +105,6 @@ export function IndustryBreakdownChart({
                 animationEasing="ease-out"
               />
             )}
-            <defs>
-              <linearGradient
-                id="industryVolumeGradient"
-                x1="0"
-                y1="0"
-                x2="1"
-                y2="0"
-              >
-                <stop offset="0%" stopColor="#22c55e" />
-                <stop offset="60%" stopColor="#2563eb" />
-                <stop offset="100%" stopColor="#a855f7" />
-              </linearGradient>
-            </defs>
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

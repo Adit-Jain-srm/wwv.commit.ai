@@ -18,6 +18,7 @@ export type JobsSummary = {
   top_growing_industry: string;
   new_businesses_this_month: number;
   last_updated: string;
+  job_growth_pct_30d?: number | null;
 };
 
 export type HiringTimeseriesPoint = {

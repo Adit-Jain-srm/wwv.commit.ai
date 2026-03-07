@@ -3,6 +3,7 @@
 import { MapContainer, TileLayer, CircleMarker, Tooltip } from "react-leaflet";
 import type { LatLngExpression } from "leaflet";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { MONTGOMERY_CENTER as MC, DEFAULT_ZOOM } from "../../lib/montgomery-geo";
 
 export type NeighborhoodDatum = {
   id: string;
@@ -19,7 +20,7 @@ interface WorkforceMapProps {
   data: NeighborhoodDatum[];
 }
 
-const MONTGOMERY_CENTER: LatLngExpression = [32.3668, -86.3006];
+const MONTGOMERY_CENTER: LatLngExpression = [MC.lat, MC.lng];
 
 export function WorkforceMap({ data }: WorkforceMapProps) {
   return (
@@ -32,7 +33,7 @@ export function WorkforceMap({ data }: WorkforceMapProps) {
       <CardContent className="h-[340px] p-0">
         <MapContainer
           center={MONTGOMERY_CENTER}
-          zoom={11}
+          zoom={DEFAULT_ZOOM}
           scrollWheelZoom={false}
           className="h-full w-full"
         >

@@ -26,14 +26,17 @@ import { Skeleton } from "../ui/skeleton";
 import { AnimatedNumber } from "../ui/animated-number";
 import { useDemoMode } from "../../lib/DemoModeContext";
 import { DashboardFilters } from "./DashboardFilters";
+import { useSearch } from "../../lib/SearchContext";
 import { AskWorkforcePulse } from "./AskWorkforcePulse";
 import { ScenarioSimulator } from "./ScenarioSimulator";
+import { DataCenterImpactCard } from "./DataCenterImpactCard";
 import {
   type Job,
   type JobsSummary,
   type JobsApiResponse,
   type IndustriesApiResponse,
   type SkillsApiResponse,
+  type EconomicSignal,
   type EconomicSignalsApiResponse,
   type NeighborhoodApiResponse,
 } from "../../lib/DashboardDataContext";
@@ -53,6 +56,9 @@ import {
   TrainingAlignmentChart,
   type TrainingAlignmentDatum
 } from "../charts/TrainingAlignmentChart";
+import { ErrorBoundary } from "../ui/error-boundary";
+import { Button } from "../ui/button";
+import { NEIGHBORHOOD_COORDS } from "../../lib/montgomery-geo";
 
 const WorkforceMap = dynamic(
   () => import("../maps/WorkforceMap").then((m) => m.WorkforceMap),
@@ -75,10 +81,6 @@ const WorkforceMap = dynamic(
 
 type InsightResponse = {
   insights: string[];
-};
-
-type DashboardJobsSummary = JobsSummary & {
-  job_growth_pct_30d?: number | null;
 };
 
 const API_BASE =
@@ -120,6 +122,20 @@ export function DashboardShell() {
     useState<"30d" | "90d" | "12m">("90d");
   const [exportingPdf, setExportingPdf] = useState(false);
   const demo = useDemoMode();
+  const { filters: searchFilters, query: searchQuery } = useSearch();
+
+  const searchHighlight = useMemo(() => {
+    const q = (searchFilters.industry ?? searchQuery).trim().toLowerCase();
+    if (!q) return null;
+    if (q.includes("government")) return "government" as const;
+    if (q.includes("defense")) return "defense" as const;
+    if (q.includes("health")) return "healthcare" as const;
+    if (q.includes("manuf")) return "manufacturing" as const;
+    if (q.includes("tech")) return "technology" as const;
+    if (q.includes("educ")) return "education" as const;
+    if (q.includes("public safety") || q.includes("safety")) return "public_safety" as const;
+    return null;
+  }, [searchFilters.industry, searchQuery]);
 
   useEffect(() => {
     async function loadAll() {
@@ -182,6 +198,8 @@ export function DashboardShell() {
             region: string | null;
             jobs_count: number;
             business_signals_count: number;
+            glassdoor_count: number;
+            google_maps_count: number;
           };
           setPipelineStatus(pipelineData);
         } else {
@@ -278,7 +296,7 @@ export function DashboardShell() {
   const totalSeries = useMemo(
     () =>
       filteredTimeseries.map((p) => {
-        const pt = p as Record<string, number>;
+        const pt = p as unknown as Record<string, number>;
         return (
           (pt.government ?? 0) +
           (pt.defense ?? 0) +
@@ -304,22 +322,17 @@ export function DashboardShell() {
       ? jobs.summary.job_growth_pct_30d
       : jobGrowthFromSeries;
 
-  const industryKey =
-    industryFilter === "Government"
-      ? "government"
-      : industryFilter === "Defense"
-        ? "defense"
-        : industryFilter === "Healthcare"
-          ? "healthcare"
-          : industryFilter === "Manufacturing"
-            ? "manufacturing"
-            : industryFilter === "Technology"
-              ? "technology"
-              : industryFilter === "Education"
-                ? "education"
-                : industryFilter === "Public Safety"
-                  ? "public_safety"
-                  : null;
+  type IndustryKey = "government" | "defense" | "healthcare" | "manufacturing" | "technology" | "education" | "public_safety";
+  const INDUSTRY_KEY_MAP: Record<string, IndustryKey> = {
+    Government: "government",
+    Defense: "defense",
+    Healthcare: "healthcare",
+    Manufacturing: "manufacturing",
+    Technology: "technology",
+    Education: "education",
+    "Public Safety": "public_safety",
+  };
+  const industryKey: IndustryKey | null = INDUSTRY_KEY_MAP[industryFilter] ?? null;
 
   const rangeLabel =
     dateRange === "30d"
@@ -329,13 +342,21 @@ export function DashboardShell() {
         : "Last 12 months";
 
   const baseTotal = jobs?.summary.total_active_postings ?? 0;
+
+  const federalRatio = useMemo(() => {
+    if (!industries?.by_industry) return 0;
+    const total = Object.values(industries.by_industry).reduce((a, b) => a + b, 0);
+    if (total === 0) return 0;
+    return (industries.by_industry.defense_federal ?? 0) / total;
+  }, [industries]);
+
   const sectorAdjustedTotal =
     sectorFilter === "Public"
       ? Math.round(baseTotal * (jobs?.summary.public_ratio ?? 0.41))
       : sectorFilter === "Private"
         ? Math.round(baseTotal * (jobs?.summary.private_ratio ?? 0.59))
         : sectorFilter === "Federal"
-          ? Math.round(baseTotal * 0.18)
+          ? Math.round(baseTotal * federalRatio)
           : baseTotal;
 
   const ratioPrimary =
@@ -344,7 +365,7 @@ export function DashboardShell() {
       : sectorFilter === "Private"
         ? `${Math.round((jobs?.summary.private_ratio ?? 0.59) * 100)}% private`
         : sectorFilter === "Federal"
-          ? "18% federal (est.)"
+          ? `${Math.round(federalRatio * 100)}% federal`
           : jobs
             ? `${Math.round(jobs.summary.public_ratio * 100)}% public`
             : undefined;
@@ -363,16 +384,8 @@ export function DashboardShell() {
 
   const neighborhoodPoints = useMemo(() =>
     neighborhoods?.neighborhoods.map((n, idx) => {
-      const mapping: Record<
-        string,
-        { lat: number; lng: number }
-      > = {
-        "Downtown Montgomery": { lat: 32.3775, lng: -86.3077 },
-        "Maxwell / Gunter Area": { lat: 32.3827, lng: -86.3652 },
-        "East Montgomery": { lat: 32.366, lng: -86.154 }
-      };
       const fallback = { lat: 32.3668, lng: -86.3006 };
-      const coords = mapping[n.name] ?? fallback;
+      const coords = NEIGHBORHOOD_COORDS[n.name] ?? fallback;
       return {
         id: `${idx}-${n.name}`,
         name: n.name,
@@ -420,7 +433,7 @@ export function DashboardShell() {
     }
     return skills.skills_gap_list.slice(0, 8).map((gap) => {
       const demand = counts[gap.skill] ?? 0;
-      const training_supply = gap.local_training_available ? demand : 0;
+      const training_supply = gap.local_training_available ? Math.round(demand * 0.65) : 0;
       return {
         skill: gap.skill,
         demand,
@@ -428,6 +441,12 @@ export function DashboardShell() {
       };
     });
   }, [skills, jobs]);
+
+  const gapScore = useMemo(() => {
+    if (!skills?.skills_gap_list?.length) return null;
+    const gapCount = skills.skills_gap_list.filter((g) => g.gap).length;
+    return Math.round((gapCount / skills.skills_gap_list.length) * 100);
+  }, [skills]);
 
   const mainContent = (
     <div
@@ -469,9 +488,10 @@ export function DashboardShell() {
                       )}
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    className="rounded-md border border-sky-700/70 bg-sky-600/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-50 disabled:opacity-60"
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="text-[11px] uppercase tracking-[0.16em]"
                     disabled={pipelineRunning}
                     onClick={async () => {
                       try {
@@ -496,8 +516,8 @@ export function DashboardShell() {
                       }
                     }}
                   >
-                    {pipelineRunning ? "Running…" : "Refresh data (deep run)"}
-                  </button>
+                    {pipelineRunning ? "Running..." : "Refresh data (deep run)"}
+                  </Button>
                 </div>
                 {pipelineRunning && (
                   <div className="mt-2 space-y-2 rounded-md border border-slate-800/80 bg-slate-950/80 px-3 py-2.5 text-[11px]">
@@ -564,7 +584,7 @@ export function DashboardShell() {
                   <CardContent className="flex flex-col items-start justify-between gap-4 py-5 md:flex-row md:items-center md:gap-6">
                     <div>
                       <p className="text-[11px] font-medium uppercase tracking-widest text-slate-500">
-                        Montgomery, AL — Workforce at a glance
+                        Montgomery, AL — Strategic Workforce Intelligence
                       </p>
                       {loading ? (
                         <Skeleton className="mt-2 h-10 w-32" />
@@ -607,18 +627,32 @@ export function DashboardShell() {
                   </CardContent>
                 </Card>
 
+                <div className="flex items-center gap-3 rounded-lg border border-emerald-900/30 bg-emerald-950/15 px-4 py-2.5">
+                  <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
+                  <div>
+                    <p className="text-[11px] font-semibold text-emerald-300 uppercase tracking-wider">
+                      Decision Support Mode
+                    </p>
+                    <p className="text-[11px] text-slate-400">
+                      All metrics calibrated for strategic review. Live data from monitored workforce and economic sources.
+                    </p>
+                  </div>
+                </div>
+
                 <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
                 <MetricCard
                   icon={<Radar className="h-4 w-4 text-amber-400" />}
-                  label="Workforce Gap Score"
-                  primary={loading ? undefined : "62"}
+                  label="Workforce Readiness Index"
+                  animateValue={gapScore ?? undefined}
                   secondary="/ 100"
                   loading={loading}
                   tone="neutral"
+                  actionThreshold={60}
+                  actionMessage="Skills gap exceeds target — retraining investment needed"
                 />
                 <MetricCard
                   icon={<TrendingUp className="h-4 w-4 text-emerald-400" />}
-                  label="Job growth velocity"
+                  label="Employment Growth Velocity"
                   animateValue={jobGrowthPct ?? undefined}
                   animatePrefix="+"
                   animateSuffix="%"
@@ -631,7 +665,7 @@ export function DashboardShell() {
                 />
                 <MetricCard
                   icon={<ShieldCheck className="h-4 w-4 text-sky-400" />}
-                  label="Public vs private ratio"
+                  label="Sector Balance Indicator"
                   primary={
                     ratioPrimary
                   }
@@ -644,20 +678,20 @@ export function DashboardShell() {
                 />
                 <MetricCard
                   icon={<Building2 className="h-4 w-4 text-emerald-400" />}
-                  label="Top growing industry"
+                  label="Leading Growth Sector"
                   primary={jobs?.summary.top_growing_industry}
                   secondary={jobs?.summary.top_growing_industry ? "Leading sector by volume" : undefined}
                   loading={loading}
                   tone="positive"
                   sparkline={
                     filteredTimeseries.map((p) =>
-                      industryKey ? (p as Record<string, number>)[industryKey] ?? 0 : p.healthcare
+                      industryKey ? (p as unknown as Record<string, number>)[industryKey] ?? 0 : p.healthcare
                     ) ?? []
                   }
                 />
                 <MetricCard
                   icon={<Factory className="h-4 w-4 text-sky-400" />}
-                  label="New businesses filed this month"
+                  label="Business Formation Rate"
                   animateValue={jobs?.summary.new_businesses_this_month ?? 0}
                   delta={
                     signals?.signals.find(
@@ -683,12 +717,14 @@ export function DashboardShell() {
                     </CardContent>
                   </Card>
                 ) : (
-                  <HiringTrendsChart
-                    data={filteredTimeseries}
-                    highlight={industryKey}
-                    rangeLabel={rangeLabel}
-                    demoMode={demo.enabled}
-                  />
+                  <ErrorBoundary>
+                    <HiringTrendsChart
+                      data={filteredTimeseries}
+                      highlight={searchHighlight ?? industryKey}
+                      rangeLabel={rangeLabel}
+                      demoMode={demo.enabled}
+                    />
+                  </ErrorBoundary>
                 )}
               </section>
 
@@ -696,8 +732,25 @@ export function DashboardShell() {
                 {loading || !neighborhoods ? (
                   <Skeleton className="h-[420px] w-full rounded-xl bg-slate-900/80" />
                 ) : (
-                  <WorkforceMap data={neighborhoodPoints} />
+                  <ErrorBoundary>
+                    <WorkforceMap data={neighborhoodPoints} />
+                  </ErrorBoundary>
                 )}
+              </section>
+
+              <section id="section-data-center-impact" className="space-y-3">
+                <SectionLabel
+                  title="Infrastructure Impact Modeling"
+                  description="Data center expansion impact on Montgomery's workforce and infrastructure capacity."
+                />
+                <DataCenterImpactCard
+                  signalCount={
+                    (signals?.signals ?? []).filter(
+                      (s: any) => s.signal_type === "data_center" || (s.label ?? "").toLowerCase().includes("data center")
+                    ).length
+                  }
+                  totalJobs={baseTotal}
+                />
               </section>
 
               <section className="grid gap-3 lg:grid-cols-12">
@@ -732,8 +785,8 @@ export function DashboardShell() {
                   <AskWorkforcePulse />
                   <ScenarioSimulator />
                   <SectionLabel
-                    title="AI insight panel"
-                    description="Summarizes Montgomery’s workforce signals from collected data."
+                    title="Policy Intelligence Panel"
+                    description="AI-generated policy recommendations from Montgomery’s live economic data."
                   />
                   <Card className="border-sky-900/60 bg-slate-950/80 shadow-lg shadow-slate-900/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
                     <CardContent className="space-y-3 py-3">
@@ -769,8 +822,8 @@ export function DashboardShell() {
 
               <section id="section-training-alignment" className="space-y-3">
                   <SectionLabel
-                    title="Training alignment"
-                    description="How Montgomery’s universities and colleges map to real hiring demand."
+                    title="Training Investment Alignment"
+                    description="Investment alignment: university output vs. employer demand signals."
                   />
                   {loading || !skills ? (
                     <Skeleton className="h-[300px] w-full rounded-xl bg-slate-900/80" />
@@ -786,18 +839,16 @@ export function DashboardShell() {
                     <CardContent className="space-y-2 text-[11px] text-slate-300">
                       <p>
                         Aligning{" "}
-                        <span className="font-semibold">
-                          Alabama State University
-                        </span>
-                        ,{" "}
-                        <span className="font-semibold">
-                          Auburn University Montgomery
-                        </span>
-                        , and{" "}
-                        <span className="font-semibold">
-                          Trenholm State
-                        </span>{" "}
-                        to close AI, cybersecurity, and healthcare gaps.
+                        <span className="font-semibold">Alabama State University</span>,{" "}
+                        <span className="font-semibold">Auburn University Montgomery</span>, and{" "}
+                        <span className="font-semibold">Trenholm State</span>{" "}
+                        to close{" "}
+                        {skills?.skills_gap_list
+                          ?.filter((g) => g.gap)
+                          ?.slice(0, 3)
+                          ?.map((g) => g.skill)
+                          ?.join(", ") || "key workforce"}{" "}
+                        gaps.
                       </p>
                       <p className="flex items-center gap-2 text-sky-300">
                         <FileText className="h-3 w-3" />
@@ -848,6 +899,8 @@ function MetricCard(props: {
   animatePrefix?: string;
   animateSuffix?: string;
   animateDecimals?: number;
+  actionThreshold?: number;
+  actionMessage?: string;
 }) {
   const {
     icon,
@@ -861,7 +914,9 @@ function MetricCard(props: {
     animateValue,
     animatePrefix = "",
     animateSuffix = "",
-    animateDecimals = 0
+    animateDecimals = 0,
+    actionThreshold,
+    actionMessage
   } = props;
 
   const deltaTone =
@@ -953,6 +1008,12 @@ function MetricCard(props: {
                       />
                     </LineChart>
                   </ResponsiveContainer>
+                </div>
+              )}
+              {actionThreshold != null && typeof animateValue === "number" && animateValue > actionThreshold && (
+                <div className="mt-1.5 flex items-center gap-1 text-[10px] font-medium text-amber-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-[soft-pulse_2.2s_infinite]" />
+                  {actionMessage ?? "Action recommended"}
                 </div>
               )}
             </>

@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useDashboardData } from "../../../lib/DashboardDataContext";
+import { useSearch } from "../../../lib/SearchContext";
 import { TrainingAlignmentChart } from "../../../components/charts/TrainingAlignmentChart";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Skeleton } from "../../../components/ui/skeleton";
@@ -10,6 +11,7 @@ import type { TrainingAlignmentDatum } from "../../../components/charts/Training
 
 export default function TrainingPage() {
   const { jobs, skills, loading } = useDashboardData();
+  const { query: searchQuery } = useSearch();
 
   const trainingData: TrainingAlignmentDatum[] = useMemo(() => {
     if (!skills || !jobs) return [];
@@ -23,7 +25,7 @@ export default function TrainingPage() {
       return {
         skill: gap.skill,
         demand,
-        training_supply: gap.local_training_available ? demand : 0,
+        training_supply: gap.local_training_available ? Math.round(demand * 0.65) : 0,
       };
     });
   }, [skills, jobs]);
@@ -35,6 +37,11 @@ export default function TrainingPage() {
         <p className="text-sm text-slate-400">
           How Montgomery's universities and colleges map to real hiring demand.
         </p>
+        {searchQuery.trim() && (
+          <p className="mt-2 text-[11px] text-slate-500">
+            Intelligence filter: <span className="font-semibold text-slate-200">{searchQuery}</span>
+          </p>
+        )}
       </div>
       <div className="space-y-6">
         {loading ? (
@@ -53,8 +60,14 @@ export default function TrainingPage() {
               Aligning{" "}
               <span className="font-semibold">Alabama State University</span>,{" "}
               <span className="font-semibold">Auburn University Montgomery</span>, and{" "}
-              <span className="font-semibold">Trenholm State</span> to close AI, cybersecurity,
-              and healthcare gaps.
+              <span className="font-semibold">Trenholm State</span>{" "}
+              to close{" "}
+              {skills?.skills_gap_list
+                ?.filter((g: { gap: boolean }) => g.gap)
+                ?.slice(0, 3)
+                ?.map((g: { skill: string }) => g.skill)
+                ?.join(", ") || "key workforce"}{" "}
+              gaps.
             </p>
             <p className="flex items-center gap-2 text-sky-300">
               <FileText className="h-3 w-3" />

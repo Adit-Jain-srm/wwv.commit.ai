@@ -52,29 +52,12 @@ export function UserMenu({ name }: UserMenuProps) {
             type="button"
             className="flex w-full items-center px-3 py-1.5 text-left hover:bg-slate-800/80"
             role="menuitem"
-          >
-            Profile
-          </button>
-          <button
-            type="button"
-            className="flex w-full items-center px-3 py-1.5 text-left hover:bg-slate-800/80"
-            role="menuitem"
-          >
-            Settings
-          </button>
-          <button
-            type="button"
-            className="flex w-full items-center px-3 py-1.5 text-left hover:bg-slate-800/80"
-            role="menuitem"
+            onClick={() => {
+              if (typeof window !== "undefined") window.print();
+              setOpen(false);
+            }}
           >
             Download data
-          </button>
-          <button
-            type="button"
-            className="mt-0.5 flex w-full items-center px-3 py-1.5 text-left text-red-300 hover:bg-red-950/40 hover:text-red-200"
-            role="menuitem"
-          >
-            Logout
           </button>
         </div>
       )}

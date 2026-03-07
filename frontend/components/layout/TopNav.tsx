@@ -101,13 +101,14 @@ export function TopNav({
                   setActiveSuggestion(null);
                   setHighlightIdx(-1);
                   const q = v.trim().toLowerCase();
-                  const industryLabels = ["Government", "Defense", "Healthcare", "Manufacturing", "Technology", "Education", "Public Safety"];
-                  const industry = industryLabels.find((x) => x.toLowerCase().includes(q) || q.includes(x.toLowerCase())) ?? null;
-                  setFilters({
-                    industry,
-                    skill: q.length >= 2 ? (q.includes("python") ? "Python" : q.includes("cyber") ? "Cybersecurity" : q.includes("nurs") ? "Nursing" : null) : null,
-                    neighborhood: q.length >= 2 ? (q.includes("downtown") ? "Downtown Montgomery" : q.includes("east") ? "East Montgomery" : q.includes("maxwell") ? "Maxwell / Gunter Area" : null) : null,
-                  });
+                  if (q.length < 2) {
+                    setFilters({ industry: null, skill: null, neighborhood: null });
+                    return;
+                  }
+                  const industry = searchSuggestions.find((s) => s.type === "industry" && s.name.toLowerCase().includes(q))?.name ?? null;
+                  const skill = searchSuggestions.find((s) => s.type === "skill" && s.name.toLowerCase().includes(q))?.name ?? null;
+                  const neighborhood = searchSuggestions.find((s) => s.type === "neighborhood" && s.name.toLowerCase().includes(q))?.name ?? null;
+                  setFilters({ industry, skill, neighborhood });
                 }}
                 onFocus={() => setFocused(true)}
                 onBlur={() => setTimeout(() => { setFocused(false); setHighlightIdx(-1); }, 180)}
@@ -168,7 +169,7 @@ export function TopNav({
             )}
           </Button>
 
-          <UserMenu name="Montgomery Planner" />
+          <UserMenu name="City Planner" />
         </div>
       </div>
     </header>

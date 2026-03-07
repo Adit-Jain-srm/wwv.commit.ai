@@ -32,20 +32,6 @@ module.exports = {
       screens: {
         "laptop": "1280px",
         "desktop": "1440px"
-      },
-      colors: {
-        surface: {
-          DEFAULT: "#020617",
-          muted: "#020617",
-          raised: "#020617"
-        },
-        brand: {
-          primary: "#2563EB",
-          secondary: "#0F172A",
-          accent: "#22C55E",
-          warning: "#F59E0B",
-          danger: "#EF4444"
-        }
       }
     }
   },

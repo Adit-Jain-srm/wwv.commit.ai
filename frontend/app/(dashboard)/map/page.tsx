@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui
 import { Skeleton } from "../../../components/ui/skeleton";
 import { useDashboardData } from "../../../lib/DashboardDataContext";
 import { useSearch } from "../../../lib/SearchContext";
+import { NEIGHBORHOOD_COORDS } from "../../../lib/montgomery-geo";
 
 const WorkforceIntelligenceMap = dynamic(
   () => import("../../../components/maps/WorkforceIntelligenceMap").then((m) => m.WorkforceIntelligenceMap),
@@ -27,13 +28,8 @@ export default function MapPage() {
   const { neighborhoods, loading } = useDashboardData();
   const { filters, query } = useSearch();
   const neighborhoodPoints = neighborhoods?.neighborhoods?.map((n, idx) => {
-    const mapping: Record<string, { lat: number; lng: number }> = {
-      "Downtown Montgomery": { lat: 32.3775, lng: -86.3077 },
-      "Maxwell / Gunter Area": { lat: 32.3827, lng: -86.3652 },
-      "East Montgomery": { lat: 32.366, lng: -86.154 },
-    };
     const fallback = { lat: 32.3668, lng: -86.3006 };
-    const coords = mapping[n.name] ?? fallback;
+    const coords = NEIGHBORHOOD_COORDS[n.name] ?? fallback;
     return {
       id: `${idx}-${n.name}`,
       name: n.name,
