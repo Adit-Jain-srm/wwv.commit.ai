@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { Star, MapPin, Building2 } from "lucide-react";
-import { useSearch } from "../../../lib/SearchContext";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
@@ -61,7 +60,6 @@ export default function EmployerQualityPage() {
   const [data, setData] = useState<EmployerQualityData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { query: searchQuery } = useSearch();
 
   useEffect(() => {
     fetch(`${API_BASE}/api/employer-quality`)
@@ -77,24 +75,6 @@ export default function EmployerQualityPage() {
   const glassdoor = data?.glassdoor ?? [];
   const google_maps = data?.google_maps ?? [];
   const summary = data?.summary ?? { glassdoor_count: 0, google_maps_count: 0, avg_employer_rating: null };
-
-  const filteredGlassdoor = useMemo(() => {
-    if (!searchQuery.trim()) return glassdoor;
-    const q = searchQuery.toLowerCase();
-    return glassdoor.filter((e) =>
-      (e.company_name ?? "").toLowerCase().includes(q)
-    );
-  }, [glassdoor, searchQuery]);
-
-  const filteredGoogleMaps = useMemo(() => {
-    if (!searchQuery.trim()) return google_maps;
-    const q = searchQuery.toLowerCase();
-    return google_maps.filter((b) =>
-      (b.name ?? "").toLowerCase().includes(q) ||
-      (b.category ?? "").toLowerCase().includes(q) ||
-      (b.address ?? "").toLowerCase().includes(q)
-    );
-  }, [google_maps, searchQuery]);
 
   if (loading) {
     return (
@@ -128,12 +108,6 @@ export default function EmployerQualityPage() {
         <p className="text-sm text-slate-400">
           Glassdoor employer ratings and Google Maps local business signals for Montgomery employers.
         </p>
-        {searchQuery.trim() && (
-          <p className="mt-2 text-[11px] text-slate-500">
-            Filtering for: <span className="font-semibold text-slate-200">{searchQuery}</span>
-            {" · "}{filteredGlassdoor.length + filteredGoogleMaps.length} result{filteredGlassdoor.length + filteredGoogleMaps.length !== 1 ? "s" : ""}
-          </p>
-        )}
       </div>
 
       {/* Summary cards */}
@@ -187,13 +161,13 @@ export default function EmployerQualityPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {filteredGlassdoor.length === 0 ? (
+            {glassdoor.length === 0 ? (
               <p className="py-6 text-center text-xs text-slate-500">
-                {searchQuery.trim() ? "No employers match your search." : "No Glassdoor data. Run the pipeline with --glassdoor to collect."}
+                No Glassdoor data. Run the pipeline with --glassdoor to collect.
               </p>
             ) : (
               <div className="max-h-[380px] space-y-2 overflow-y-auto pr-1">
-                {filteredGlassdoor
+                {glassdoor
                   .sort((a, b) => (b.overall_rating ?? 0) - (a.overall_rating ?? 0))
                   .map((emp, i) => (
                     <div
@@ -232,13 +206,13 @@ export default function EmployerQualityPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {filteredGoogleMaps.length === 0 ? (
+            {google_maps.length === 0 ? (
               <p className="py-6 text-center text-xs text-slate-500">
-                {searchQuery.trim() ? "No businesses match your search." : "No Google Maps data. Run the pipeline with --google-maps to collect."}
+                No Google Maps data. Run the pipeline with --google-maps to collect.
               </p>
             ) : (
               <div className="max-h-[380px] space-y-2 overflow-y-auto pr-1">
-                {filteredGoogleMaps.map((biz, i) => (
+                {google_maps.map((biz, i) => (
                   <div
                     key={i}
                     className="flex items-start justify-between rounded-lg border border-slate-800/60 bg-slate-950/50 px-3 py-2"

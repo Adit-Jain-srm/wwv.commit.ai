@@ -168,3 +168,26 @@ Short reference of decisions, constraints, and goals to keep us aligned.
 - **Phase 13** — AI retry logic: centralized `_call_azure()` helper with retry on 429/5xx, `_safe_parse_json()`.
 - **Phase 14** — Empty states: "No data — run the pipeline" messages for hiring trends and AI insights.
 - **Phase 18** — Security: sanitized `.env.example`, comprehensive `.gitignore`, git history audit.
+
+### Session 3 Fixes (Continued Conversation)
+
+- **React Hooks violation** — `useSearch()` was called after conditional returns in `employer-quality/page.tsx`. Moved all hooks above early returns.
+- **Cluster badge overflow** — "CLUSTER" text truncation in `SkillsDemandClusters.tsx`. Shortened labels (e.g., "Gov & Admin", "Mfg & Trades"), added `shrink-0 whitespace-nowrap`, hid empty clusters with `activeClusterKeys` filter.
+- **Hiring Trends chart blank** — Backend was dividing job totals over 12 weeks (producing ~1-2/sector); unmapped industries and null-industry jobs were dropped. Fixed industry mapping for `construction_trades`, `retail_hospitality`, `transportation`; distributed null-industry jobs proportionally across sectors.
+- **Chart rendering** — `<Area>` components wrapped in `<g>` elements were invisible to Recharts (requires direct children of `<AreaChart>`). Replaced `.map()` returning `<g>` wrappers with `.flatMap()` returning `<Area>` elements directly. Added `shortDate()` formatter, stacked areas with `stackId`, increased fill opacity.
+- **X-axis label overflow** — Fixed chart margins and added `interval="preserveStartEnd"` to XAxis.
+- **Skills Gap empty clusters** — Filtered out clusters with no skills data via `activeClusterKeys` useMemo.
+- **PDF report improvements** (multiple rounds):
+  - Raw snake_case keys → display labels via `_industryLabelMap`.
+  - Emoji (✅❌⚠) → ASCII-safe markers (`[ALIGNED]`, `[GAP - no local training]`, etc.) for PDF rendering.
+  - Synthesized consulting-quality insights from actual data instead of raw data sentences.
+  - Replaced forced page breaks per section with continuous flow using `startSection()` helper.
+  - Fixed double page numbering on chart pages via `pageNumbered` flag.
+- **Fake growth metric** — Synthetic timeseries always showed positive growth due to monotonic curve. Initially replaced with sine-wave oscillation; ultimately **removed synthetic timeseries entirely**. Backend now returns only real data points (one per collection date). Frontend falls back to honest horizontal bar chart ("Sector Hiring Snapshot") when only 1 data point exists. Growth metric shows "—" instead of fabricated percentage.
+- **Dynamic metric labels** — `jobGrowthLabel` in DashboardShell now dynamically shows "vs last 30/90 days" or "vs last 12 months" based on actual data source.
+
+## Key Design Decisions
+
+- **No synthetic data**: Timeseries chart only shows real observed data points. The single-point fallback renders a horizontal bar chart of actual sector counts with a message to run additional pipeline cycles for trend analysis.
+- **Proportional distribution**: Jobs with `null` industry are distributed proportionally across classified sectors in the timeseries buckets (not dropped or lumped into "other").
+- **Industry consolidation**: 10 raw industries map to 7 chart series: `construction_trades` and `transportation` → `manufacturing`; `retail_hospitality` → `government`.

@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useDashboardData } from "../../../lib/DashboardDataContext";
-import { useSearch } from "../../../lib/SearchContext";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { TrendingUp, Building2, Zap, FileText, ChevronDown, ChevronRight } from "lucide-react";
@@ -44,19 +43,11 @@ type TimelineEvent = {
 
 export default function SignalsPage() {
   const { signals, loading } = useDashboardData();
-  const { query: searchQuery } = useSearch();
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
 
   const filteredSignals = useMemo(() => {
-    const sigs = signals?.signals ?? [];
-    if (!searchQuery.trim()) return sigs;
-    const q = searchQuery.toLowerCase();
-    return sigs.filter((s: any) =>
-      ((s as any).label ?? (s as any).title ?? "").toLowerCase().includes(q) ||
-      ((s as any).description ?? "").toLowerCase().includes(q) ||
-      ((s as any).signal_type ?? "").toLowerCase().includes(q)
-    );
-  }, [signals, searchQuery]);
+    return signals?.signals ?? [];
+  }, [signals]);
 
   const apiEvents: TimelineEvent[] = useMemo(
     () =>
@@ -138,12 +129,6 @@ export default function SignalsPage() {
         <p className="text-sm text-slate-400">
           Recent business signals and economic activity in Montgomery.
         </p>
-        {searchQuery.trim() && (
-          <p className="mt-2 text-[11px] text-slate-500">
-            Filtering signals for: <span className="font-semibold text-slate-200">{searchQuery}</span>
-            {" · "}{filteredSignals.length} result{filteredSignals.length !== 1 ? "s" : ""}
-          </p>
-        )}
       </div>
 
       {/* Type badges */}

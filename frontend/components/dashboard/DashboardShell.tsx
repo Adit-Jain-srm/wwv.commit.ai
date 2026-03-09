@@ -26,7 +26,6 @@ import { Skeleton } from "../ui/skeleton";
 import { AnimatedNumber } from "../ui/animated-number";
 import { useDemoMode } from "../../lib/DemoModeContext";
 import { DashboardFilters } from "./DashboardFilters";
-import { useSearch } from "../../lib/SearchContext";
 import { AskWorkforcePulse } from "./AskWorkforcePulse";
 import { ScenarioSimulator } from "./ScenarioSimulator";
 import { DataCenterImpactCard } from "./DataCenterImpactCard";
@@ -122,20 +121,6 @@ export function DashboardShell() {
     useState<"30d" | "90d" | "12m">("90d");
   const [exportingPdf, setExportingPdf] = useState(false);
   const demo = useDemoMode();
-  const { filters: searchFilters, query: searchQuery } = useSearch();
-
-  const searchHighlight = useMemo(() => {
-    const q = (searchFilters.industry ?? searchQuery).trim().toLowerCase();
-    if (!q) return null;
-    if (q.includes("government")) return "government" as const;
-    if (q.includes("defense")) return "defense" as const;
-    if (q.includes("health")) return "healthcare" as const;
-    if (q.includes("manuf")) return "manufacturing" as const;
-    if (q.includes("tech")) return "technology" as const;
-    if (q.includes("educ")) return "education" as const;
-    if (q.includes("public safety") || q.includes("safety")) return "public_safety" as const;
-    return null;
-  }, [searchFilters.industry, searchQuery]);
 
   useEffect(() => {
     async function loadAll() {
@@ -321,6 +306,14 @@ export function DashboardShell() {
     jobs?.summary?.job_growth_pct_30d != null
       ? jobs.summary.job_growth_pct_30d
       : jobGrowthFromSeries;
+  const jobGrowthLabel =
+    jobs?.summary?.job_growth_pct_30d != null
+      ? "vs last 30 days"
+      : dateRange === "30d"
+        ? "vs last 30 days"
+        : dateRange === "90d"
+          ? "vs last 90 days"
+          : "vs last 12 months";
 
   type IndustryKey = "government" | "defense" | "healthcare" | "manufacturing" | "technology" | "education" | "public_safety";
   const INDUSTRY_KEY_MAP: Record<string, IndustryKey> = {
@@ -621,7 +614,7 @@ export function DashboardShell() {
                         )}
                       </span>
                       <span className="text-[11px] uppercase tracking-wider text-slate-400">
-                        vs last 30 days
+                        {jobGrowthLabel}
                       </span>
                     </div>
                   </CardContent>
@@ -654,11 +647,11 @@ export function DashboardShell() {
                   icon={<TrendingUp className="h-4 w-4 text-emerald-400" />}
                   label="Employment Growth Velocity"
                   animateValue={jobGrowthPct ?? undefined}
-                  animatePrefix="+"
+                  animatePrefix={jobGrowthPct != null && jobGrowthPct >= 0 ? "+" : ""}
                   animateSuffix="%"
                   animateDecimals={1}
                   primary={jobGrowthPct == null ? "—" : undefined}
-                  secondary="vs last 30 days"
+                  secondary={jobGrowthLabel}
                   loading={loading}
                   tone="positive"
                   sparkline={totalSeries}
@@ -720,7 +713,7 @@ export function DashboardShell() {
                   <ErrorBoundary>
                     <HiringTrendsChart
                       data={filteredTimeseries}
-                      highlight={searchHighlight ?? industryKey}
+                      highlight={industryKey}
                       rangeLabel={rangeLabel}
                       demoMode={demo.enabled}
                     />

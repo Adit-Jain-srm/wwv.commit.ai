@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { TopNav } from "./TopNav";
 import { useDashboardData } from "../../lib/DashboardDataContext";
 
@@ -13,43 +13,6 @@ type PolicyBrief = {
 export function TopNavWithData() {
   const { jobs, industries, skills, neighborhoods, signals, insights } = useDashboardData();
   const [exportLoading, setExportLoading] = useState(false);
-
-  const searchSuggestions = useMemo(() => {
-    const out: { type: string; name: string }[] = [];
-    if (industries?.by_industry) {
-      const labelMap: Record<string, string> = {
-        government: "Government",
-        defense_federal: "Defense",
-        healthcare: "Healthcare",
-        manufacturing: "Manufacturing",
-        technology: "Technology",
-        education: "Education",
-        public_safety: "Public Safety",
-      };
-      for (const k of Object.keys(industries.by_industry)) {
-        out.push({ type: "industry", name: labelMap[k] ?? k });
-      }
-    }
-    if (skills?.in_demand_skills_list) {
-      for (const s of skills.in_demand_skills_list) {
-        if (typeof s === "string") out.push({ type: "skill", name: s });
-      }
-    }
-    if (neighborhoods?.neighborhoods) {
-      for (const n of neighborhoods.neighborhoods) {
-        out.push({ type: "neighborhood", name: n.name });
-      }
-    }
-    if (jobs?.jobs) {
-      const companies = new Set<string>();
-      for (const j of jobs.jobs.slice(0, 100)) {
-        const c = j.company ?? j.title;
-        if (c && typeof c === "string" && c.length > 2) companies.add(c);
-      }
-      for (const c of companies) out.push({ type: "company", name: c });
-    }
-    return out;
-  }, [industries, skills, neighborhoods, jobs]);
 
   const handleExportPdf = async () => {
     setExportLoading(true);
@@ -653,7 +616,6 @@ export function TopNavWithData() {
 
   return (
     <TopNav
-      searchSuggestions={searchSuggestions}
       onExportPdf={handleExportPdf}
       exportLoading={exportLoading}
     />

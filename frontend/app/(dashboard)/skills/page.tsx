@@ -5,12 +5,10 @@ import { useDashboardData } from "../../../lib/DashboardDataContext";
 import { SkillsDemandClusters } from "../../../components/dashboard/SkillsDemandClusters";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Skeleton } from "../../../components/ui/skeleton";
-import { useSearch } from "../../../lib/SearchContext";
 import { useDemoMode } from "../../../lib/DemoModeContext";
 
 export default function SkillsPage() {
   const { jobs, skills, loading } = useDashboardData();
-  const { filters, query } = useSearch();
   const demo = useDemoMode();
 
   const skillsDemand = useMemo(() => {
@@ -87,7 +85,6 @@ export default function SkillsPage() {
           ) : (
             <SkillsDemandClusters
               data={skillsDemand}
-              highlightSkill={filters.skill ?? query}
               demoMode={demo.enabled}
             />
           )}
