@@ -1,0 +1,213 @@
+{
+  "timestamp": "2026-03-07T04:25:00.334175+00:00",
+  "region": "Montgomery, AL",
+  "results": {
+    "jobs": {
+      "count": 387,
+      "by_sector": {
+        "private": 323,
+        "public": 36,
+        "federal": 28
+      },
+      "public_sector_ratio": 0.165,
+      "top_industries": [
+        "public_safety",
+        "technology",
+        "healthcare",
+        "manufacturing",
+        "defense_federal"
+      ],
+      "top_skills": [
+        "aws",
+        "cybersecurity",
+        "cloud",
+        "customer service",
+        "registered nurse",
+        "payroll",
+        "hvac",
+        "welding",
+        "forklift",
+        "cyber security"
+      ],
+      "skills_gaps": [
+        "customer service",
+        "payroll",
+        "forklift",
+        "procurement",
+        "marketing"
+      ],
+      "sample": [
+        {
+          "title": "Associate Director, Medical Science Liaison, Solid Tumors - East Region - job post",
+          "url": "",
+          "company": "",
+          "location": "",
+          "description": "",
+          "pay": "",
+          "posted": "",
+          "job_type": "",
+          "department": "",
+          "source": "ai_extract",
+          "query": "",
+          "collected_at": "2026-03-07T04:25:00.553304+00:00",
+          "industry": "healthcare",
+          "sector": "private",
+          "skills": [],
+          "experience_level": "management",
+          "work_arrangement": "onsite"
+        },
+        {
+          "title": "Jazz Pharmaceuticals",
+          "url": "https://www.indeed.com/cmp/Jazz-Pharmaceuticals?campaignid=mobvjcmp&from=mobviewjob&tk=1jj38lbkmh76l804&fromjk=1cb7760d1345a21c",
+          "company": "",
+          "location": "",
+          "description": "",
+          "pay": "",
+          "posted": "",
+          "job_type": "",
+          "department": "",
+          "source": "ai_extract",
+          "query": "",
+          "collected_at": "2026-03-07T04:25:00.553304+00:00",
+          "industry": null,
+          "sector": "private",
+          "skills": [],
+          "experience_level": "mid",
+          "work_arrangement": "onsite"
+        },
+        {
+          "title": "Travel requirements",
+          "url": "",
+          "company": "",
+          "location": "",
+          "description": "",
+          "pay": "",
+          "posted": "",
+          "job_type": "",
+          "department": "",
+          "source": "ai_extract",
+          "query": "",
+          "collected_at": "2026-03-07T04:25:00.553304+00:00",
+          "industry": null,
+          "sector": "private",
+          "skills": [],
+          "experience_level": "mid",
+          "work_arrangement": "onsite"
+        }
+      ]
+    },
+    "business_signals": {
+      "count": 105,
+      "by_signal_type": {
+        "company_profile": 4,
+        "general": 18,
+        "economic_development": 11,
+        "expansion": 15,
+        "new_business": 1,
+        "infrastructure": 3,
+        "data_center": 26,
+        "defense_contract": 12,
+        "real_estate": 8,
+        "hiring_surge": 7
+      },
+      "sample": [
+        {
+          "title": "State of Alabama",
+          "url": "https://www.linkedin.com/company/state-of-alabama",
+          "description": "State of Alabama | 9,425 followers on LinkedIn. Office of Information Technology",
+          "source": "linkedin_company",
+          "signal_type": "company_profile",
+          "collected_at": "2026-03-07T04:25:54.389079+00:00",
+          "employee_count": "51-200 employees",
+          "industry": "Government Administration"
+        },
+        {
+          "title": "Alabama State University",
+          "url": "https://www.linkedin.com/school/alabama-state-university/",
+          "description": "Alabama State University | 36,730 followers on LinkedIn. ASU is a student-centered and diverse public historically black University committed to achieving excellence in teaching, research and public service.",
+          "source": "linkedin_company",
+          "signal_type": "company_profile",
+          "collected_at": "2026-03-07T04:25:54.389079+00:00",
+          "employee_count": "2-10 employees",
+          "industry": "Higher Education",
+          "headquarters": "Montgomery, al"
+        },
+        {
+          "title": "Amazon Web Services (AWS)",
+          "url": "https://www.linkedin.com/company/amazon-web-services",
+          "description": "Amazon Web Services (AWS) | 10,703,528 followers on LinkedIn. Official Global LinkedIn page for Amazon Web Services (AWS). | Launched in 2006, Amazon Web Services (AWS) began exposing key infrastructure services to businesses in the form of web services -- now widely known as cloud computing. The ultimate benefit of cloud computing, and AWS, is the ability to leverage a new business model and turn capital infrastructure expenses into variable costs. Businesses no longer need to plan and procure ",
+          "source": "linkedin_company",
+          "signal_type": "company_profile",
+          "collected_at": "2026-03-07T04:25:54.389079+00:00",
+          "employee_count": "10,001+ employees",
+          "industry": "IT Services and IT Consulting",
+          "headquarters": "Seattle, WA"
+        }
+      ]
+    },
+    "glassdoor": {
+      "count": 45,
+      "sample": [
+        {
+          "title": "City of Montgomery, AL Reviews (26)",
+          "url": "https://www.glassdoor.com/Reviews/City-of-Montgomery-AL-Reviews-E889634.htm",
+          "description": "City of Montgomery, AL has an employee rating of 3.5 out of 5 stars, based on 26 company reviews on Glassdoor which indicates that most employees have a good\u00a0...[Read more](https://www.glassdoor.com/Reviews/City-of-Montgomery-AL-Reviews-E889634.htm#:~:text=City%20of%20Montgomery%2C%20AL%20has,a%20go",
+          "source": "glassdoor_serp",
+          "signal_type": "employer_review",
+          "query": "Glassdoor reviews City of Montgomery Alabama employer",
+          "collected_at": "2026-03-07T04:33:20.563525+00:00"
+        },
+        {
+          "title": "City of Montgomery, AL Reviews in ...",
+          "url": "https://www.glassdoor.com/Reviews/City-of-Montgomery-AL-Montgomery-Reviews-EI_IE889634.0,21_IL.22,32_IC1127704.htm",
+          "description": "Employees in Montgomery have given City of Montgomery, AL a rating of 3.7 out of 5 stars, based on 16 company reviews on Glassdoor. This indicates that most\u00a0...",
+          "source": "glassdoor_serp",
+          "signal_type": "employer_review",
+          "query": "Glassdoor reviews City of Montgomery Alabama employer",
+          "collected_at": "2026-03-07T04:33:20.563525+00:00"
+        },
+        {
+          "title": "Working at City-of-Montgomery-AL",
+          "url": "https://www.glassdoor.com/Overview/Working-at-City-of-Montgomery-AL-EI_IE889634.11,32.htm",
+          "description": "Overall, 53% of employees would recommend working at City of Montgomery, AL to a friend. This is based on 26 anonymously submitted reviews on Glassdoor. How do\u00a0...[Read more](https://www.glassdoor.com/Overview/Working-at-City-of-Montgomery-AL-EI_IE889634.11,32.htm#:~:text=How%20do%20job%20seekers%20",
+          "source": "glassdoor_serp",
+          "signal_type": "employer_review",
+          "query": "Glassdoor reviews City of Montgomery Alabama employer",
+          "collected_at": "2026-03-07T04:33:20.563525+00:00"
+        }
+      ]
+    },
+    "google_maps": {
+      "count": 34,
+      "sample": [
+        {
+          "title": "MGM Employers - Montgomery Regional ...",
+          "url": "https://www.montgomerychamber.com/mgm-employers",
+          "description": "Top Employers ; Baptist Health, 4,300, Hospitals/Clinics ; Hyundai Motor Manufacturing Alabama, 3,530, Automobile Manufacturing ; ALFA Companies, 2,568, Insurance\u00a0...",
+          "source": "google_maps_serp",
+          "signal_type": "local_business_discovery",
+          "query": "top employers Montgomery Alabama",
+          "collected_at": "2026-03-07T04:39:34.019260+00:00"
+        },
+        {
+          "title": "Best 30 Companies to Work for in Montgomery",
+          "url": "https://www.instawork.com/blog/best-companies-in-montgomery-al",
+          "description": "Nov 25, 2025 \u2014 1\\. Baptist Health \u00b7 2. Jackson Hospital \u00b7 3. Alliance Insurance Group \u00b7 4. Caddell Construction \u00b7 5. Hyundai Motor Manufacturing Alabama \u00b7 6. Giles\u00a0...",
+          "source": "google_maps_serp",
+          "signal_type": "local_business_discovery",
+          "query": "top employers Montgomery Alabama",
+          "collected_at": "2026-03-07T04:39:34.019260+00:00"
+        },
+        {
+          "title": "Largest Employers | Jobs",
+          "url": "https://www.careeronestop.org/Toolkit/Jobs/find-largest-employers.aspx?location=AL",
+          "description": "MONTGOMERY. Insurance. 7,200. 4. Mercedes-Benz USA LLC. VANCE. Automobile-Manufacturers. 6,000. 5. Alabama Power Co. BIRMINGHAM. Electric Companies. 5,000. 5.",
+          "source": "google_maps_serp",
+          "signal_type": "local_business_discovery",
+          "query": "top employers Montgomery Alabama",
+          "collected_at": "2026-03-07T04:39:34.019260+00:00"
+        }
+      ]
+    }
+  }
+}

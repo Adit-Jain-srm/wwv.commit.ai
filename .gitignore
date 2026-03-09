@@ -15,9 +15,6 @@ dist/
 build/
 .pytest_cache/
 
-# Data
-data_collection/data/
-
 # Frontend
 frontend/.next/
 frontend/node_modules/

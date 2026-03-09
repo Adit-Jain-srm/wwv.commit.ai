@@ -1,0 +1,955 @@
+[
+  {
+    "title": "State of Alabama",
+    "url": "https://www.linkedin.com/company/state-of-alabama",
+    "description": "State of Alabama | 9,425 followers on LinkedIn. Office of Information Technology",
+    "source": "linkedin_company",
+    "signal_type": "company_profile",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00",
+    "employee_count": "51-200 employees",
+    "industry": "Government Administration"
+  },
+  {
+    "title": "Alabama State University",
+    "url": "https://www.linkedin.com/school/alabama-state-university/",
+    "description": "Alabama State University | 36,730 followers on LinkedIn. ASU is a student-centered and diverse public historically black University committed to achieving excellence in teaching, research and public service.",
+    "source": "linkedin_company",
+    "signal_type": "company_profile",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00",
+    "employee_count": "2-10 employees",
+    "industry": "Higher Education",
+    "headquarters": "Montgomery, al"
+  },
+  {
+    "title": "Amazon Web Services (AWS)",
+    "url": "https://www.linkedin.com/company/amazon-web-services",
+    "description": "Amazon Web Services (AWS) | 10,703,528 followers on LinkedIn. Official Global LinkedIn page for Amazon Web Services (AWS). | Launched in 2006, Amazon Web Services (AWS) began exposing key infrastructure services to businesses in the form of web services -- now widely known as cloud computing. The ultimate benefit of cloud computing, and AWS, is the ability to leverage a new business model and turn capital infrastructure expenses into variable costs. Businesses no longer need to plan and procure ",
+    "source": "linkedin_company",
+    "signal_type": "company_profile",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00",
+    "employee_count": "10,001+ employees",
+    "industry": "IT Services and IT Consulting",
+    "headquarters": "Seattle, WA"
+  },
+  {
+    "title": "Google",
+    "url": "https://www.linkedin.com/company/google",
+    "description": "Google | 41,040,113 followers on LinkedIn. A problem isn&#39;t truly solved until it&#39;s solved for all. Googlers build products that help create opportunities for everyone, whether down the street or across the globe. Bring your insight, imagination and a healthy disregard for the impossible.",
+    "source": "linkedin_company",
+    "signal_type": "company_profile",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00",
+    "employee_count": "10,001+ employees",
+    "industry": "Software Development",
+    "headquarters": "Mountain View, CA",
+    "specialties": "search, ads, mobile, android, online video, apps, machine learning, virtual reality, cloud, hardware, artificial intelligence, youtube, and software"
+  },
+  {
+    "title": "License and Revenue | City of Montgomery, AL",
+    "url": "https://www.montgomeryal.gov/work/business-resources/license-and-revenue",
+    "description": "The License and Revenue Division assists businesses in the City of Montgomery when issuing and maintaining appropriate business licenses and sales tax numbers.[Read more](https://www.montgomeryal.gov/work/business-resources/license-and-revenue#:~:text=The%20License%20and%20Revenue%20Division,your%20",
+    "signal_type": "general",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "City Of Montgomery Announces 2026 Business License ...",
+    "url": "https://www.montgomeryindependent.com/news/city-of-montgomery-announces-2026-business-license-renewal-information/article_305d18e8-657f-43cf-8514-124f20d7e5d8.html",
+    "description": "Nov 5, 2025 \u2014 The City of Montgomery reminds all business owners that the 2026 business license renewal period is approaching. All 2025 business licenses\u00a0...[Read more](https://www.montgomeryindependent.com/news/city-of-montgomery-announces-2026-business-license-renewal-information/article_305d18e8-",
+    "signal_type": "general",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Businesses - Alabama Department of Revenue",
+    "url": "https://www.revenue.alabama.gov/businesses/",
+    "description": "Alabama Department of Revenue (.gov)",
+    "signal_type": "general",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery County Commission Approves FY2026 Budget",
+    "url": "https://www.mc-ala.org/Home/Components/News/News/236/",
+    "description": "Sep 16, 2025 \u2014 (Sept. 16, 2025) -- The Montgomery County Commission has approved a $156,586,324 budget for fiscal year 2026, focused on economic development,\u00a0...[Read more](https://www.mc-ala.org/Home/Components/News/News/236/#:~:text=\\(Sept.%2016%2C%202025\\)%20%2D%2D%20The,public%20safety%20and%20i",
+    "signal_type": "economic_development",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Business and License - Alabama Department of Revenue",
+    "url": "https://www.revenue.alabama.gov/division/business-license/",
+    "description": "Alabama Department of Revenue (.gov)",
+    "signal_type": "general",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Chamber to Announce Major Industry Expansion and ...",
+    "url": "https://www.montgomerychamber.com/news/details/news-release-2-25-2026",
+    "description": "Feb 25, 2026 \u2014 Montgomery, Ala., February 25, 2026 - The Montgomery Regional Chamber will announce a major existing industry expansion and release new data\u00a0...[Read more](https://www.montgomerychamber.com/news/details/news-release-2-25-2026#:~:text=Montgomery%2C%20Ala.%2C%20February%2025%2C%202026,e",
+    "signal_type": "expansion",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Documents & Publications - Made in Alabama",
+    "url": "https://www.madeinalabama.com/resources/documents/",
+    "description": "The 2025 Economic Development Guide is the source for updated information about the resources and incentives available to business and industry locating in\u00a0...[Read more](https://www.madeinalabama.com/resources/documents/#:~:text=New%20%26%20Expanding%20Industry%20Report)",
+    "signal_type": "expansion",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Friendly Reminder! Be sure to renew your business license ...",
+    "url": "https://www.instagram.com/p/DT2-9dMCJ9Z/",
+    "description": "Be sure to renew your business license this month to avoid penalties. If you're in Montgomery, AL, the deadline is February 3, 2026. Visit https\u00a0...[Read more](https://www.instagram.com/p/DT2-9dMCJ9Z/#:~:text=Be%20sure%20to%20renew%20your,February%203%2C%202026.%20Visit%20https)",
+    "signal_type": "general",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Mayor Steven L. Reed Presents FY 2026 Budget Proposal ...",
+    "url": "https://www.montgomeryal.gov/Home/Components/News/News/4715/16",
+    "description": "Aug 19, 2025 \u2014 Mayor Steven L. Reed today presented his proposed Fiscal Year 2026 General Fund Operating and Debt Service Budget to the Montgomery City\u00a0...[Read more](https://www.montgomeryal.gov/Home/Components/News/News/4715/16#:~:text=Mayor%20Steven%20L.%20Reed%20today,Budget%20to%20the%20Montgom",
+    "signal_type": "general",
+    "query": "new business filings Montgomery AL 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "DAS North America Announces $77.6 Million Expansion in ...",
+    "url": "https://www.montgomeryal.gov/Home/Components/News/News/4850/16",
+    "description": "Feb 26, 2026 \u2014 DAS North America Announces $77.6 Million Expansion in Montgomery as Region Ranks Among Alabama's Top Growth Markets \u00b7 Advanced manufacturing\u00a0...[Read more](https://www.montgomeryal.gov/Home/Components/News/News/4850/16#:~:text=DAS%20North%20America%20Announces%20%2477.6,Among%20Alaba",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery County Rises as an Economic Powerhouse ...",
+    "url": "https://www.montgomeryal.gov/Home/Components/News/News/4852/16",
+    "description": "Feb 26, 2026 \u2014 More than half a billion dollars in advanced manufacturing growth; Major expansions across automotive suppliers tied to Hyundai Motor\u00a0...[Read more](https://www.montgomeryal.gov/Home/Components/News/News/4852/16#:~:text=More%20than%20half%20a%20billion,to%20Hyundai%20Motor%20Manufactu",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Hyundai Power Transformers Announces $200 Million ...",
+    "url": "https://www.montgomerychamber.com/blog/press-releases-3604/post/hyundai-power-transformers-announces-200-million-expansion-in-montgomery-42379",
+    "description": "4 hours ago \u2014 With this expansion, HD-HPT's total investment in Montgomery will reach $277 million, supporting 600 jobs since the company first established\u00a0...[Read more](https://www.montgomerychamber.com/blog/press-releases-3604/post/hyundai-power-transformers-announces-200-million-expansion-in-mon",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "DAS North America announces $77.6M expansion, 100 ...",
+    "url": "https://www.wsfa.com/2026/02/26/das-north-america-announces-776m-expansion-100-new-jobs-montgomery/",
+    "description": "Feb 25, 2026 \u2014 A major automotive supplier, DAS North America, announced a $77.6 million expansion in Montgomery that will bring 100 new jobs to the city.[Read more](https://www.wsfa.com/2026/02/26/das-north-america-announces-776m-expansion-100-new-jobs-montgomery/#:~:text=A%20major%20automotive%20s",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Big news for Montgomery! DAS North America has ...",
+    "url": "https://www.facebook.com/montgomeryalabama/posts/big-news-for-montgomerydas-north-america-has-announced-a-776-million-expansion-b/1390883786419613/",
+    "description": "Facebook\u00a0\u00b7\u00a0City of Montgomery, Alabama Government",
+    "signal_type": "general",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery Positioned as One of the Southeast's ...",
+    "url": "https://www.montgomerychamber.com/blog/press-releases-3604/post/montgomery-positioned-as-one-of-the-southeast-s-strongest-growth-markets-42157",
+    "description": "Jan 28, 2026 \u2014 More than $1.1 billion of Montgomery's total investment came from existing companies reinvesting and expanding locally \u2014 representing over 90%\u00a0...[Read more](https://www.montgomerychamber.com/blog/press-releases-3604/post/montgomery-positioned-as-one-of-the-southeast-s-strongest-growt",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Hyundai announces $200M expansion at Montgomery facility",
+    "url": "https://thebamabuzz.com/hyundai-announces-200m-expansion-at-montgomery-facility/",
+    "description": "8 hours ago \u2014 The expansion is expected to create more than 200 new jobs + significantly increase Hyundai's domestic production capacity.",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Auto supplier plans to spend $430 million, create more ...",
+    "url": "https://www.madeinalabama.com/2026/03/auto-supplier-plans-to-spend-430-million-create-more-than-1300-jobs-at-former-gadsden-steel-mill-site/",
+    "description": "14 hours ago \u2014 Minth's investment in Gadsden is expected to create hundreds of jobs initially, with the potential to reach up to 1,325 positions as operations\u00a0...[Read more](https://www.madeinalabama.com/2026/03/auto-supplier-plans-to-spend-430-million-create-more-than-1300-jobs-at-former-gadsden-st",
+    "signal_type": "economic_development",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "DAS North America Announces $77.6M Expansion in ...",
+    "url": "https://www.knoxnews.com/press-release/story/151337/das-north-america-announces-77-6m-expansion-in-montgomery-as-region-ranks-among-alabamas-top-growth-markets/",
+    "description": "8 days ago \u2014 DAS North America Announces $77.6M Expansion in Montgomery as Region Ranks Among Alabama's Top Growth Markets. Distributed by EIN Presswire.[Read more](https://www.knoxnews.com/press-release/story/151337/das-north-america-announces-77-6m-expansion-in-montgomery-as-region-ranks-among-ala",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama business growth expansion",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Sales Representative - No Experience Required",
+    "url": "",
+    "description": "",
+    "signal_type": "general",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Alabama Title Examiner",
+    "url": "",
+    "description": "",
+    "signal_type": "general",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Diageo North America Announces New Manufacturing and ...",
+    "url": "https://www.diageo.com/en/news-and-media/press-releases/2025/diageo-north-america-announces-new-manufacturing-and-warehousing-facility-in-alabama",
+    "description": "Jan 30, 2025 \u2014 The new facility, which will be referred to as 'Diageo Montgomery,' will provide a new point of operations closer to the company's beverage\u00a0...[Read more](https://www.diageo.com/en/news-and-media/press-releases/2025/diageo-north-america-announces-new-manufacturing-and-warehousing-faci",
+    "signal_type": "general",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "New and Expanding Industries",
+    "url": "https://www.montgomerychamber.com/new-expanding-industries",
+    "description": "Over the last 5 years, Montgomery has announced 4,701 jobs, 122 major projects, and a record-breaking $3.6 Billion in capital investment.[Read more](https://www.montgomerychamber.com/new-expanding-industries#:~:text=Over%20the%20last%205%20years%2C,%243.6%20Billion%20in%20capital%20investment.)",
+    "signal_type": "expansion",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "15 Startup jobs in Montgomery",
+    "url": "https://www.linkedin.com/jobs/startup-jobs-montgomery-al?trk=public_profile_jserp",
+    "description": "15 Startup Jobs in Montgomery \u00b7 BMS Controls Systems Specialist I \u00b7 Tech Lead, Web Core Product & Chrome Extension - Montgomery, USA \u00b7 Installation Technician -\u00a0...[Read more](https://www.linkedin.com/jobs/startup-jobs-montgomery-al?trk=publicprofilejserp#:~:text=15%20Startup%20Jobs%20in%20Montgomer",
+    "signal_type": "new_business",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Diageo North America announces new $415m ...",
+    "url": "https://www.themanufacturer.com/articles/diageo-north-america-announces-new-415m-manufacturing-and-warehousing-facility-in-alabama/",
+    "description": "Feb 7, 2025 \u2014 Diageo North America has announced plans to open a new $415m manufacturing and warehousing facility in Montgomery, Alabama, creating hundreds of jobs in the\u00a0...[Read more](https://www.themanufacturer.com/articles/diageo-north-america-announces-new-415m-manufacturing-and-warehousing-fac",
+    "signal_type": "general",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Premier Tech invests $33M for the construction of a new ...",
+    "url": "https://www.premiertech.com/news/new-facility-montgomery",
+    "description": "Jul 20, 2022 \u2014 Premier Tech announces a 33 million investment for the construction of a new facility in Montgomery, Alabama, for its Systems and Automation business group.[Read more](https://www.premiertech.com/news/new-facility-montgomery#:~:text=Premier%20Tech%20announces%20a%2033,Systems%20and%20",
+    "signal_type": "infrastructure",
+    "query": "Montgomery AL new companies opening",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Governor Ivey announces record-breaking year for ...",
+    "url": "https://www.sedc.org/news/governor-ivey-announces-record-breaking-year-for-alabama-economic-development",
+    "description": "Southern Economic Development Council | SEDC",
+    "signal_type": "economic_development",
+    "query": "Montgomery Alabama economic development news",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Economic Development & Growth - Montgomery Regional ...",
+    "url": "https://www.montgomerychamber.com/economic-development-growth",
+    "description": "Our 2025 Strategic Priorities focus on targeted economic development, manufacturing growth, and positioning Montgomery as a leading logistics and technology hub\u00a0...[Read more](https://www.montgomerychamber.com/economic-development-growth#:~:text=Our%202025%20Strategic%20Priorities%20focus,technology",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama economic development news",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Economic Development | City of Montgomery, AL",
+    "url": "https://www.montgomeryal.gov/government/city-government/city-departments/community-development",
+    "description": "Impact Montgomery is dedicated to fostering inclusive economic growth by advancing community development, real estate projects, placemaking initiatives, retail\u00a0...[Read more](https://www.montgomeryal.gov/government/city-government/city-departments/community-development#:~:text=Impact%20Montgomery%20",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama economic development news",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "CentrAL Inc!: Home",
+    "url": "https://centralalabamainc.com/",
+    "description": "DAS North America announces $77.6 Million expansion in Montgomery as Region ranks among Alabama's Top Growth Markets. Montgomery, Ala. \u2014DAS North America\u00a0...[Read more](https://centralalabamainc.com/#:~:text=DAS%20North%20America%20announces%20%2477.6,Montgomery%2C%20Ala.%20%E2%80%94DAS%20North%20Am",
+    "signal_type": "expansion",
+    "query": "Montgomery Alabama economic development news",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Economic Development - Community Development Department",
+    "url": "https://www.montgomeryal.gov/government/city-government/city-departments/community-development",
+    "description": "Impact Montgomery is dedicated to fostering inclusive economic growth by advancing community development, real estate projects, placemaking initiatives, retail\u00a0...[Read more](https://www.montgomeryal.gov/government/city-government/city-departments/community-development#:~:text=Impact%20Montgomery%20",
+    "signal_type": "expansion",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Highlights from MCEDC's 2025 Annual Report",
+    "url": "https://thinkmoco.com/why-moco/success-stories/building-a-stronger-montgomery-county-economy-highlights-from-mcedcs-2025-annual-report/",
+    "description": "Montgomery County Economic Development Corporation",
+    "signal_type": "economic_development",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Economic Development Platform",
+    "url": "https://www.montgomerycountymd.gov/COUNCIL/resources/EconomicDevelopment/edp.html",
+    "description": "The Council supports a four-pillar economic development platform that is business-friendly and leverages our assets through continued investment.[Read more](https://www.montgomerycountymd.gov/COUNCIL/resources/EconomicDevelopment/edp.html#:~:text=The%20Council%20supports%20a%20four%2Dpillar,our%20as",
+    "signal_type": "economic_development",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery County Delivered Big Business Wins in 2025",
+    "url": "https://thinkmoco.com/why-moco/success-stories/montgomery-county-delivered-big-business-wins-in-2025/",
+    "description": "Montgomery County Economic Development Corporation",
+    "signal_type": "economic_development",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Governor Shapiro Secures Over $1 Billion Investment ... - DCED",
+    "url": "https://dced.pa.gov/newsroom/governor-shapiro-secures-over-1-billion-investment-from-johnson-johnson-to-build-new-cancer-fighting-manufacturing-facility-in-montgomery-county-creating-more-than-500-new-jobs/",
+    "description": "PA Department of Community & Economic Development (.gov)",
+    "signal_type": "economic_development",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery Development Fund",
+    "url": "https://www.montgomeryil.org/806/Montgomery-Development-Fund",
+    "description": "The Montgomery Development Fund (MDF) was established to provide financial support to new or expanding business in the Village.[Read more](https://www.montgomeryil.org/806/Montgomery-Development-Fund#:~:text=The%20Montgomery%20Development%20Fund%20\\(MDF\\),business%20in%20the%20Village%3B%20and%3A)",
+    "signal_type": "expansion",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery attracting investments, new jobs",
+    "url": "https://www.montgomeryadvertiser.com/story/news/local/alabama/2025/04/16/montgomery-attracting-investments-new-jobs/82993120007/",
+    "description": "Apr 16, 2025 \u2014 Montgomery generated 15% of 2024 capital investments in Alabama, new data shows \u00b7 Top five in the state in capital investment in new projects.[Read more](https://www.montgomeryadvertiser.com/story/news/local/alabama/2025/04/16/montgomery-attracting-investments-new-jobs/82993120007/#:~",
+    "signal_type": "economic_development",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Capital Region on the Rise: Montgomery's Economic ...",
+    "url": "https://www.montgomerychamber.com/blog/press-releases-3604/post/capital-region-on-the-rise-montgomery-s-economic-momentum-powers-regional-progress-montgomery-chamber-celebrates-regional-wins-in-2024-statewide-industry-report-40775",
+    "description": "Apr 4, 2025 \u2014 Montgomery landed $1.1 billion in capital investment and 497 new jobs in 2024\u2014clear evidence of the strength, readiness, and momentum powering\u00a0...[Read more](https://www.montgomerychamber.com/blog/press-releases-3604/post/capital-region-on-the-rise-montgomery-s-economic-momentum-powers",
+    "signal_type": "economic_development",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Thrive Montgomery 2050 - Envisioning a Sustainable Future",
+    "url": "https://montgomeryplanning.org/planning/master-plan-list/general-plans/thrive-montgomery-2050/",
+    "description": "Thrive Montgomery 2050 proposes to concentrate development along major corridors to maximize the efficiency of infrastructure, preserve land, and focus\u00a0...[Read more](https://montgomeryplanning.org/planning/master-plan-list/general-plans/thrive-montgomery-2050/#:~:text=Thrive%20Montgomery%202050%20p",
+    "signal_type": "infrastructure",
+    "query": "Montgomery economic revitalization investment",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery, we're growing! - Meta Data Centers",
+    "url": "https://datacenters.atmeta.com/2025/09/montgomery-were-growing/",
+    "description": "Sep 23, 2025 \u2014 Meta is excited to announce that the Montgomery Data Center campus is expanding with two new buildings, bringing the campus footprint to\u00a0...",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Meta to significantly expand Montgomery data center",
+    "url": "https://www.wsfa.com/2025/09/23/meta-significantly-expand-montgomery-data-center/",
+    "description": "Sep 23, 2025 \u2014 Meta will be expanding plans for the data center, bringing the campus to more than 1.3 million square feet and the company's total investment to\u00a0...",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Meta Awards Hensel Phelps Montgomery Data Center",
+    "url": "https://www.henselphelps.com/meta-awards-hensel-phelps-montgomery-data-center/",
+    "description": "May 9, 2024 \u2014 The Montgomery data center, spanning 715,000 SF and designed to be AI-optimized, will become Meta's 24th data hub and 20th in the United States.",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery Data Centers & Colocation",
+    "url": "https://baxtel.com/data-center/montgomery",
+    "description": "Explore 7 data centers in Montgomery. Compare colocation facilities with detailed specs, pricing, and location maps for informed decisions.",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery Data Center - Montgomery AL",
+    "url": "https://www.facebook.com/MontgomeryDataCenter/",
+    "description": "Facebook\u00a0\u00b7\u00a0Montgomery Data Center",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Alabama data centers multiply as artificial intelligence fuels ...",
+    "url": "https://www.wbrc.com/2026/02/18/alabama-data-centers-multiply-artificial-intelligence-fuels-growth/",
+    "description": "Feb 17, 2026 \u2014 Meta is building a second data center in Montgomery with a combined investment of $3 billion, according to the company. Meta Huntsville Data\u00a0...",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Consider Caddell \u2013 Data Centers",
+    "url": "https://caddell.com/consider-caddell-data-centers/",
+    "description": "Let's talk! Caddell Construction Company logo \u00b7 445 Dexter Avenue, Suite 11000. Montgomery, AL 36104 \u00b7 +1.334. 272.7723. \u00a9 2026 Copyright Caddell Construction.",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Governor Ivey Announces Meta Plans to Build $800 Million ...",
+    "url": "https://governor.alabama.gov/newsroom/2024/05/governor-ivey-announces-meta-plans-to-build-800-million-next-generation-data-center-in-montgomery/",
+    "description": "May 2, 2024 \u2014 Meta's new 715,000-square-foot, AI-optimized data center will be built off Interstate 65 in Montgomery, across from the Hyundai automotive\u00a0...",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Meta Montgomery Data Center",
+    "url": "https://www.datacentermap.com/usa/alabama/montgomery/meta-montgomery-data-center/",
+    "description": "In Montgomery, Alabama, Meta is undertaking a major project with an investment surpassing $800 million. Construction is scheduled to commence in 2024, with\u00a0...",
+    "signal_type": "data_center",
+    "query": "data center construction Montgomery Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Alabama has emerged as a major data center hub with 27 ...",
+    "url": "https://www.facebook.com/wtvynews4/posts/alabama-has-emerged-as-a-major-data-center-hub-with-27-facilities-now-operating-/1343560474476415/",
+    "description": "Alabama has emerged as a major data center hub with 27 facilities now operating or under construction statewide, including billion-dollar\u00a0...",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "United States - Meta Data Centers",
+    "url": "https://datacenters.atmeta.com/us-locations/",
+    "description": "Explore our data center locations, our clean and renewable energy projects, and our water stewardship efforts in the communities we operate in. Filters:.[Read more](https://datacenters.atmeta.com/us-locations/#:~:text=Explore%20our%20data%20center%20locations%2C,Filters%3A)",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Meta Building New $800M AI Data Center in Alabama ...",
+    "url": "https://aibusiness.com/verticals/meta-building-new-800m-ai-data-center-in-alabama-second-in-state",
+    "description": "The new 715,000 square feet site will be built in Montgomery and will be powered entirely by renewable energy sources. It will be the Meta's 20th data center in\u00a0...[Read more](https://aibusiness.com/verticals/meta-building-new-800m-ai-data-center-in-alabama-second-in-state#:~:text=The%20new%20715%2C",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Jackson County, Alabama \u2013 Google Data Center Location",
+    "url": "https://datacenters.google/locations/alabama/",
+    "description": "Settled in the foothills of the Appalachian mountains, Jackson County, Alabama, is supporting the community \u2014 and the cloud. Powered by carbon-free energy from\u00a0...[Read more](https://datacenters.google/locations/alabama/#:~:text=Settled%20in%20the%20foothills%20of,to%20keep%20the%20internet%20runnin",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "The developers of the proposed STREAM data center in the ...",
+    "url": "https://www.instagram.com/reel/DUSx0WbjrCd/",
+    "description": "](https://www.instagram.com/reel/DUSx0WbjrCd/)",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Meta Announces Expansion Of Montgomery Data Center",
+    "url": "https://www.montgomeryindependent.com/news/meta-announces-expansion-of-montgomery-data-center/article_165ae1e8-4acb-433c-a32a-594d99e5fcf9.html",
+    "description": "Sep 23, 2025 \u2014 Meta announced the expansion of its Montgomery Data Center, bringing the company's total investment in Alabama's capital region to more than\u00a0...",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Meta to build $800m data center in Montgomery, Alabama",
+    "url": "https://www.datacenterdynamics.com/en/news/meta-to-build-800m-data-center-in-montgomery-alabama/",
+    "description": "May 3, 2024 \u2014 The social media firm, formerly known as Facebook, this week announced plans to build a $800 million data center in Montgomery County.[Read more](https://www.datacenterdynamics.com/en/news/meta-to-build-800m-data-center-in-montgomery-alabama/#:~:text=The%20social%20media%20firm%2C%20fo",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Facebook to Build $750M Data Center in Huntsville, Alabama",
+    "url": "https://www.datacenterknowledge.com/hyperscalers/facebook-to-build-750m-data-center-in-huntsville-alabama",
+    "description": "Facebook is planning to spend $750 million to build the next of its sprawling data center campuses in Huntsville.[Read more](https://www.datacenterknowledge.com/hyperscalers/facebook-to-build-750m-data-center-in-huntsville-alabama#:~:text=Facebook%20is%20planning%20to%20spend,data%20center%20campuse",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Will the Bessemer, Alabama proposed data center actually ...",
+    "url": "https://www.reddit.com/r/Alabama/comments/1m03uqu/will_the_bessemer_alabama_proposed_data_center/",
+    "description": "The Alabama Rivers Alliance is reporting that the vote will be tomorrow morning to rezone the property for the proposed data center.[Read more](https://www.reddit.com/r/Alabama/comments/1m03uqu/willthebessemeralabamaproposeddatacenter/#:~:text=The%20Alabama%20Rivers%20Alliance%20is,for%20the%20propo",
+    "signal_type": "data_center",
+    "query": "AWS Google Meta data center Alabama",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "AI Factory vs. Data Center: Answers to Alabama questions",
+    "url": "https://www.wvtm13.com/article/ai-factor-data-center-alabama/70520217",
+    "description": "Feb 26, 2026 \u2014 Data centers and AI facilities are expanding in Alabama, with projects underway that promise jobs and tax revenue but raise concerns about\u00a0...",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Data centers in Alabama: Shelby County town puts 'very ...",
+    "url": "https://www.al.com/news/birmingham/2026/02/small-alabama-town-will-restrict-new-data-centers.html",
+    "description": "Feb 18, 2026 \u2014 The changes come as development for a data center in the city's industrial park is up for $200 million in investment by Canadian energy\u00a0...[Read more](https://www.al.com/news/birmingham/2026/02/small-alabama-town-will-restrict-new-data-centers.html#:~:text=The%20changes%20come%20as%20",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Alabama data center proposal moves forward",
+    "url": "https://www.selc.org/news/another-data-center-proposal-is-paused/",
+    "description": "Southern Environmental Law Center",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Data center in Bessemer continues to draw praise ...",
+    "url": "https://abc3340.com/news/abc-3340-news-iteam/data-center-in-bessemer-continues-to-draw-praise-skepticism-and-growing-questions-project-marvel-logistic-land-investments-development-mayor-kenneth-gulley-data-center-impact-environmental-concerns-zoning-plans-northern-beltline-follow-up",
+    "description": "Feb 5, 2026 \u2014 Bessemer is not alone. Across Alabama, large data centers are prompting questions about land use, infrastructure, and environmental impact.[Read more](https://abc3340.com/news/abc-3340-news-iteam/data-center-in-bessemer-continues-to-draw-praise-skepticism-and-growing-questions-project-",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Why Are Plans for This Alabama Data Center So Hush- ...",
+    "url": "https://wordinblack.com/2025/09/alabama-data-center-is-hush-hush/",
+    "description": "Sep 30, 2025 \u2014 Although developers claim that the hulking data centers provide jobs for their host communities, critics argue that they come at a price: air\u00a0...[Read more](https://wordinblack.com/2025/09/alabama-data-center-is-hush-hush/#:~:text=Although%20developers%20claim%20that%20the,strain%20on",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Two Alabama cities, two very different receptions for big ...",
+    "url": "https://www.apr.org/news/2026-02-19/two-alabama-cities-two-very-different-receptions-for-big-data-centers",
+    "description": "Feb 19, 2026 \u2014 The Shelby County town of Columbiana is becoming the first municipality in the state to pass new restrictions governing future data centers.",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Data centers and their impacts",
+    "url": "https://thecarbonalmanac.org/data-centers-and-their-impacts/",
+    "description": "This potential increased demand for energy is causing Alabama Power to increase their fossil fuel investments and purchase a gas-powered power plant, and it\u00a0...[Read more](https://thecarbonalmanac.org/data-centers-and-their-impacts/#:~:text=This%20potential%20increased%20demand%20for,monthly%20rates",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "The small-town Alabamians fighting a data center",
+    "url": "https://unherd.com/2025/08/the-small-town-alabamians-resisting-a-data-centre/?edition=us",
+    "description": "Aug 18, 2025 \u2014 That said, Alabama offers extensive tax incentives for data processing centers, including up to 30 years of abatement for non-educational\u00a0...[Read more](https://unherd.com/2025/08/the-small-town-alabamians-resisting-a-data-centre/?edition=us#:~:text=That%20said%2C%20Alabama%20offers%2",
+    "signal_type": "data_center",
+    "query": "data center impact Alabama infrastructure",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "5 companies bring $124 million in Pentagon work to ...",
+    "url": "https://www.al.com/news/2026/03/5-companies-bring-124-million-in-pentagon-work-to-alabama.html",
+    "description": "5 days ago \u2014 Four Alabama companies and Lockheed Martin Corp. have received at least $124 million in Department of Defense contracts, based on notices posted\u00a0...[Read more](https://www.al.com/news/2026/03/5-companies-bring-124-million-in-pentagon-work-to-alabama.html#:~:text=Four%20Alabama%20compani",
+    "signal_type": "defense_contract",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Contracts for Feb. 23, 2026",
+    "url": "https://www.war.gov/News/Contracts/Contract/Article/4412484/contracts-for-feb-23-2026/",
+    "description": "Feb 23, 2026 \u2014 Today's Department of War contracts valued at $7.5 million or more are now live on War.gov.,",
+    "signal_type": "general",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "2 Alabama businesses win massive war department ...",
+    "url": "https://www.al.com/news/2026/02/2-alabama-businesses-win-massive-war-department-contracts.html",
+    "description": "An initial tranche of $8.8 million will come from fiscal 2026 research, development, test and engineering funds. The contract runs from Feb. 19,\u00a0...[Read more](https://www.al.com/news/2026/02/2-alabama-businesses-win-massive-war-department-contracts.html#:~:text=An%20initial%20tranche%20of%20%248.8,",
+    "signal_type": "real_estate",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "M500 Water Main Replacement, Maxwell AFB - Sweetspot",
+    "url": "https://console.sweetspotgov.com/opportunity/federal-contract/45572c28-cf3d-50cf-8fec-de12da04cb3c",
+    "description": "Feb 10, 2026 \u2014 Offers are due by March 16, 2026, at 1:00 PM local time. The solicitation includes various FAR and DFARS clauses, covering aspects like payment\u00a0...[Read more](https://console.sweetspotgov.com/opportunity/federal-contract/45572c28-cf3d-50cf-8fec-de12da04cb3c#:~:text=Related%20Contract%",
+    "signal_type": "defense_contract",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Contracts for Feb. 6, 2026",
+    "url": "https://www.war.gov/News/Contracts/Contract/Article/4399519/contracts-for-feb-6-2026/",
+    "description": "Feb 6, 2026 \u2014 Today's Department of War contracts valued at $7.5 million or more are now live on War.gov.,",
+    "signal_type": "general",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "march cerfp scte",
+    "url": "https://sam.gov/workspace/contract/opp/6db2d66894ed4ea987b0892ba6abdf31/view",
+    "description": "Feb 20, 2026 \u2014 Contracting Office Address. KO FOR ALARNG DO NOT DELETE. 1740 CONG W L DICKINSON DR. MONTGOMERY, AL 36109-2602 USA ... Department of Defense\u00a0...[Read more](https://sam.gov/workspace/contract/opp/6db2d66894ed4ea987b0892ba6abdf31/view#:~:text=Contracting%20Office%20Address,MONTGOMERY%2C",
+    "signal_type": "general",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Alabama Institute for the Deaf & Blind picks up two major ...",
+    "url": "https://aladefense.com/alabama-institute-for-the-deaf-blind-picks-up-two-major-defense-contracts/",
+    "description": "Alabama Institute for the Deaf & Blind picks up two major defense contracts ... Montgomery picks up $341 million food-and-beverage military contract. Alabama\u00a0...[Read more](https://aladefense.com/alabama-institute-for-the-deaf-blind-picks-up-two-major-defense-contracts/#:~:text=Alabama%20Institute%2",
+    "signal_type": "defense_contract",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "A Virginia-based defense technology company has been ...",
+    "url": "https://www.facebook.com/whntnews19/posts/a-virginia-based-defense-technology-company-has-been-awarded-a-major-contract-to/1479705370406366/",
+    "description": "A Virginia-based defense technology company has been awarded a major contract to help advance missile defense testing capabilities in North\u00a0...",
+    "signal_type": "general",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Indigent Defense Services - Alabama Department of Finance",
+    "url": "https://finance.alabama.gov/indigent-defense",
+    "description": "INDIGENT DEFENSE SERVICES \u00b7 FY 2026 Contract Application Memo \u00b7 Act 2024-161 Memo - Updated \u00b7 Investigator Licensing by APIB \u00b7 Act 2023-368 Memo \u00b7 Expert Fee\u00a0...[Read more](https://finance.alabama.gov/indigent-defense#:~:text=INDIGENT%20DEFENSE%20SERVICES&text=FY%202026%20Contract%20Application%20Me",
+    "signal_type": "general",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "A Month's Worth of Defense Contracts in Alabama",
+    "url": "https://businessalabama.com/a-months-worth-of-defense-contracts-in-alabama/",
+    "description": "Defense contracts awarded from June 19 to July 19 to Alabama companies and to non-Alabama companies for work to be performed in Alabama. By. Chris McFadyen. -.[Read more](https://businessalabama.com/a-months-worth-of-defense-contracts-in-alabama/#:~:text=Defense%20contracts%20awarded%20from%20June,%",
+    "signal_type": "defense_contract",
+    "query": "defense contracts Montgomery Alabama 2026",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Request for Information - Maxwell AFB BOS",
+    "url": "https://sam.gov/opp/8d92535af25343605d4455e6fb361a4f/view",
+    "description": "THIS IS NOT A REQUEST FOR PROPOSAL. It is not to be construed as a commitment by the Government to issue a solicitation or ultimately award a contract.[Read more](https://sam.gov/opp/8d92535af25343605d4455e6fb361a4f/view#:~:text=THIS%20IS%20NOT%20A%20REQUEST,or%20ultimately%20award%20a%20contract.)",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "City of Montgomery signs landmark lifeguard partnership ...",
+    "url": "https://www.maxwell.af.mil/News/Display/Article/4199707/city-of-montgomery-signs-landmark-lifeguard-partnership-agreement-with-maxwell/",
+    "description": "May 28, 2025 \u2014 City of Montgomery signs landmark lifeguard partnership agreement with Maxwell AFB. Published May 28, 2025; By Lt. Col. William Russell; Maxwell\u00a0...[Read more](https://www.maxwell.af.mil/News/Display/Article/4199707/city-of-montgomery-signs-landmark-lifeguard-partnership-agreement-wit",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Maxwell AFB - Small Business Contracting Information and ...",
+    "url": "https://defensestudies.net/pages/maxwell-air-force-base-small-business-information",
+    "description": "Maxwell AFB - Small business opportunities. Information about small business set-aside contracts and subcontracting with prime defense contractors.",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "maxwell-gunter air force Bids, RFP & Government Contracts",
+    "url": "https://www.instantmarkets.com/q/maxwell-gunter_air_force",
+    "description": "maxwell-gunter air force Bids, RFP & Government Contracts. Also search for maxwell-gunter air force Contract Awards, RFIs, RFQs, and other Opportunities.",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "DOGE: $465K Maxwell Air Force Base contract terminated",
+    "url": "https://www.wsfa.com/2025/03/18/doge-465k-maxwell-air-force-base-contract-terminated/",
+    "description": "Mar 18, 2025 \u2014 A Department of Defense contract has been terminated that was for \u201cnon-personal services, to serve as the Maxwell Air Force Base installations horticulturalist.[Read more](https://www.wsfa.com/2025/03/18/doge-465k-maxwell-air-force-base-contract-terminated/#:~:text=The%20post%20indica",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "CONTRACT to VECTRUS SYSTEMS CORPORATION",
+    "url": "https://www.usaspending.gov/award/CONT_AWD_FA300215C0008_9700_-NONE-_-NONE-",
+    "description": "View a summary page of this 2015 CONTRACT to VECTRUS SYSTEMS CORPORATION from the Department of Defense.",
+    "signal_type": "general",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Maxwell AFB Interactive White Boards RFI",
+    "url": "https://usfcr.com/search/opportunities/?oppId=0044199b682d48d8baaf650b5c4a433d",
+    "description": "US Federal Contractor Registration (USFCR)",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "FA300217C0009",
+    "url": "https://www.highergov.com/contract/FA300217C0009/",
+    "description": "Definitive Contract FA300217C0009 worth up to $1.8B was awarded to Vectrus Systems on 3/17/17 by the Air Education and Training Command (FA3002-17-C-0009)",
+    "signal_type": "general",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Maxwell AFB responds to contract termination by DOGE",
+    "url": "https://www.wsfa.com/video/2025/03/19/maxwell-afb-responds-contract-termination-by-doge/",
+    "description": "](https://www.wsfa.com/video/2025/03/19/maxwell-afb-responds-contract-termination-by-doge/)",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Defense Contract Jobs, Employment in Maxwell AFB, AL",
+    "url": "https://www.indeed.com/q-defense-contract-l-maxwell-afb,-al-jobs.html",
+    "description": "Easily apply. Caddell Construction. Montgomery, AL. $62,100 - $93,200 a year. Full-time. 401(k). Health insurance. Vision insurance. Dental insurance. Gym\u00a0...[Read more](https://www.indeed.com/q-defense-contract-l-maxwell-afb,-al-jobs.html#:~:text=Easily%20apply,Vision%20insurance)",
+    "signal_type": "defense_contract",
+    "query": "Maxwell Air Force Base contracts Montgomery",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Expert Commercial Real Estate Services in Central Alabama",
+    "url": "https://moorecompanyrealty.com/",
+    "description": "Expert commercial real estate services, including property management & investment, in Montgomery and the Southeast since 1894.",
+    "signal_type": "economic_development",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Commercial Properties, Inc. - Real Estate Services",
+    "url": "https://commercialpropertiesinc.net/",
+    "description": "Comprehensive development services for commercial and residential properties, including planning, construction oversight, and project management. Brokerage. The\u00a0...",
+    "signal_type": "infrastructure",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery, AL Commercial Real Estate for Sale",
+    "url": "https://www.partnersrealty.info/commercial/",
+    "description": "Ready to explore commercial real estate opportunities in Montgomery? View our latest listings or contact us today to speak with an expert!",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Kyser Property",
+    "url": "https://kyserproperties.com/",
+    "description": "Developing. Our services are designed to help you navigate every stage of the commercial property development process, from conceptualization to completion.",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery, AL Commercial Real Estate Properties for Sale",
+    "url": "https://www.loopnet.com/search/commercial-real-estate/montgomery-al/for-sale/",
+    "description": "Currently, there are 128 Commercial Real Estate listings for sale near Montgomery, AL. LoopNet consistently features the most up-to-date commercial property\u00a0...",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Aronov Montgomery, Alabama, commercial, real estate ...",
+    "url": "https://aronov.com/commercial/",
+    "description": "Aronov provides a premier commercial real estate brokerage experience. Our dynamic approach goes far beyond a transaction to create a proven process.",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "EASTCHASE OUTPARCELS",
+    "url": "https://jwacompanies.com/properties/eastchase-outparcels/",
+    "description": "EastChase is a 330 acre mixed-use development in the Montgomery, Alabama MSA. \u00b7 Montgomery is a growing hub for commerce, culture, and education.",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Development Division | City of Montgomery, AL",
+    "url": "https://www.montgomeryal.gov/government/city-government/city-departments/community-development/development-division",
+    "description": "Real Estate. Advance the sale and redevelopment of strategic City-owned properties to leverage private economic investment and promote community revitalization.",
+    "signal_type": "economic_development",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Top Commercial Real Estate Companies in Montgomery",
+    "url": "https://clutch.co/real-estate/montgomery",
+    "description": "Commercial Property Management company Aronov is located in Montgomery, Alabama. Their services include Commercial Property Management.",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Hodges CRE: Award-Winning Commercial Real Estate Broker",
+    "url": "https://www.hodgescommercialrealestate.com/",
+    "description": "Discover top Alabama third-party warehousing & logistics with Hodges Commercial Real Estate. 30+ years experience in Southeast, finding the perfect space\u00a0...",
+    "signal_type": "real_estate",
+    "query": "Montgomery AL commercial real estate development",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery County Police Department faces critical staff ...",
+    "url": "https://www.fox5dc.com/news/montgomery-county-police-department-faces-critical-staff-shortage",
+    "description": "Nov 4, 2025 \u2014 Montgomery County is sounding the alarm over a serious police staffing shortage, with fears that these vacancies could impact public safety in\u00a0...[Read more](https://www.fox5dc.com/news/montgomery-county-police-department-faces-critical-staff-shortage#:~:text=Montgomery%20County%20is%2",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Legislature considering allowing state to take over staffing ...",
+    "url": "https://www.waka.com/2026/02/26/legislature-considering-allowing-state-to-take-over-staffing-at-montgomery-police-department/",
+    "description": "Feb 26, 2026 \u2014 The Montgomery Police Department has not publicly released its current staffing numbers, citing safety concerns. Barfoot says credible sources\u00a0...[Read more](https://www.waka.com/2026/02/26/legislature-considering-allowing-state-to-take-over-staffing-at-montgomery-police-department/#:",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Montgomery mayor fights police force minimum staffing bill",
+    "url": "https://www.al.com/politics/2026/02/montgomery-mayor-fights-police-force-minimum-staffing-bill-we-dont-need-any-meddling-by-the-state.html",
+    "description": "Feb 18, 2026 \u2014 Based on the 2020 census, which showed Montgomery had a population of 200,603, the city would need about 400 officers to hit the minimum. If the\u00a0...[Read more](https://www.al.com/politics/2026/02/montgomery-mayor-fights-police-force-minimum-staffing-bill-we-dont-need-any-meddling-by-t",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "The Montgomery County Police Department is sounding ...",
+    "url": "https://www.facebook.com/fox5dc/photos/the-montgomery-county-police-department-is-sounding-the-alarm-over-a-serious-pol/1291314523033105/",
+    "description": "The Montgomery County Police Department is sounding the alarm over a serious police staffing shortage, expressing fears that these vacancies\u00a0...",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "Senate committee considers police staffing bill that could ...",
+    "url": "https://www.wcov.com/news/senate-committee-considers-police-staffing-bill-that-could-impact-montgomery/article_b9d53d9f-4ef6-49bf-868a-a7da2ee2be95.html",
+    "description": "Feb 18, 2026 \u2014 The proposed legislation would apply only to Class 3 municipalities, which currently include Huntsville and Montgomery. Under the bill, law\u00a0...[Read more](https://www.wcov.com/news/senate-committee-considers-police-staffing-bill-that-could-impact-montgomery/article_b9d53d9f-4ef6-49bf-",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "New Report Reveals Uptick in MCPD Police Detentions & ...",
+    "url": "https://www.mymcmedia.org/public-safety-committee-reviews-2024-police-statistics/",
+    "description": "Jul 21, 2025 \u2014 Montgomery County police detentions jumped more than 25 percent in 2024, while officer patrol staffing fell by nearly the same margin.[Read more](https://www.mymcmedia.org/public-safety-committee-reviews-2024-police-statistics/#:~:text=Montgomery%20County%20police%20detentions%20jumpe",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  },
+  {
+    "title": "The Never Ending Headache of Police Staffing",
+    "url": "https://montgomeryperspective.com/2025/11/03/the-never-ending-headache-of-police-staffing/",
+    "description": "Nov 3, 2025 \u2014 The Never Ending Headache of Police Staffing \u00b7 Filled sworn position strength is down 16% since 2019. The chart below shows filled sworn\u00a0...[Read more](https://montgomeryperspective.com/2025/11/03/the-never-ending-headache-of-police-staffing/#:~:text=The%20Never%20Ending%20Headache%20o",
+    "signal_type": "hiring_surge",
+    "query": "Montgomery police staffing shortage",
+    "source": "serp",
+    "collected_at": "2026-03-07T04:25:54.389079+00:00"
+  }
+]
