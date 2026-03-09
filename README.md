@@ -15,7 +15,7 @@ Local governments and workforce agencies lack a unified, real-time view of hirin
 **Workforce Pulse** is an AI-powered decision-support platform that:
 
 - **Aggregates job postings** from LinkedIn, Indeed, USAJobs, and the Montgomery Open Data Portal via Bright Data into a single, live feed of regional hiring activity (public, federal, and private sectors).
-- **Identifies hiring trends** by industry (government, defense, healthcare, manufacturing, tech, education, public safety) and tags each role by sector.
+- **Identifies hiring trends** by industry (government, defense, healthcare, manufacturing, tech, education, public safety) and tags each role by sector. With a single pipeline run, displays an honest sector snapshot; with multiple runs over time, builds real multi-week trend analysis.
 - **Monitors business growth signals** — new business filings, defense contracts, data center projects (AWS / Google / Meta), commercial real estate activity, and open-data economic indicators.
 - **Tracks employer quality** via Glassdoor ratings and Google Maps local business discovery for Montgomery's key employers.
 - **Maps training needs and skills gaps** by comparing in-demand skills from job descriptions against local education programs (ASU, AUM, Trenholm State, Faulkner, Huntingdon).
@@ -28,7 +28,7 @@ Local governments and workforce agencies lack a unified, real-time view of hirin
 | Data Collection | **Bright Data SDK (Python)** — LinkedIn jobs/companies, Indeed, Glassdoor reviews, Google Maps, SERP API, Web Unlocker with AI extract; **Montgomery Open Data Portal**; 4 async collectors in `data_collection/` |
 | AI / Analysis | **Azure OpenAI (GPT-4o)** for insights, policy briefs, Q&A, and scenario simulation with retry logic; Python analysis engine with compiled regex, skills-gap detection with synonym mapping, Montgomery-aligned industry classification (10 industries) |
 | Backend | **FastAPI** (`backend/`) — 14 REST endpoints with Pydantic validation, in-memory caching (30s TTL), structured logging; reads pipeline JSON, calls Azure OpenAI |
-| Frontend | **Next.js 16 (App Router)** + React 18, Tailwind CSS, ShadCN-style components, Recharts, Leaflet; 9 pages, demo mode with 6-month projections, progress bar with per-stage tracking, error boundaries, keyboard-accessible navigation |
+| Frontend | **Next.js 16 (App Router)** + React 18, Tailwind CSS, ShadCN-style components, Recharts, Leaflet; 9 pages, demo mode with 6-month projections, PDF export, progress bar with per-stage tracking, error boundaries, keyboard-accessible navigation |
 | Testing | **168 tests** (pytest + pytest-asyncio) covering API endpoints, data access, analysis, and edge cases |
 
 ## Architecture
@@ -55,7 +55,7 @@ frontend/                 # Next.js dashboard
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/jobs` | Jobs + dashboard summary + timeseries |
+| GET | `/api/jobs` | Jobs + dashboard summary + timeseries (real data only, no synthetic fill) |
 | GET | `/api/industries` | Industry breakdown |
 | GET | `/api/skills` | In-demand skills + skills gap analysis |
 | GET | `/api/economic-signals` | Business growth signals |

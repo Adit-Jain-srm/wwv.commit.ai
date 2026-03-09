@@ -1,70 +1,75 @@
-import { useCallback, useRef, useState } from "react";
-import { Search } from "lucide-react";
+"use client";
+
+import { useRef, useState } from "react";
+import { MessageCircle, Send, ChevronDown } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
-import { useSearch } from "../../lib/SearchContext";
 import { UserMenu } from "../UserMenu";
 
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+
+const AI_NAME = "Pulse AI";
+
+const SUGGESTED_QUESTIONS = [
+  "What industries are growing fastest in Montgomery?",
+  "What training programs should we fund?",
+  "What skills will be in demand next year?",
+  "How does public sector hiring compare to private?",
+];
+
+type Message = { role: "user" | "assistant"; content: string };
+
 interface TopNavProps {
-  searchSuggestions?: { type: string; name: string }[];
   onExportPdf?: () => void;
   exportLoading?: boolean;
 }
 
 export function TopNav({
-  searchSuggestions = [],
   onExportPdf,
-  exportLoading = false
+  exportLoading = false,
 }: TopNavProps) {
-  const { query, setQuery, setActiveSuggestion, setFilters } = useSearch();
-  const [focused, setFocused] = useState(false);
-  const [highlightIdx, setHighlightIdx] = useState(-1);
+  const [open, setOpen] = useState(false);
+  const [question, setQuestion] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [loading, setLoading] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const matches = query.trim().length > 0
-    ? searchSuggestions.filter(
-        (s) =>
-          s.name.toLowerCase().includes(query.toLowerCase()) ||
-          s.type.toLowerCase().includes(query.toLowerCase())
-      )
-    : [];
+  const send = async (q?: string) => {
+    const text = (q ?? question).trim();
+    if (!text || loading) return;
 
-  const handleSelect = (name: string) => {
-    setQuery(name);
-    setActiveSuggestion(name);
-    setFilters({
-      industry: matches.find((m) => m.name === name && m.type === "industry")?.name ?? null,
-      skill: matches.find((m) => m.name === name && m.type === "skill")?.name ?? null,
-      neighborhood: matches.find((m) => m.name === name && m.type === "neighborhood")?.name ?? null,
-    });
-    setFocused(false);
-    setHighlightIdx(-1);
-    inputRef.current?.blur();
+    setQuestion("");
+    setMessages((prev) => [...prev, { role: "user", content: text }]);
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/ask`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: text }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+      const answer =
+        typeof data.answer === "string"
+          ? data.answer
+          : "Sorry, I couldn't get an answer. Try again or run the data pipeline.";
+
+      setMessages((prev) => [...prev, { role: "assistant", content: answer }]);
+    } catch (e) {
+      const errMsg =
+        e instanceof Error ? e.message : "Backend unreachable. Start the API.";
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: `Unable to reach ${AI_NAME}: ${errMsg}` },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const visibleMatches = matches.slice(0, 8);
-
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
-      if (!focused || visibleMatches.length === 0) return;
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        setHighlightIdx((prev) => (prev < visibleMatches.length - 1 ? prev + 1 : 0));
-      } else if (e.key === "ArrowUp") {
-        e.preventDefault();
-        setHighlightIdx((prev) => (prev > 0 ? prev - 1 : visibleMatches.length - 1));
-      } else if (e.key === "Enter" && highlightIdx >= 0) {
-        e.preventDefault();
-        handleSelect(visibleMatches[highlightIdx].name);
-      } else if (e.key === "Escape") {
-        setFocused(false);
-        setHighlightIdx(-1);
-        inputRef.current?.blur();
-      }
-    },
-    [focused, visibleMatches, highlightIdx]
-  );
 
   return (
     <header className="print:hidden border-b border-slate-900/80 bg-slate-950/80 backdrop-blur">
@@ -89,67 +94,118 @@ export function TopNav({
         </div>
 
         <div className="flex items-center gap-3 shrink-0">
-          <div className="hidden lg:block">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-500" />
-              <input
-                ref={inputRef}
-                value={query}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  setQuery(v);
-                  setActiveSuggestion(null);
-                  setHighlightIdx(-1);
-                  const q = v.trim().toLowerCase();
-                  if (q.length < 2) {
-                    setFilters({ industry: null, skill: null, neighborhood: null });
-                    return;
-                  }
-                  const industry = searchSuggestions.find((s) => s.type === "industry" && s.name.toLowerCase().includes(q))?.name ?? null;
-                  const skill = searchSuggestions.find((s) => s.type === "skill" && s.name.toLowerCase().includes(q))?.name ?? null;
-                  const neighborhood = searchSuggestions.find((s) => s.type === "neighborhood" && s.name.toLowerCase().includes(q))?.name ?? null;
-                  setFilters({ industry, skill, neighborhood });
-                }}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setTimeout(() => { setFocused(false); setHighlightIdx(-1); }, 180)}
-                onKeyDown={handleKeyDown}
-                placeholder="Intelligence search — industries, skills, neighborhoods"
-                aria-label="Search industries, skills, and neighborhoods"
-                role="combobox"
-                aria-expanded={focused && visibleMatches.length > 0}
-                aria-autocomplete="list"
-                className={cn(
-                  "h-9 w-80 min-w-[18rem] xl:w-96 xl:min-w-[22rem] rounded-md border border-slate-800/80 bg-slate-900/70 pl-8 pr-2 text-[15px]",
-                  "placeholder:text-slate-500 focus:border-sky-500/70 focus:outline-none focus:ring-1 focus:ring-sky-500/70"
-                )}
-              />
-              {focused && visibleMatches.length > 0 && (
-                <div
-                  className="absolute left-0 right-0 top-full z-50 mt-1 max-h-56 overflow-auto rounded-md border border-slate-700 bg-slate-900 py-1 shadow-xl"
-                  role="listbox"
-                  onMouseDown={(e) => e.preventDefault()}
-                >
-                  {visibleMatches.map((s, i) => (
-                    <button
-                      key={`${s.type}-${s.name}-${i}`}
-                      type="button"
-                      role="option"
-                      aria-selected={i === highlightIdx}
-                      onClick={() => handleSelect(s.name)}
-                      className={cn(
-                        "flex w-full items-center gap-2 px-3 py-2 text-left text-[14px] text-slate-200 hover:bg-slate-800",
-                        i === highlightIdx && "bg-slate-800"
-                      )}
-                    >
-                      <span className="rounded bg-slate-700 px-1.5 py-0.5 text-[10px] uppercase text-slate-400">
-                        {s.type}
-                      </span>
-                      {s.name}
-                    </button>
-                  ))}
-                </div>
+          {/* ---- Pulse AI trigger ---- */}
+          <div className="relative hidden lg:block">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen((o) => !o);
+                if (!open) setTimeout(() => inputRef.current?.focus(), 60);
+              }}
+              className={cn(
+                "flex items-center gap-2 rounded-md border px-3 py-2 text-[13px] transition-colors",
+                open
+                  ? "border-sky-500/60 bg-sky-950/40 text-sky-300"
+                  : "border-slate-800/80 bg-slate-900/70 text-slate-400 hover:border-sky-700/50 hover:text-sky-300"
               )}
-            </div>
+            >
+              <MessageCircle className="h-3.5 w-3.5" />
+              <span className="font-medium">{AI_NAME}</span>
+              <ChevronDown className={cn("h-3 w-3 transition-transform", open && "rotate-180")} />
+            </button>
+
+            {/* ---- Dropdown panel ---- */}
+            {open && (
+              <>
+                {/* backdrop to close */}
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setOpen(false)}
+                />
+                <div
+                  ref={panelRef}
+                  className="absolute right-0 top-full z-50 mt-2 w-[420px] rounded-lg border border-slate-700/80 bg-slate-900 shadow-2xl shadow-black/40"
+                >
+                  <div className="border-b border-slate-800 px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <MessageCircle className="h-4 w-4 text-sky-400" />
+                      <span className="text-sm font-semibold text-slate-200">{AI_NAME}</span>
+                    </div>
+                    <p className="mt-0.5 text-[11px] text-slate-500">
+                      AI assistant for city planning. Ask about industries, training, or skills.
+                    </p>
+                  </div>
+
+                  <div className="px-4 py-3 space-y-3">
+                    {/* Input row */}
+                    <div className="flex gap-2">
+                      <input
+                        ref={inputRef}
+                        type="text"
+                        value={question}
+                        onChange={(e) => setQuestion(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && send()}
+                        placeholder="e.g. What industries are growing fastest?"
+                        className="flex-1 rounded-md border border-slate-700 bg-slate-950/80 px-2.5 py-2 text-xs text-slate-200 placeholder:text-slate-500 focus:border-sky-600 focus:outline-none focus:ring-1 focus:ring-sky-600"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => send()}
+                        disabled={loading}
+                        className="rounded-md bg-sky-600 px-3 py-2 text-xs font-medium text-white hover:bg-sky-500 disabled:opacity-50"
+                      >
+                        <Send className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+
+                    {/* Suggested questions (shown when no messages yet) */}
+                    {messages.length === 0 && (
+                      <div className="space-y-1">
+                        <p className="text-[10px] uppercase tracking-wider text-slate-500">
+                          Try asking
+                        </p>
+                        <ul className="space-y-1">
+                          {SUGGESTED_QUESTIONS.map((q, i) => (
+                            <li key={i}>
+                              <button
+                                type="button"
+                                onClick={() => send(q)}
+                                className="w-full rounded border border-slate-800 bg-slate-950/50 px-2 py-1.5 text-left text-[11px] text-slate-300 hover:border-sky-800 hover:bg-slate-800/50 hover:text-sky-200 transition-colors"
+                              >
+                                {q}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Messages */}
+                    {messages.length > 0 && (
+                      <div className="max-h-[320px] space-y-2 overflow-y-auto">
+                        {messages.map((m, i) => (
+                          <div
+                            key={i}
+                            className={
+                              m.role === "user"
+                                ? "rounded-md bg-sky-900/30 px-2.5 py-2 text-[11px] text-slate-200"
+                                : "rounded-md border border-slate-800 bg-slate-950/50 px-2.5 py-2 text-[11px] leading-relaxed text-slate-300 whitespace-pre-wrap"
+                            }
+                          >
+                            {m.content}
+                          </div>
+                        ))}
+                        {loading && (
+                          <div className="rounded-md border border-slate-800 bg-slate-950/50 px-2.5 py-2 text-[11px] text-slate-500 animate-pulse">
+                            {AI_NAME} is thinking...
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           <Button
@@ -160,7 +216,7 @@ export function TopNav({
             disabled={exportLoading}
           >
             {exportLoading ? (
-              <span className="animate-pulse">Generating report…</span>
+              <span className="animate-pulse">Generating report...</span>
             ) : (
               <>
                 <span className="uppercase tracking-[0.16em]">Export</span>
@@ -175,4 +231,3 @@ export function TopNav({
     </header>
   );
 }
-

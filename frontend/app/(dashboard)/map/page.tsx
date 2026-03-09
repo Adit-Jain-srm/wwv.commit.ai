@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Skeleton } from "../../../components/ui/skeleton";
 import { useDashboardData } from "../../../lib/DashboardDataContext";
-import { useSearch } from "../../../lib/SearchContext";
 import { NEIGHBORHOOD_COORDS } from "../../../lib/montgomery-geo";
 
 const WorkforceIntelligenceMap = dynamic(
@@ -26,7 +25,6 @@ const WorkforceIntelligenceMap = dynamic(
 
 export default function MapPage() {
   const { neighborhoods, loading } = useDashboardData();
-  const { filters, query } = useSearch();
   const neighborhoodPoints = neighborhoods?.neighborhoods?.map((n, idx) => {
     const fallback = { lat: 32.3668, lng: -86.3006 };
     const coords = NEIGHBORHOOD_COORDS[n.name] ?? fallback;
@@ -54,14 +52,6 @@ export default function MapPage() {
         <p className="text-sm text-slate-400">
           Interactive map of workforce activity across Montgomery, Alabama. Toggle layers to explore job density, business growth, and skills demand.
         </p>
-        {(filters.neighborhood ?? query.trim()) && (
-          <p className="mt-2 text-[11px] text-slate-500">
-            Intelligence filter:{" "}
-            <span className="font-semibold text-slate-200">
-              {filters.neighborhood ?? query.trim()}
-            </span>
-          </p>
-        )}
       </div>
       {loading ? (
         <Skeleton className="h-[600px] w-full rounded-xl bg-slate-900/80" />

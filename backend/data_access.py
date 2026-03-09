@@ -302,15 +302,18 @@ def _synthesize_historical_timeseries(
 
     weeks = 12
     points = []
+    # Use a mild wave pattern instead of monotonic growth
+    # This creates realistic variation without artificial trend bias
+    import math
     for w in range(weeks):
         d = (base - timedelta(weeks=weeks - 1 - w)).isoformat()[:10]
         progress = w / (weeks - 1) if weeks > 1 else 1.0
-        growth = 0.7 + 0.3 * progress
+        # Oscillate around 0.95-1.05 with a slight upward drift
+        wave = 0.92 + 0.08 * progress + 0.06 * math.sin(progress * math.pi * 2.5)
         entry: dict = {"date": d}
         for k in series_keys:
             total = industry_totals.get(k, 0)
-            # Use total as the target for the final week, scaled by growth curve
-            noisy = total * growth * (0.85 + rng.random() * 0.3)
+            noisy = total * wave * (0.88 + rng.random() * 0.24)
             entry[k] = max(0, round(noisy))
         points.append(entry)
     return points
@@ -386,11 +389,7 @@ def get_jobs_with_summary() -> Tuple[list[dict], dict, list[dict]]:
             buckets[day] = {k: 0 for k in series_keys}
         buckets[day][key] += 1
 
-    if len(buckets) < 4 and jobs:
-        base_date = max(buckets.keys()) if buckets else datetime.now().isoformat()[:10]
-        timeseries = _synthesize_historical_timeseries(jobs, base_date, series_keys)
-    else:
-        timeseries = [{"date": d, **buckets[d]} for d in sorted(buckets)]
+    timeseries = [{"date": d, **buckets[d]} for d in sorted(buckets)]
 
     # Compute job growth % (first vs last in last 30 days)
     job_growth_pct: float | None = None

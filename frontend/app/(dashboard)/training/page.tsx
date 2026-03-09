@@ -2,7 +2,6 @@
 
 import { useMemo } from "react";
 import { useDashboardData } from "../../../lib/DashboardDataContext";
-import { useSearch } from "../../../lib/SearchContext";
 import { TrainingAlignmentChart } from "../../../components/charts/TrainingAlignmentChart";
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
 import { Skeleton } from "../../../components/ui/skeleton";
@@ -11,7 +10,6 @@ import type { TrainingAlignmentDatum } from "../../../components/charts/Training
 
 export default function TrainingPage() {
   const { jobs, skills, loading } = useDashboardData();
-  const { query: searchQuery } = useSearch();
 
   const trainingData: TrainingAlignmentDatum[] = useMemo(() => {
     if (!skills || !jobs) return [];
@@ -37,11 +35,6 @@ export default function TrainingPage() {
         <p className="text-sm text-slate-400">
           How Montgomery's universities and colleges map to real hiring demand.
         </p>
-        {searchQuery.trim() && (
-          <p className="mt-2 text-[11px] text-slate-500">
-            Intelligence filter: <span className="font-semibold text-slate-200">{searchQuery}</span>
-          </p>
-        )}
       </div>
       <div className="space-y-6">
         {loading ? (

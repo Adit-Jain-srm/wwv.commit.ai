@@ -268,7 +268,8 @@ export function HiringTrendsChart({
         </CardHeader>
         <CardContent>
           <p className="mb-4 text-[11px] text-slate-400">
-            Single collection point. Run additional pipeline cycles for multi-week trend analysis.
+            Snapshot from a single collection cycle — showing classified positions by sector.
+            Multi-week trend analysis requires additional pipeline runs.
           </p>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -458,48 +459,51 @@ export function HiringTrendsChart({
             )}
 
             {/* ---------- area series ---------- */}
-            {SERIES.map((s) => {
+            {SERIES.flatMap((s) => {
               const dim = dimIfNot(s.key, s.stroke, 1.5);
               const isHidden = hidden[s.key];
               const actualKey = demoMode ? `${s.key}_actual` : String(s.key);
               const projKey = `${s.key}_proj`;
 
-              return (
-                <g key={s.key as string}>
-                  {/* actual data area */}
+              const areas = [
+                <Area
+                  key={`${s.key}-actual`}
+                  type="monotone"
+                  dataKey={actualKey}
+                  stackId="hiring"
+                  stroke={dim.stroke}
+                  strokeWidth={dim.strokeWidth}
+                  fill={`url(#grad-${s.key})`}
+                  fillOpacity={dim.fillOpacity}
+                  opacity={dim.opacity}
+                  dot={false}
+                  isAnimationActive
+                  animationDuration={450}
+                  hide={isHidden}
+                />,
+              ];
+
+              if (demoMode) {
+                areas.push(
                   <Area
+                    key={`${s.key}-proj`}
                     type="monotone"
-                    dataKey={actualKey}
-                    stackId="hiring"
-                    stroke={dim.stroke}
-                    strokeWidth={dim.strokeWidth}
-                    fill={`url(#grad-${s.key})`}
-                    fillOpacity={dim.fillOpacity}
-                    opacity={dim.opacity}
+                    dataKey={projKey}
+                    stroke={s.stroke}
+                    strokeWidth={1.4}
+                    strokeDasharray="4 4"
+                    fill="none"
+                    fillOpacity={0}
+                    opacity={isHidden ? 0 : 0.6}
                     dot={false}
                     isAnimationActive
-                    animationDuration={450}
+                    animationDuration={700}
                     hide={isHidden}
-                  />
-                  {/* projected data area (dashed, no fill) */}
-                  {demoMode && (
-                    <Area
-                      type="monotone"
-                      dataKey={projKey}
-                      stroke={s.stroke}
-                      strokeWidth={1.4}
-                      strokeDasharray="4 4"
-                      fill="none"
-                      fillOpacity={0}
-                      opacity={isHidden ? 0 : 0.6}
-                      dot={false}
-                      isAnimationActive
-                      animationDuration={700}
-                      hide={isHidden}
-                    />
-                  )}
-                </g>
-              );
+                  />,
+                );
+              }
+
+              return areas;
             })}
           </AreaChart>
         </ResponsiveContainer>
