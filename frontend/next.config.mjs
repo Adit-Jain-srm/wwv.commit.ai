@@ -3,14 +3,19 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const isProd = process.env.NODE_ENV === "production";
-const repoName = "wwv.commit.ai";
+// Only apply basePath for GitHub Pages; Vercel/local serve from root.
+const basePath =
+  "NEXT_PUBLIC_BASE_PATH" in process.env
+    ? process.env.NEXT_PUBLIC_BASE_PATH
+    : process.env.GITHUB_ACTIONS
+      ? "/wwv.commit.ai"
+      : "";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export",
-  basePath: isProd ? `/${repoName}` : "",
-  assetPrefix: isProd ? `/${repoName}/` : "",
+  basePath: basePath,
+  assetPrefix: basePath ? `${basePath}/` : "",
   images: {
     unoptimized: true,
   },

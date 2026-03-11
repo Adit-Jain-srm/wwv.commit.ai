@@ -1,45 +1,44 @@
 {
-  "timestamp": "2026-03-07T04:25:00.334175+00:00",
+  "timestamp": "2026-03-11T09:08:24.580656+00:00",
   "region": "Montgomery, AL",
   "results": {
     "jobs": {
-      "count": 387,
+      "count": 348,
       "by_sector": {
-        "private": 323,
-        "public": 36,
-        "federal": 28
+        "private": 290,
+        "public": 28,
+        "federal": 30
       },
-      "public_sector_ratio": 0.165,
+      "public_sector_ratio": 0.167,
       "top_industries": [
         "public_safety",
         "technology",
         "healthcare",
-        "manufacturing",
-        "defense_federal"
+        "defense_federal",
+        "government"
       ],
       "top_skills": [
-        "aws",
         "cybersecurity",
+        "aws",
         "cloud",
         "customer service",
-        "registered nurse",
-        "payroll",
-        "hvac",
-        "welding",
         "forklift",
+        "nursing",
+        "marketing",
+        "hvac",
+        "devops",
         "cyber security"
       ],
       "skills_gaps": [
         "customer service",
-        "payroll",
         "forklift",
-        "procurement",
-        "marketing"
+        "marketing",
+        "payroll"
       ],
       "sample": [
         {
-          "title": "Associate Director, Medical Science Liaison, Solid Tumors - East Region - job post",
-          "url": "",
+          "title": "Administrative Pay Plan",
+          "url": "http://jobapscloud.com/MGM/sup/Administrative Pay Plan.pdf",
           "company": "",
           "location": "",
           "description": "",
@@ -49,26 +48,7 @@
           "department": "",
           "source": "ai_extract",
           "query": "",
-          "collected_at": "2026-03-07T04:25:00.553304+00:00",
-          "industry": "healthcare",
-          "sector": "private",
-          "skills": [],
-          "experience_level": "management",
-          "work_arrangement": "onsite"
-        },
-        {
-          "title": "Jazz Pharmaceuticals",
-          "url": "https://www.indeed.com/cmp/Jazz-Pharmaceuticals?campaignid=mobvjcmp&from=mobviewjob&tk=1jj38lbkmh76l804&fromjk=1cb7760d1345a21c",
-          "company": "",
-          "location": "",
-          "description": "",
-          "pay": "",
-          "posted": "",
-          "job_type": "",
-          "department": "",
-          "source": "ai_extract",
-          "query": "",
-          "collected_at": "2026-03-07T04:25:00.553304+00:00",
+          "collected_at": "2026-03-11T09:08:24.800238+00:00",
           "industry": null,
           "sector": "private",
           "skills": [],
@@ -76,8 +56,8 @@
           "work_arrangement": "onsite"
         },
         {
-          "title": "Travel requirements",
-          "url": "",
+          "title": "Service Maintenance Pay Rates",
+          "url": "http://jobapscloud.com/MGM/sup/Service Maintenance Pay Plan.pdf",
           "company": "",
           "location": "",
           "description": "",
@@ -87,9 +67,28 @@
           "department": "",
           "source": "ai_extract",
           "query": "",
-          "collected_at": "2026-03-07T04:25:00.553304+00:00",
-          "industry": null,
+          "collected_at": "2026-03-11T09:08:24.800238+00:00",
+          "industry": "construction_trades",
           "sector": "private",
+          "skills": [],
+          "experience_level": "mid",
+          "work_arrangement": "onsite"
+        },
+        {
+          "title": "Public Safety Pay Plan",
+          "url": "http://jobapscloud.com/MGM/sup/Public Safety Pay Plan.pdf",
+          "company": "",
+          "location": "",
+          "description": "",
+          "pay": "",
+          "posted": "",
+          "job_type": "",
+          "department": "",
+          "source": "ai_extract",
+          "query": "",
+          "collected_at": "2026-03-11T09:08:24.800238+00:00",
+          "industry": "public_safety",
+          "sector": "public",
           "skills": [],
           "experience_level": "mid",
           "work_arrangement": "onsite"
@@ -99,15 +98,15 @@
     "business_signals": {
       "count": 105,
       "by_signal_type": {
-        "company_profile": 4,
-        "general": 18,
-        "economic_development": 11,
-        "expansion": 15,
-        "new_business": 1,
+        "company_profile": 5,
+        "company_funding": 1,
+        "expansion": 16,
+        "general": 16,
+        "economic_development": 10,
         "infrastructure": 3,
-        "data_center": 26,
-        "defense_contract": 12,
-        "real_estate": 8,
+        "data_center": 27,
+        "defense_contract": 13,
+        "real_estate": 7,
         "hiring_surge": 7
       },
       "sample": [
@@ -117,17 +116,17 @@
           "description": "State of Alabama | 9,425 followers on LinkedIn. Office of Information Technology",
           "source": "linkedin_company",
           "signal_type": "company_profile",
-          "collected_at": "2026-03-07T04:25:54.389079+00:00",
+          "collected_at": "2026-03-11T09:17:31.066151+00:00",
           "employee_count": "51-200 employees",
           "industry": "Government Administration"
         },
         {
           "title": "Alabama State University",
           "url": "https://www.linkedin.com/school/alabama-state-university/",
-          "description": "Alabama State University | 36,730 followers on LinkedIn. ASU is a student-centered and diverse public historically black University committed to achieving excellence in teaching, research and public service.",
+          "description": "Alabama State University | 36,763 followers on LinkedIn. ASU is a student-centered and diverse public historically black University committed to achieving excellence in teaching, research and public service.",
           "source": "linkedin_company",
           "signal_type": "company_profile",
-          "collected_at": "2026-03-07T04:25:54.389079+00:00",
+          "collected_at": "2026-03-11T09:17:31.066151+00:00",
           "employee_count": "2-10 employees",
           "industry": "Higher Education",
           "headquarters": "Montgomery, al"
@@ -135,10 +134,10 @@
         {
           "title": "Amazon Web Services (AWS)",
           "url": "https://www.linkedin.com/company/amazon-web-services",
-          "description": "Amazon Web Services (AWS) | 10,703,528 followers on LinkedIn. Official Global LinkedIn page for Amazon Web Services (AWS). | Launched in 2006, Amazon Web Services (AWS) began exposing key infrastructure services to businesses in the form of web services -- now widely known as cloud computing. The ultimate benefit of cloud computing, and AWS, is the ability to leverage a new business model and turn capital infrastructure expenses into variable costs. Businesses no longer need to plan and procure ",
+          "description": "Amazon Web Services (AWS) | 10,707,122 followers on LinkedIn. Official Global LinkedIn page for Amazon Web Services (AWS). | Launched in 2006, Amazon Web Services (AWS) began exposing key infrastructure services to businesses in the form of web services -- now widely known as cloud computing. The ultimate benefit of cloud computing, and AWS, is the ability to leverage a new business model and turn capital infrastructure expenses into variable costs. Businesses no longer need to plan and procure ",
           "source": "linkedin_company",
           "signal_type": "company_profile",
-          "collected_at": "2026-03-07T04:25:54.389079+00:00",
+          "collected_at": "2026-03-11T09:17:31.066151+00:00",
           "employee_count": "10,001+ employees",
           "industry": "IT Services and IT Consulting",
           "headquarters": "Seattle, WA"
@@ -146,7 +145,7 @@
       ]
     },
     "glassdoor": {
-      "count": 45,
+      "count": 46,
       "sample": [
         {
           "title": "City of Montgomery, AL Reviews (26)",
@@ -155,16 +154,16 @@
           "source": "glassdoor_serp",
           "signal_type": "employer_review",
           "query": "Glassdoor reviews City of Montgomery Alabama employer",
-          "collected_at": "2026-03-07T04:33:20.563525+00:00"
+          "collected_at": "2026-03-11T09:23:12.751458+00:00"
         },
         {
-          "title": "City of Montgomery, AL Reviews in ...",
-          "url": "https://www.glassdoor.com/Reviews/City-of-Montgomery-AL-Montgomery-Reviews-EI_IE889634.0,21_IL.22,32_IC1127704.htm",
-          "description": "Employees in Montgomery have given City of Montgomery, AL a rating of 3.7 out of 5 stars, based on 16 company reviews on Glassdoor. This indicates that most\u00a0...",
+          "title": "City of Montgomery, AL reviews",
+          "url": "https://www.glassdoor.com/Reviews/Montgomery-Reviews-EI_IE889634_IL.0,10.htm",
+          "description": "Employees in Montgomery have given City of Montgomery, AL a rating of 3.5 out of 5 stars, based on 26 company reviews on Glassdoor. This indicates that most\u00a0...[Read more](https://www.glassdoor.com/Reviews/Montgomery-Reviews-EIIE889634IL.0,10.htm#:~:text=Employees%20in%20Montgomery%20have%20given,go",
           "source": "glassdoor_serp",
           "signal_type": "employer_review",
           "query": "Glassdoor reviews City of Montgomery Alabama employer",
-          "collected_at": "2026-03-07T04:33:20.563525+00:00"
+          "collected_at": "2026-03-11T09:23:12.751458+00:00"
         },
         {
           "title": "Working at City-of-Montgomery-AL",
@@ -173,39 +172,39 @@
           "source": "glassdoor_serp",
           "signal_type": "employer_review",
           "query": "Glassdoor reviews City of Montgomery Alabama employer",
-          "collected_at": "2026-03-07T04:33:20.563525+00:00"
+          "collected_at": "2026-03-11T09:23:12.751458+00:00"
         }
       ]
     },
     "google_maps": {
-      "count": 34,
+      "count": 35,
       "sample": [
         {
-          "title": "MGM Employers - Montgomery Regional ...",
+          "title": "MGM Employers",
           "url": "https://www.montgomerychamber.com/mgm-employers",
-          "description": "Top Employers ; Baptist Health, 4,300, Hospitals/Clinics ; Hyundai Motor Manufacturing Alabama, 3,530, Automobile Manufacturing ; ALFA Companies, 2,568, Insurance\u00a0...",
+          "description": "Top Employers ; State of Alabama, 10,315, State Government ; Montgomery Public Schools, 4,524, Public Schools ; Baptist Health, 4,300, Hospitals/Clinics ; Hyundai\u00a0...[Read more](https://www.montgomerychamber.com/mgm-employers#:~:text=Top%20Employers&text=State%20of%20Alabama,10%2C315&text=Montgomery",
           "source": "google_maps_serp",
           "signal_type": "local_business_discovery",
           "query": "top employers Montgomery Alabama",
-          "collected_at": "2026-03-07T04:39:34.019260+00:00"
+          "collected_at": "2026-03-11T09:27:25.446372+00:00"
         },
         {
           "title": "Best 30 Companies to Work for in Montgomery",
           "url": "https://www.instawork.com/blog/best-companies-in-montgomery-al",
-          "description": "Nov 25, 2025 \u2014 1\\. Baptist Health \u00b7 2. Jackson Hospital \u00b7 3. Alliance Insurance Group \u00b7 4. Caddell Construction \u00b7 5. Hyundai Motor Manufacturing Alabama \u00b7 6. Giles\u00a0...",
+          "description": "Nov 25, 2025 \u2014 1\\. Baptist Health \u00b7 2. Jackson Hospital \u00b7 3. Alliance Insurance Group \u00b7 4. Caddell Construction \u00b7 5. Hyundai Motor Manufacturing Alabama \u00b7 6. Giles\u00a0...[Read more](https://www.instawork.com/blog/best-companies-in-montgomery-al#:~:text=1.%20Baptist%20Health&text=2.%20Jackson%20Hospital",
           "source": "google_maps_serp",
           "signal_type": "local_business_discovery",
           "query": "top employers Montgomery Alabama",
-          "collected_at": "2026-03-07T04:39:34.019260+00:00"
+          "collected_at": "2026-03-11T09:27:25.446372+00:00"
         },
         {
-          "title": "Largest Employers | Jobs",
-          "url": "https://www.careeronestop.org/Toolkit/Jobs/find-largest-employers.aspx?location=AL",
-          "description": "MONTGOMERY. Insurance. 7,200. 4. Mercedes-Benz USA LLC. VANCE. Automobile-Manufacturers. 6,000. 5. Alabama Power Co. BIRMINGHAM. Electric Companies. 5,000. 5.",
+          "title": "Montgomery Region Ranks Among Alabama's Top Growth ...",
+          "url": "https://www.mc-ala.org/Home/Components/News/News/290/",
+          "description": "Mar 2, 2026 \u2014 Montgomery Region Ranks Among Alabama's Top Growth Markets \u00b7 #2 statewide for capital investment among existing industry \u00b7 #2 statewide for job\u00a0...[Read more](https://www.mc-ala.org/Home/Components/News/News/290/#:~:text=Montgomery%20Region%20Ranks%20Among%20Alabama's,Top%20Growth%20Ma",
           "source": "google_maps_serp",
           "signal_type": "local_business_discovery",
           "query": "top employers Montgomery Alabama",
-          "collected_at": "2026-03-07T04:39:34.019260+00:00"
+          "collected_at": "2026-03-11T09:27:25.446372+00:00"
         }
       ]
     }
