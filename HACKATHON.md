@@ -112,10 +112,10 @@ All sessions will be recorded and shared.
 
 | Item | Link / Placeholder |
 |------|--------------------|
-| **Prototype URL** | *(e.g. Vercel app URL)* |
+| **Prototype URL** | https://adit-jain-srm.github.io/wwv.commit.ai/ |
 | **Pitch video** (≤5 min) | *(e.g. YouTube/Loom link)* |
 | **Slides** (optional) | *(e.g. Google Slides link)* |
-| **Code repo** | *(e.g. GitHub URL)* |
+| **Code repo** | https://github.com/Adit-Jain-srm/wwv.commit.ai |
 | **Supplementary doc** (optional) | *(e.g. PDF brief)* |
 
 **Solution summary (1–2 sentences):**  

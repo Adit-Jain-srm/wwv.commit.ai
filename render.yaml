@@ -19,3 +19,11 @@ services:
         sync: false
       - key: BRIGHTDATA_SERP_ZONE
         sync: false
+      - key: BRIGHTDATA_DC_HOST
+        sync: false
+      - key: BRIGHTDATA_DC_PORT
+        sync: false
+      - key: BRIGHTDATA_DC_USER
+        sync: false
+      - key: BRIGHTDATA_DC_PASS
+        sync: false
