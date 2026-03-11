@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[96545,["/wwv.commit.ai/_next/static/chunks/52f493ed61217bc0.js","/wwv.commit.ai/_next/static/chunks/ab85741c99a1febc.js","/wwv.commit.ai/_next/static/chunks/11f605714f659831.js","/wwv.commit.ai/_next/static/chunks/149271659eecfe6f.js","/wwv.commit.ai/_next/static/chunks/c1399d44f85d3138.js","/wwv.commit.ai/_next/static/chunks/afa3f6be3b38c010.js"],"DashboardShell"]
+3:I[97367,["/wwv.commit.ai/_next/static/chunks/ff1a16fafef87110.js","/wwv.commit.ai/_next/static/chunks/61cc43b3d7ad2990.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"NmUEh-6lvIz7Hrbjj-pWM","rsc":["$","$1","c",{"children":[["$","$L2",null,{}],[["$","script","script-0",{"src":"/wwv.commit.ai/_next/static/chunks/149271659eecfe6f.js","async":true}],["$","script","script-1",{"src":"/wwv.commit.ai/_next/static/chunks/c1399d44f85d3138.js","async":true}],["$","script","script-2",{"src":"/wwv.commit.ai/_next/static/chunks/afa3f6be3b38c010.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

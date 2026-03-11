@@ -1,80 +1,82 @@
 {
-  "total_jobs": 387,
+  "total_jobs": 409,
   "by_industry": {
     "public_safety": 41,
-    "technology": 35,
-    "healthcare": 34,
-    "manufacturing": 25,
-    "defense_federal": 23,
-    "government": 19,
+    "healthcare": 38,
+    "technology": 34,
+    "defense_federal": 24,
+    "government": 23,
+    "manufacturing": 21,
+    "construction_trades": 17,
     "education": 17,
-    "construction_trades": 16,
     "retail_hospitality": 7,
     "transportation": 2
   },
   "by_sector": {
-    "private": 323,
-    "public": 36,
-    "federal": 28
+    "private": 342,
+    "public": 37,
+    "federal": 30
   },
-  "public_sector_ratio": 0.165,
+  "public_sector_ratio": 0.164,
   "top_roles": [
     "Careers",
-    "Police Officer Trainee",
     "Job Opportunities",
-    "Job Openings",
     "Employment Opportunities",
-    "Associate Director, Medical Science Liaison, Solid Tumors - East Region - job post",
-    "Jazz Pharmaceuticals",
-    "Travel requirements",
-    "Medical specialty",
-    "If you are a current Jazz employee please apply via the Internal Career site.",
-    "Essential Functions/Responsibilities",
-    "Required Knowledge, Skills, and Abilities",
-    "Required/Preferred Education and Licenses",
-    "FOR US BASED CANDIDATES ONLY",
-    "Administrative Pay Plan",
-    "Service Maintenance Pay Rates",
-    "Public Safety Pay Plan",
-    "Current Job Openings",
-    "Welcome to the Montgomery Personnel Board's Online Employment Center!",
-    "How do I..."
+    "Police Officer Trainee",
+    "Job Openings",
+    "Specialist",
+    "Security Officer",
+    "View 10+ similar jobs with this employer",
+    "Line Operator 3rd shift - job post",
+    "Undisclosed",
+    "Tier One Supplier to Hyundai and KIA is seeking Line Operators to join their team!!",
+    "$14.00 to start with a raise to $16.00 upon permanent hire.",
+    "3rd shift -",
+    "SUMMARY:",
+    "RESPONSIBILITIES OF THE LINE OPERATOR:",
+    "REQUIREMENTS FOR THE LINE OPERATOR:",
+    "PHYSICAL/MENTAL REQUIREMENTS OF THE LINE OPERATOR:",
+    "WORK ENVIRONMENT:",
+    "Snapshot of Benefits and Culture",
+    "Administrative Pay Plan"
   ],
   "top_companies": [
     "City of Montgomery, AL",
     "Maxwell Air Force Base",
-    "Baptist Health",
-    "SPD",
     "Montgomery",
-    "City of Montgomery Texas",
-    "HigherEdJobs",
-    "Official Website",
+    "SPD",
+    "MONTGOMERY PUBLIC SCHOOLS",
+    "Baptist Health",
     "Sorted by Posting Date descending",
+    "Official Website",
+    "Home CCPB",
     "Maxwell Air Force Base, Alabama",
     "Employment Resources & Info",
     "Search",
     "Alabama National Guard",
-    "Parts Development (Trim)",
-    "Montgomery, AL"
+    "NOW HIRING",
+    "EHS (Site Safety)"
   ],
   "in_demand_skills": [
-    "aws",
-    "cybersecurity",
     "cloud",
-    "customer service",
-    "registered nurse",
-    "payroll",
-    "hvac",
-    "welding",
-    "forklift",
+    "cybersecurity",
+    "aws",
     "cyber security",
+    "devops",
+    "customer service",
+    "nursing",
+    "payroll",
+    "marketing",
+    "hvac",
+    "forklift",
     "project management",
     "procurement",
-    "marketing"
+    "registered nurse",
+    "data entry"
   ],
   "skills_gap": [
     {
-      "skill": "aws",
+      "skill": "cloud",
       "local_training_available": true,
       "gap": false
     },
@@ -84,7 +86,17 @@
       "gap": false
     },
     {
-      "skill": "cloud",
+      "skill": "aws",
+      "local_training_available": true,
+      "gap": false
+    },
+    {
+      "skill": "cyber security",
+      "local_training_available": true,
+      "gap": false
+    },
+    {
+      "skill": "devops",
       "local_training_available": true,
       "gap": false
     },
@@ -94,7 +106,7 @@
       "gap": true
     },
     {
-      "skill": "registered nurse",
+      "skill": "nursing",
       "local_training_available": true,
       "gap": false
     },
@@ -104,12 +116,12 @@
       "gap": true
     },
     {
-      "skill": "hvac",
-      "local_training_available": true,
-      "gap": false
+      "skill": "marketing",
+      "local_training_available": false,
+      "gap": true
     },
     {
-      "skill": "welding",
+      "skill": "hvac",
       "local_training_available": true,
       "gap": false
     },
@@ -117,11 +129,6 @@
       "skill": "forklift",
       "local_training_available": false,
       "gap": true
-    },
-    {
-      "skill": "cyber security",
-      "local_training_available": true,
-      "gap": false
     },
     {
       "skill": "project management",
@@ -134,24 +141,29 @@
       "gap": true
     },
     {
-      "skill": "marketing",
+      "skill": "registered nurse",
+      "local_training_available": true,
+      "gap": false
+    },
+    {
+      "skill": "data entry",
       "local_training_available": false,
       "gap": true
     }
   ],
   "by_source": {
-    "ai_extract": 64,
-    "serp": 183,
-    "job_board": 140
+    "ai_extract": 69,
+    "serp": 186,
+    "job_board": 154
   },
   "by_experience_level": {
-    "management": 23,
-    "mid": 324,
-    "entry": 17,
-    "senior": 23
+    "mid": 345,
+    "entry": 16,
+    "management": 27,
+    "senior": 21
   },
   "by_work_arrangement": {
-    "onsite": 384,
+    "onsite": 406,
     "remote": 2,
     "hybrid": 1
   },
