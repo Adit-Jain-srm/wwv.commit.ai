@@ -258,13 +258,10 @@ export function HiringTrendsChart({
     return (
       <Card className="overflow-hidden border-slate-800/80 bg-gradient-to-br from-slate-950 via-slate-950 to-sky-950/20 shadow-xl">
         <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-200">
-              <TrendingUp className="h-4 w-4 text-sky-400" />
-              Sector Hiring Snapshot — {point.date}
-            </CardTitle>
-            <span className="text-[10px] text-slate-500">{rangeLabel}</span>
-          </div>
+          <CardTitle className="flex items-center gap-2 text-sm font-semibold text-slate-200">
+            <TrendingUp className="h-4 w-4 text-sky-400" />
+            Sector Hiring Snapshot — {point.date}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="mb-4 text-[11px] text-slate-400">

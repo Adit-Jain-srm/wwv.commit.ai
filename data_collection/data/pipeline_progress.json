@@ -1,1 +1,1 @@
-{"running": true, "progress": 0, "current_step": "LinkedIn job listings + SERP + AI extract (Indeed, USAJobs, JobAps)", "steps_done": [], "stages": [], "updated_at": "2026-03-11T09:08:24.798962+00:00"}
+{"running": true, "progress": 16, "current_step": "LinkedIn companies + SERP + AI extract (open data)", "steps_done": ["Job collection (LinkedIn, SERP, AI extract)"], "stages": [{"name": "jobs", "status": "done", "items": 348}], "updated_at": "2026-03-11T09:17:31.065819+00:00"}

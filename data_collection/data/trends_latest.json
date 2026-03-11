@@ -1,52 +1,53 @@
 {
-  "total_jobs": 409,
+  "total_jobs": 348,
   "by_industry": {
-    "public_safety": 41,
-    "healthcare": 38,
+    "public_safety": 34,
     "technology": 34,
+    "healthcare": 25,
     "defense_federal": 24,
     "government": 23,
-    "manufacturing": 21,
+    "manufacturing": 22,
     "construction_trades": 17,
-    "education": 17,
-    "retail_hospitality": 7,
-    "transportation": 2
+    "education": 10,
+    "retail_hospitality": 6,
+    "transportation": 3
   },
   "by_sector": {
-    "private": 342,
-    "public": 37,
+    "private": 290,
+    "public": 28,
     "federal": 30
   },
-  "public_sector_ratio": 0.164,
+  "public_sector_ratio": 0.167,
   "top_roles": [
     "Careers",
-    "Job Opportunities",
     "Employment Opportunities",
+    "Current Job Openings",
     "Police Officer Trainee",
+    "Job Opportunities",
     "Job Openings",
     "Specialist",
-    "Security Officer",
-    "View 10+ similar jobs with this employer",
-    "Line Operator 3rd shift - job post",
-    "Undisclosed",
-    "Tier One Supplier to Hyundai and KIA is seeking Line Operators to join their team!!",
-    "$14.00 to start with a raise to $16.00 upon permanent hire.",
-    "3rd shift -",
-    "SUMMARY:",
-    "RESPONSIBILITIES OF THE LINE OPERATOR:",
-    "REQUIREMENTS FOR THE LINE OPERATOR:",
-    "PHYSICAL/MENTAL REQUIREMENTS OF THE LINE OPERATOR:",
-    "WORK ENVIRONMENT:",
-    "Snapshot of Benefits and Culture",
-    "Administrative Pay Plan"
+    "Administrative Pay Plan",
+    "Service Maintenance Pay Rates",
+    "Public Safety Pay Plan",
+    "Welcome to the Montgomery Personnel Board's Online Employment Center!",
+    "How do I...",
+    "Open Job Quick Links",
+    "Application Template and Transfer/Reemployment",
+    "Transfer/Reemployment",
+    "top of page",
+    "Open Competitive Opportunities",
+    "Job Title",
+    "Filing Deadline",
+    "Auto Mechanic (Diesel Engine/Heavy Equipment)"
   ],
   "top_companies": [
     "City of Montgomery, AL",
     "Maxwell Air Force Base",
     "Montgomery",
-    "SPD",
-    "MONTGOMERY PUBLIC SCHOOLS",
+    "Montgomery Personnel Board",
     "Baptist Health",
+    "MONTGOMERY PUBLIC SCHOOLS",
+    "SPD",
     "Sorted by Posting Date descending",
     "Official Website",
     "Home CCPB",
@@ -54,32 +55,23 @@
     "Employment Resources & Info",
     "Search",
     "Alabama National Guard",
-    "NOW HIRING",
     "EHS (Site Safety)"
   ],
   "in_demand_skills": [
-    "cloud",
     "cybersecurity",
     "aws",
-    "cyber security",
-    "devops",
+    "cloud",
     "customer service",
+    "forklift",
     "nursing",
-    "payroll",
     "marketing",
     "hvac",
-    "forklift",
-    "project management",
-    "procurement",
+    "devops",
+    "cyber security",
     "registered nurse",
-    "data entry"
+    "payroll"
   ],
   "skills_gap": [
-    {
-      "skill": "cloud",
-      "local_training_available": true,
-      "gap": false
-    },
     {
       "skill": "cybersecurity",
       "local_training_available": true,
@@ -91,12 +83,7 @@
       "gap": false
     },
     {
-      "skill": "cyber security",
-      "local_training_available": true,
-      "gap": false
-    },
-    {
-      "skill": "devops",
+      "skill": "cloud",
       "local_training_available": true,
       "gap": false
     },
@@ -106,14 +93,14 @@
       "gap": true
     },
     {
+      "skill": "forklift",
+      "local_training_available": false,
+      "gap": true
+    },
+    {
       "skill": "nursing",
       "local_training_available": true,
       "gap": false
-    },
-    {
-      "skill": "payroll",
-      "local_training_available": false,
-      "gap": true
     },
     {
       "skill": "marketing",
@@ -126,19 +113,14 @@
       "gap": false
     },
     {
-      "skill": "forklift",
-      "local_training_available": false,
-      "gap": true
-    },
-    {
-      "skill": "project management",
+      "skill": "devops",
       "local_training_available": true,
       "gap": false
     },
     {
-      "skill": "procurement",
-      "local_training_available": false,
-      "gap": true
+      "skill": "cyber security",
+      "local_training_available": true,
+      "gap": false
     },
     {
       "skill": "registered nurse",
@@ -146,25 +128,25 @@
       "gap": false
     },
     {
-      "skill": "data entry",
+      "skill": "payroll",
       "local_training_available": false,
       "gap": true
     }
   ],
   "by_source": {
-    "ai_extract": 69,
-    "serp": 186,
-    "job_board": 154
+    "ai_extract": 56,
+    "serp": 151,
+    "job_board": 141
   },
   "by_experience_level": {
-    "mid": 345,
-    "entry": 16,
-    "management": 27,
-    "senior": 21
+    "mid": 293,
+    "entry": 14,
+    "management": 24,
+    "senior": 17
   },
   "by_work_arrangement": {
-    "onsite": 406,
-    "remote": 2,
+    "onsite": 344,
+    "remote": 3,
     "hybrid": 1
   },
   "median_salary_by_industry": {}
