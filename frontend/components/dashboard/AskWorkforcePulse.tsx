@@ -14,6 +14,13 @@ const SUGGESTED_QUESTIONS = [
   "How does public sector hiring compare to private?",
 ];
 
+/** Convert minimal markdown (bold, bullet lists) to HTML for display. */
+function formatAIContent(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/^[-•]\s+/gm, "&#8226; ");
+}
+
 type Message = { role: "user" | "assistant"; content: string };
 
 export function AskWorkforcePulse() {
@@ -128,11 +135,12 @@ export function AskWorkforcePulse() {
               className={
                 m.role === "user"
                   ? "rounded-md bg-sky-900/30 px-2.5 py-2 text-[11px] text-slate-200"
-                  : "rounded-md border border-slate-800 bg-slate-900/50 px-2.5 py-2 text-[11px] leading-relaxed text-slate-300 whitespace-pre-wrap"
+                  : "rounded-md border border-slate-800 bg-slate-900/50 px-2.5 py-2 text-[11px] leading-relaxed text-slate-300 whitespace-pre-wrap [&_strong]:font-semibold [&_strong]:text-slate-100"
               }
-            >
-              {m.content}
-            </div>
+              {...(m.role === "assistant"
+                ? { dangerouslySetInnerHTML: { __html: formatAIContent(m.content) } }
+                : { children: m.content })}
+            />
           ))}
           {loading && (
             <div className="rounded-md border border-slate-800 bg-slate-900/50 px-2.5 py-2 text-[11px] text-slate-500">

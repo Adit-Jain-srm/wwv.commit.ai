@@ -177,8 +177,7 @@ async def generate_insights(jobs: list[dict], trends: dict, signals: list[dict])
                 ),
             },
         ],
-        "temperature": 0.2,
-        "max_tokens": 600,
+        "max_completion_tokens": 600,
     }
 
     content = await _call_azure(payload, timeout=30)
@@ -264,8 +263,7 @@ async def generate_policy_brief(
                 ),
             },
         ],
-        "temperature": 0.3,
-        "max_tokens": 700,
+        "max_completion_tokens": 700,
     }
 
     content = await _call_azure(payload, timeout=40)
@@ -340,8 +338,7 @@ async def ask_workforce_pulse(
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": f"Data context:\n{context}\n\nUser question: {question}"},
         ],
-        "temperature": 0.3,
-        "max_tokens": 600,
+        "max_completion_tokens": 600,
     }
 
     content = await _call_azure(payload, timeout=45)
@@ -456,8 +453,7 @@ async def run_scenario(
                 ),
             },
         ],
-        "temperature": 0.4,
-        "max_tokens": 400,
+        "max_completion_tokens": 400,
     }
 
     content = await _call_azure(payload, timeout=30)

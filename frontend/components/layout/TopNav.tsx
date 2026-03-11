@@ -12,6 +12,13 @@ const API_BASE =
 
 const AI_NAME = "Pulse AI";
 
+/** Convert minimal markdown (bold, bullet lists) to HTML for display. */
+function formatAIContent(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/^[-•]\s+/gm, "&#8226; ");
+}
+
 const SUGGESTED_QUESTIONS = [
   "What industries are growing fastest in Montgomery?",
   "What training programs should we fund?",
@@ -72,7 +79,7 @@ export function TopNav({
   };
 
   return (
-    <header className="print:hidden border-b border-slate-900/80 bg-slate-950/80 backdrop-blur">
+    <header className="print:hidden relative z-50 border-b border-slate-900/80 bg-slate-950/80 backdrop-blur">
       <div className="mx-auto max-w-[1600px] px-2 lg:px-4 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0">
           <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-sky-500 via-emerald-400 to-sky-700 shadow-lg shadow-sky-900/50" />
@@ -189,11 +196,12 @@ export function TopNav({
                             className={
                               m.role === "user"
                                 ? "rounded-md bg-sky-900/30 px-2.5 py-2 text-[11px] text-slate-200"
-                                : "rounded-md border border-slate-800 bg-slate-950/50 px-2.5 py-2 text-[11px] leading-relaxed text-slate-300 whitespace-pre-wrap"
+                                : "rounded-md border border-slate-800 bg-slate-950/50 px-2.5 py-2 text-[11px] leading-relaxed text-slate-300 whitespace-pre-wrap [&_strong]:font-semibold [&_strong]:text-slate-100"
                             }
-                          >
-                            {m.content}
-                          </div>
+                            {...(m.role === "assistant"
+                              ? { dangerouslySetInnerHTML: { __html: formatAIContent(m.content) } }
+                              : { children: m.content })}
+                          />
                         ))}
                         {loading && (
                           <div className="rounded-md border border-slate-800 bg-slate-950/50 px-2.5 py-2 text-[11px] text-slate-500 animate-pulse">
