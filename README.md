@@ -1,4 +1,20 @@
-# Workforce Pulse
+<div align="center">
+
+# wwv.commit.ai
+
+**AI-Powered Commit Message Generator**
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT-412991?logo=openai&logoColor=white)](https://openai.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/Adit-Jain-srm/wwv.commit.ai)](https://github.com/Adit-Jain-srm/wwv.commit.ai)
+
+*Generate meaningful, conventional commit messages from your staged changes using AI.*
+
+</div>
+
+---
 
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Adit-Jain-srm/wwv.commit.ai)
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)](https://www.python.org/)
